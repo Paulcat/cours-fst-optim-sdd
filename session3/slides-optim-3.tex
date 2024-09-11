@@ -1,0 +1,174 @@
+\documentclass[9pt,table]{beamer} % options fleqn
+
+\usepackage{/home/paul/Workspace/build/macros}
+
+
+\usetheme[titleformat frame = smallcaps]{metropolis}
+%\usepackage{FiraSans}
+\usepackage{FiraMono}
+
+\metroset{sectionpage=none}
+
+%\usepackage[T1]{fontenc}
+
+
+%\setbeamersize{text margin left=5mm,text margin right=5mm} 
+%\setbeamersize{text margin left=9mm,text margin right=3mm} 
+
+\setbeamertemplate{section in toc}[sections numbered]
+
+% algorithms
+\usepackage[ruled,linesnumbered]{algorithm2e}
+\SetKwInput{KwInput}{Input}
+\SetKwInput{KwOutput}{Output}
+
+% typography
+\usepackage{soul}
+
+\usepackage{caption}
+
+\usepackage{varwidth}
+
+\usepackage{dsfont}
+
+% drawings
+\usepackage{tikz}
+\usetikzlibrary{shapes,shapes.misc,shapes.geometric}
+\usetikzlibrary{positioning,fit,backgrounds}
+\usetikzlibrary{trees,matrix}
+\usetikzlibrary{decorations.pathreplacing,calligraphy}
+%
+\tikzset{cross/.style={cross out, draw=red, minimum size=3pt, line width=0.25mm, inner sep=0pt, outer sep=0pt}, cross/.default={1pt}}
+%
+\usepackage[skins,theorems]{tcolorbox}
+\tcbset{highlight math style={colback=mLightBrown!20,colframe=black!2,sharp corners},bottom=2pt,top=2pt}
+\tcbset{left skip={-.01\linewidth}, colback=mLightBrown!20,colframe=black!2,sharp corners,left=0pt,right=0pt}
+%
+\newcommand{\point}[1]{\textbf{\textcolor{mDarkTeal}{#1}}\quad}
+%
+%\definecolor{cobalt}{HTML}{0047AB}
+\definecolor{aqua}{HTML}{00FFFF}
+\newcommand{\kw}[1]{\textbf{\alert{#1}}}
+\newcommand{\invsible}[1]{\textcolor{black!2}{#1}}
+%
+\definecolor{myteal}{rgb}{0.21, 0.46, 0.53}
+
+\usepackage[position=bottom]{subfig}
+
+\usepackage{tabularx}
+\usepackage{booktabs}% http://ctan.org/pkg/booktabs
+\newcommand{\tabitem}{\llap{\tiny$\blacksquare$}~~}
+
+% handling lists
+\usepackage{enumitem}
+
+\usepackage{multimedia}
+
+% tcolorbox
+\usepackage[skins,theorems]{tcolorbox}
+\tcbset{highlight math style={colback=mLightBrown!20,colframe=black!2,sharp corners},bottom=2pt,top=2pt}
+\tcbset{left skip={-.01\linewidth}, colback=mLightBrown!20,colframe=black!2,sharp corners,left=0pt,right=0pt}
+
+
+% references
+\usepackage[backend=biber,style=authoryear]{biblatex}
+%\usepackage[backend=biber,style=alphabetic]{biblatex}
+\bibliography{/home/paul/Workspace/build/biblio}
+\usepackage{bibentry}
+\newcommand{\mycite}[2]{\footnotetext[#1]{\emph{\tiny{\citeauthor{#2},\,\citeyear{#2},}}\,\tiny{\citefield{#2}{title}}}}
+
+%\renewcommand{\cite}[1]{\textcolor{myteal}{[\citeauthor{#1},\,\citeyear{#1}]}}%
+%\newcommand{\mycite}[1]{\textcolor{myteal}{\cite{#1}}}%
+\AtBeginEnvironment{frame}{\setcounter{footnote}{0}}
+
+\usepackage{hyperref}
+
+
+\graphicspath{{figs/}{examples/}{/home/paul/Workspace/data/standard_test_images}}
+
+
+
+
+% add a sommaire
+%\makeatletter
+%\setbeamertemplate{headline}{%
+%  \begin{beamercolorbox}[colsep=1.5pt]{upper separation line head}
+%  \end{beamercolorbox}
+%  \begin{beamercolorbox}{section in head/foot}
+%    \vskip2pt\insertnavigation{\paperwidth}\vskip2pt
+%  \end{beamercolorbox}%
+%  \begin{beamercolorbox}[colsep=1.5pt]{lower separation line head}
+%  \end{beamercolorbox}
+%}
+%\makeatother
+
+\setbeamertemplate{theorem begin}
+{%
+  \inserttheoremheadfont% \bfseries
+  \inserttheoremname \inserttheoremnumber
+  \ifx\inserttheoremaddition\@empty\else\ (\inserttheoremaddition)\fi%
+  \inserttheorempunctuation
+  \normalfont
+}
+\setbeamertemplate{theorem end}{%
+  % empty
+}
+\makeatother
+
+\setbeamercolor{section in head/foot}{fg=normal text.bg, bg=structure.fg}
+
+
+
+\title{Optimisation Numérique et Sciences des Données}
+\subtitle{Optimisation numérique -- Méthodes Itératives}
+\author{Paul Catala (CRAN) \hfill M2 ISC 925}
+%\date{Postdoctorant à l'université d'Osnabrück, Allemagne}
+\date{paul.catala@gmail.com \hfill Septembre 2024 \\ \\ Cours élaboré par Julien Flamant}
+
+%\usepackage{uoslogo}
+%\titlegraphic{\uoslogored{4cm}}
+
+
+
+\begin{document}
+\maketitle
+
+
+
+\section{Introduction}
+
+\begin{frame}
+\frametitle{Programme du cours}
+\tableofcontents[currentsection]
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Méthodes itératives}
+
+\begin{itemize}[label=\tiny$\blacksquare$]
+	\item On veut résoudre un problème d'optimisation (continue) sans contraintes
+	\eq{
+		\min_{x \in \RR^n} f(x) 
+	}
+	
+	Dans la très grande majorité des cas, il n'y a \alert{pas de solution analytique} comme pour les moindres carrés
+	
+	\item \textbf{Stratégie}: \alert{méthodes itératives} (algorithmes)
+	\begin{itemize}
+		\item[1.] on \alert{choisit} un (ou plusieurs) point initial $x_0 \in \RR^n$
+		\item[2.] à chaque itération $k$, on obtient un nouveau point $x_k$ suivant un mise à jour construite à partir de la fonction $f$
+		\item[3.] on réitère jusqu'à ce qu'un critère d'arrêt soit satisfait
+	\end{itemize}
+\end{itemize}
+
+\end{frame}
+
+
+
+
+%\bibliographystyle{apalike}
+%\printbibliography
+%\bibliography{/export/home/pcatala/Workspace/build/biblio}
+
+\end{document}

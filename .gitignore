@@ -1,0 +1,10 @@
+# Latex generated files #
+# ********************* #
+*.aux
+*.bcf
+*.log
+*.nav
+*.out
+*.run.xml
+*.snm
+*.toc
