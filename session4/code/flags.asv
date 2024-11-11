@@ -1,0 +1,83 @@
+% flags
+
+n = 144;
+
+% Austria
+AUS_R = [ones(n/3,4/3*n); ones(n/3,4/3*n); ones(n/3,4/3*n)];
+AUS_G = [zeros(n/3,4/3*n); ones(n/3,4/3*n); zeros(n/3,4/3*n)];
+AUS_B = [zeros(n/3,4/3*n); ones(n/3,4/3*n); zeros(n/3,4/3*n)];
+AUS   = cat(3,AUS_R,AUS_G,AUS_B);
+imshow(AUS);
+
+% en niveaux de gris
+AUS2 = sum(AUS,3);
+AUS2(AUS2==1) = 0;
+AUS2(AUS2==3) = 1;
+
+% Denmark
+DEN_R = [ones(5/12*n,5/12*n), ones(5/12*n,2/12*n), ones(5/12*n,9/12*n);...
+         ones(2/12*n,4/3*n);...
+         ones(5/12*n,5/12*n), ones(5/12*n,2/12*n), ones(5/12*n,9/12*n)];
+DEN_G = [zeros(5/12*n,5/12*n), ones(5/12*n,2/12*n), zeros(5/12*n,9/12*n);...
+         ones(2/12*n,4/3*n);...
+         zeros(5/12*n,5/12*n), ones(5/12*n,2/12*n), zeros(5/12*n,9/12*n)];
+DEN_B = [zeros(5/12*n,5/12*n), ones(5/12*n,2/12*n), zeros(5/12*n,9/12*n);...
+         ones(2/12*n,4/3*n);...
+         zeros(5/12*n,5/12*n), ones(5/12*n,2/12*n), zeros(5/12*n,9/12*n)];
+DEN   = cat(3,DEN_R,DEN_G,DEN_B);
+imshow(DEN);
+
+% en niveaux de gris
+DEN2 = sum(DEN,3);
+DEN2(DEN2==1) = 0;
+DEN2(DEN2==3) = 1;
+
+% Greece
+GRE_R = [ [zeros(4/18*n,4/18*n), ones(4/18*n,2/18*n), zeros(4/18*n,4/18*n)], ...
+          [zeros(2/18*n,14/18*n); ones(2/18*n,14/18*n)]; ...
+          %
+          ones(2/18*n,10/18*n), zeros(2/18*n,14/18*n);
+          %
+          [zeros(4/18*n,4/18*n), ones(4/18*n,2/18*n), zeros(4/18*n,4/18*n)], ...
+          [ones(2/18*n,14/18*n); zeros(2/18*n,14/18*n)];
+          %
+          ones(2/18*n,4/3*n);...
+          zeros(2/18*n,4/3*n);...
+          ones(2/18*n,4/3*n);...
+          zeros(2/18*n,4/3*n) ];
+
+GRE_G = [ [zeros(4/18*n,4/18*n), ones(4/18*n,2/18*n), zeros(4/18*n,4/18*n)], ...
+          [zeros(2/18*n,14/18*n); ones(2/18*n,14/18*n)]; ...
+          %
+          ones(2/18*n,10/18*n), zeros(2/18*n,14/18*n);
+          %
+          [zeros(4/18*n,4/18*n), ones(4/18*n,2/18*n), zeros(4/18*n,4/18*n)], ...
+          [ones(2/18*n,14/18*n); zeros(2/18*n,14/18*n)];
+          %
+          ones(2/18*n,4/3*n);...
+          zeros(2/18*n,4/3*n);...
+          ones(2/18*n,4/3*n);...
+          zeros(2/18*n,4/3*n) ];
+
+GRE_B = [ [ones(4/18*n,4/18*n), ones(4/18*n,2/18*n), ones(4/18*n,4/18*n)], ...
+          [ones(2/18*n,14/18*n); ones(2/18*n,14/18*n)]; ...
+          %
+          ones(2/18*n,10/18*n), ones(2/18*n,14/18*n);
+          %
+          [ones(4/18*n,4/18*n), ones(4/18*n,2/18*n), ones(4/18*n,4/18*n)], ...
+          [ones(2/18*n,14/18*n); ones(2/18*n,14/18*n)];
+          %
+          ones(2/18*n,4/3*n);...
+          ones(2/18*n,4/3*n);...
+          ones(2/18*n,4/3*n);...
+          ones(2/18*n,4/3*n) ];
+GRE = cat(3,GRE_R,GRE_G,GRE_B);
+
+% en niveaux de gris
+GRE2 = sum(GRE,3);
+GRE2(GRE2==1) = 0;
+GRE2(GRE2==3) = 1;
+
+
+% QR CODE
+QR = randi(2,[144,4/3*144]) - 1;

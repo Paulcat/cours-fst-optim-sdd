@@ -31,6 +31,12 @@
 
 \usepackage{dsfont}
 
+% figures
+\usepackage{svg}
+%\svgpath{{figs/}}
+
+\usepackage{algorithmic}
+
 % drawings
 \usepackage{tikz}
 \usetikzlibrary{shapes,shapes.misc,shapes.geometric}
@@ -63,6 +69,11 @@
 \usepackage{enumitem}
 
 \usepackage{multimedia}
+
+\usepackage{animate}
+\usepackage{pifont}% http://ctan.org/pkg/pifont
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}%
 
 % tcolorbox
 \usepackage[skins,theorems]{tcolorbox}
@@ -121,9 +132,9 @@
 
 \title{Optimisation Numérique et Sciences des Données}
 \subtitle{Optimisation numérique -- Méthodes Itératives}
-\author{Paul Catala (CRAN) \hfill M2 ISC 925}
+\author{Paul Catala (CRAN, UL) \hfill Master Ingénierie des Systèmes Complexes M2 ISC 925}
 %\date{Postdoctorant à l'université d'Osnabrück, Allemagne}
-\date{paul.catala@gmail.com \hfill Septembre 2024 \\ \\ Cours élaboré par Julien Flamant}
+\date{paul.catala(at)univ-lorraine.fr \hfill Semestre 9 -- 2024 \\ \\ Cours élaboré par Julien Flamant}
 
 %\usepackage{uoslogo}
 %\titlegraphic{\uoslogored{4cm}}
@@ -149,15 +160,17 @@
 \begin{itemize}[label=\tiny$\blacksquare$]
 	\item On veut résoudre un problème d'optimisation (continue) sans contraintes
 	\eq{
-		\min_{x \in \RR^n} f(x) 
+		\min_{\xx \in \RR^n} \; f(\xx) 
 	}
 	
 	Dans la très grande majorité des cas, il n'y a \alert{pas de solution analytique} comme pour les moindres carrés
 	
+	\pause
+	
 	\item \textbf{Stratégie}: \alert{méthodes itératives} (algorithmes)
 	\begin{itemize}
-		\item[1.] on \alert{choisit} un (ou plusieurs) point initial $x_0 \in \RR^n$
-		\item[2.] à chaque itération $k$, on obtient un nouveau point $x_k$ suivant un mise à jour construite à partir de la fonction $f$
+		\item[1.] on \alert{choisit} un (ou plusieurs) point initial $\xx_0 \in \RR^n$
+		\item[2.] à chaque itération $k$, on obtient un nouveau point $\xx_k$ suivant un mise à jour construite à partir de la fonction $f$ et de l'itérée $\xx_{k-1}$
 		\item[3.] on réitère jusqu'à ce qu'un critère d'arrêt soit satisfait
 	\end{itemize}
 \end{itemize}
@@ -165,6 +178,877 @@
 \end{frame}
 
 
+\section{Algorithme de Nelder-Mead}
+\begin{frame}
+\frametitle{Programme du cours}
+\tableofcontents[currentsection]
+\end{frame}
+
+\begin{frame}{Algorithme de Nelder-Mead}
+  Algorithme d'optimisation sans gradient\\
+  $\rightarrow$ il suffit de pouvoir évaluer la fonction $f(\mathbf{x})$\\[1em]
+
+\textcolor{teal}{\cmark\: Méthode heuristique bien pratique lorsque $f$ n'est pas différentiable}\\
+\textcolor{red}{\xmark\:\, \bf pas de garantie de convergence vers un minimiseur local}
+\bigskip
+
+\alert{Idée générale} pour $f: \mathbb{R}^n \rightarrow \mathbb{R}$
+
+\begin{itemize}
+  \item[1.] On tire aléatoirement $n+1$ points $ \mathbf{x}_1, \mathbf{x}_2, \ldots, \mathbf{x}_{n+1}$ dans $\mathbb{R}^{n}$\pause
+  \item[2.] on construit le simplexe associé (polytope convexe à $n+1$ sommets : un triangle en 2D, un tétraèdre en 3D...)\pause
+  \item[3.] on évalue $f$ en chaque sommet\pause
+  \item[4.] on en déduit une transformation de ce simplexe pour le faire « ramper » vers un minimiseur (local) à l'aide d'opérations de : \\ 
+  réflexion, expansion, contraction, rétrécissement\pause
+  \item[5.] on répète l'opération jusqu'à ce que le simplexe atteigne une taille suffisamment petite
+\end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Exemple}
+  L'algorithme peut converger vers un minimiseur local ...
+  \begin{center}
+  %\animategraphics[loop,width=.6\textwidth]{2}{figs/nelder_mead/nm-}{0}{19}
+  	\only<1>{\includegraphics[width=0.6\textwidth]{figs/nelder_mead/nm-0}}
+  	\only<2>{\includegraphics[width=0.6\textwidth]{figs/nelder_mead/nm-1}}
+  	\only<3>{\includegraphics[width=0.6\textwidth]{figs/nelder_mead/nm-2}}
+  	\only<4>{\includegraphics[width=0.6\textwidth]{figs/nelder_mead/nm-3}}
+  	\only<5>{\includegraphics[width=0.6\textwidth]{figs/nelder_mead/nm-4}}
+  	\only<6>{\includegraphics[width=0.6\textwidth]{figs/nelder_mead/nm-5}}
+  	\only<7>{\includegraphics[width=0.6\textwidth]{figs/nelder_mead/nm-6}}
+  	\only<8>{\includegraphics[width=0.6\textwidth]{figs/nelder_mead/nm-7}}
+  	\only<9>{\includegraphics[width=0.6\textwidth]{figs/nelder_mead/nm-9}}
+  	\only<10>{\includegraphics[width=0.6\textwidth]{figs/nelder_mead/nm-10}}
+  	\only<11>{\includegraphics[width=0.6\textwidth]{figs/nelder_mead/nm-11}}
+  	\only<12>{\includegraphics[width=0.6\textwidth]{figs/nelder_mead/nm-12}}
+  	\only<13>{\includegraphics[width=0.6\textwidth]{figs/nelder_mead/nm-13}}
+  	\only<14>{\includegraphics[width=0.6\textwidth]{figs/nelder_mead/nm-14}}
+  	\only<15>{\includegraphics[width=0.6\textwidth]{figs/nelder_mead/nm-15}}
+  	\only<16>{\includegraphics[width=0.6\textwidth]{figs/nelder_mead/nm-16}}
+  	\only<17>{\includegraphics[width=0.6\textwidth]{figs/nelder_mead/nm-17}}
+  	\only<18>{\includegraphics[width=0.6\textwidth]{figs/nelder_mead/nm-18}}
+  	\only<19>{\includegraphics[width=0.6\textwidth]{figs/nelder_mead/nm-19}}
+  \end{center}
+\end{frame}
+
+
+\begin{frame}{Exemple}
+  L'algorithme peut converger vers un minimiseur local ...
+  \begin{center}
+  %\animategraphics[loop,width=.6\textwidth]{2}{figs/nelder_mead/nm2-}{0}{19}
+  	\only<1>{\includegraphics[width=0.6\textwidth]{figs/nelder_mead/nm2-0}}
+  	\only<2>{\includegraphics[width=0.6\textwidth]{figs/nelder_mead/nm2-1}}
+  	\only<3>{\includegraphics[width=0.6\textwidth]{figs/nelder_mead/nm2-2}}
+  	\only<4>{\includegraphics[width=0.6\textwidth]{figs/nelder_mead/nm2-3}}
+  	\only<5>{\includegraphics[width=0.6\textwidth]{figs/nelder_mead/nm2-4}}
+  	\only<6>{\includegraphics[width=0.6\textwidth]{figs/nelder_mead/nm2-5}}
+  	\only<7>{\includegraphics[width=0.6\textwidth]{figs/nelder_mead/nm2-6}}
+  	\only<8>{\includegraphics[width=0.6\textwidth]{figs/nelder_mead/nm2-7}}
+  	\only<9>{\includegraphics[width=0.6\textwidth]{figs/nelder_mead/nm2-9}}
+  	\only<10>{\includegraphics[width=0.6\textwidth]{figs/nelder_mead/nm2-10}}
+  	\only<11>{\includegraphics[width=0.6\textwidth]{figs/nelder_mead/nm2-11}}
+  	\only<12>{\includegraphics[width=0.6\textwidth]{figs/nelder_mead/nm2-12}}
+  	\only<13>{\includegraphics[width=0.6\textwidth]{figs/nelder_mead/nm2-13}}
+  	\only<14>{\includegraphics[width=0.6\textwidth]{figs/nelder_mead/nm2-14}}
+  	\only<15>{\includegraphics[width=0.6\textwidth]{figs/nelder_mead/nm2-15}}
+  	\only<16>{\includegraphics[width=0.6\textwidth]{figs/nelder_mead/nm2-16}}
+  	\only<17>{\includegraphics[width=0.6\textwidth]{figs/nelder_mead/nm2-17}}
+  	\only<18>{\includegraphics[width=0.6\textwidth]{figs/nelder_mead/nm2-18}}
+  	\only<19>{\includegraphics[width=0.6\textwidth]{figs/nelder_mead/nm2-19}}
+  \end{center}
+\end{frame}
+\begin{frame}{Exemple}
+  ... mais pas toujours
+  \begin{center}
+  %\animategraphics[loop,width=.6\textwidth]{2}{figs/nelder_mead/nmbug-}{0}{19}
+  	\only<1>{\includegraphics[width=0.6\textwidth]{figs/nelder_mead/nmbug-0}}
+  	\only<2>{\includegraphics[width=0.6\textwidth]{figs/nelder_mead/nmbug-1}}
+  	\only<3>{\includegraphics[width=0.6\textwidth]{figs/nelder_mead/nmbug-2}}
+  	\only<4>{\includegraphics[width=0.6\textwidth]{figs/nelder_mead/nmbug-3}}
+  	\only<5>{\includegraphics[width=0.6\textwidth]{figs/nelder_mead/nmbug-4}}
+  	\only<6>{\includegraphics[width=0.6\textwidth]{figs/nelder_mead/nmbug-5}}
+  	\only<7>{\includegraphics[width=0.6\textwidth]{figs/nelder_mead/nmbug-6}}
+  	\only<8>{\includegraphics[width=0.6\textwidth]{figs/nelder_mead/nmbug-7}}
+  	\only<9>{\includegraphics[width=0.6\textwidth]{figs/nelder_mead/nmbug-9}}
+  	\only<10>{\includegraphics[width=0.6\textwidth]{figs/nelder_mead/nmbug-10}}
+  	\only<11>{\includegraphics[width=0.6\textwidth]{figs/nelder_mead/nmbug-11}}
+  	\only<12>{\includegraphics[width=0.6\textwidth]{figs/nelder_mead/nmbug-12}}
+  	\only<13>{\includegraphics[width=0.6\textwidth]{figs/nelder_mead/nmbug-13}}
+  	\only<14>{\includegraphics[width=0.6\textwidth]{figs/nelder_mead/nmbug-14}}
+  	\only<15>{\includegraphics[width=0.6\textwidth]{figs/nelder_mead/nmbug-15}}
+  	\only<16>{\includegraphics[width=0.6\textwidth]{figs/nelder_mead/nmbug-16}}
+  	\only<17>{\includegraphics[width=0.6\textwidth]{figs/nelder_mead/nmbug-17}}
+  	\only<18>{\includegraphics[width=0.6\textwidth]{figs/nelder_mead/nmbug-18}}
+  	\only<19>{\includegraphics[width=0.6\textwidth]{figs/nelder_mead/nmbug-19}}
+  \end{center}
+\end{frame}
+
+
+\section{Méthodes de descente: principes généraux}
+\begin{frame}
+\frametitle{Programme du cours}
+\tableofcontents[currentsection]
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Méthodes de descente}
+
+\begin{itemize}[label=\tiny$\blacksquare$]
+	\item A l'itération $k$, on met à jour
+	\eq{
+		\xx_{k+1} = \xx_k + \al_k \dd_k
+	}
+	où $\al_k \geq 0$ est le \alert{pas} et $\dd_k$ une \alert{direction}.
+	
+	\pause
+	
+	\item  \textbf{Objectif rêvé}: on veut $\xx_k \to \xx_*$ avec $\xx_*$ un \alert{minimiseur global} de $f$
+	
+	\begin{center}
+	\includesvg[width=0.38\textwidth]{figs/exemple-methode-descente-exp}
+	%
+	\pause
+	%
+	\includesvg[width=0.38\textwidth]{figs/exemple-methode-descente-Rastrigin}
+	\end{center}
+	
+	$\rightarrow$ Rarement possible car la fonction $f$ n'est pas toujours \alert{convexe}
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Méthodes de descente}
+
+\begin{itemize}[label=\tiny$\blacksquare$]
+	\item A l'itération $k$, on met à jour
+	\eq{
+		\xx_{k+1} = \xx_k + \al_k \dd_k
+	}
+	où $\al_k \geq 0$ est le \alert{pas} et $\dd_k$ une \alert{direction}.
+	
+	\item \textbf{Objectif réaliste}: on construit $\xx_k \to \xx_*$ avec $\xx_*$ un \alert{minimiseur local} de $f$
+	
+	\begin{center}
+	\includesvg[width=0.38\textwidth]{figs/exemple-methode-descente-exp}
+	%
+	\includesvg[width=0.38\textwidth]{figs/exemple-methode-descente-Rastrigin}
+	\end{center}
+	
+	On veut
+	\begin{itemize}[label=-]
+	\item que la suite $\{x_k\}$ décrive un \alert{algorithme de descente}, \ie
+	\eq{
+		f(x_0) \geq f(x_1) \geq \ldots \geq f(x_k) \geq f(x_{k+1}) \geq \ldots
+	}
+	$\rightarrow$ Pour garantir cela, on choisit adéquatement la direction et le pas
+	\item que l'algorithme s'arrête lorsqu'il ne progresse plus
+	
+	$\rightarrow$ on définit un \alert{critère d'arrêt}.
+	\end{itemize}
+	
+	
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Choix de la direction de descente}
+
+\begin{itemize}[label=\tiny$\blacksquare$]
+	\item On dit que $\dd$ est une direction de descente à partir d'un point $\xx \in \RR^n$ lorsque
+	\eq{
+		\exists\, \al > 0 \qtqq f(\xx) \geq f(\xx+\al \dd)
+	}
+	
+	\item Condition de descente au point $\xx_k$
+	\eq{\tcbhighmath{
+		\nabla f (\xx_k) \cdot \dd < 0
+	}}
+	Ce sont toutes les directions qui nous font "traverser" la ligne de niveau %\todo{define gradient?}
+	
+	\begin{center}
+	\includegraphics[width=0.4\textwidth]{figs/direction-descente.png}
+	\end{center}
+	
+	\item[NB:] Intuition : développement de Taylor
+	\eq{
+		f(\xx+\al \dd) = f(\xx) + \al \nabla f(\xx) \cdot \dd + \textcolor{gray}{o(\norm{\dd})}
+	}
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Zoologie des algorithmes de descente}
+
+
+\eq{
+	\xx_{k+1} = \xx_k + \al_k \dd_k 
+}
+Chaque choix la direction de descente donne un algorithme de descente différent
+
+
+Forme générale:
+\eq{\tcbhighmath{
+	\dd_k = -\B_k^{-1} \nabla f(\xx_k) \quad \text{avec} \quad \B_k \; \text{symmétrique et inversible}
+}}
+
+\pause
+
+Par exemple:
+\begin{itemize}[label=\tiny$\blacksquare$]
+	\item Méthode de descente du gradient: \quad $B_k = I_n$ \hfill (matrice identité)
+	\item Méthode de Newton: \quad $B_k = \nabla^2 f(\xx_k)$ \hfill (matrice Hessienne de f)
+	\item Méthode de quasi-Newton: \quad $B_k \simeq \nabla^2 f(\xx_k)$ \hfill (approx. Hessienne)
+\end{itemize}
+
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Comment définir un critère d'arrêt?}
+
+\begin{itemize}[label=\tiny$\blacksquare$]
+	\item \alert{En théorie}, l'algorithme renvoie une suite $\{x_k\}_{k=1,2,\ldots}$ telle que \eq{\lim_{k \to \infty} \xx_k = \text{un minimum local}}
+	
+	\alert{En pratique}, il faut garantir qu'il s'arrête après un nombre \alert{fini} d'itérations
+	
+	\item Idée: stopper l'algorithme lorsque
+	\eq{\tcbhighmath{
+		(\text{valeur du critère à l'itération $k$}) \leq  \eps
+	}}
+	où $\eps$ est une (petite) tolérance / précision fixée (par ex $\eps = 10^{-6}$)
+	
+	\pause
+	
+	\vfill
+	
+	\item Exemples de critères:
+	\begin{itemize}[label=-]
+		\item variation de l'objectif: $\abs{f(\xx_{k+1}) - f(\xx_{k})} \leq \eps$
+		\item variation de l'itérée: $\norm{\xx_{k+1} - \xx_{k}} \leq \eps$
+		\item norme du gradient (condition d'optimalité): $\norm{\nabla f(\xx_k)} \leq \eps$
+	\end{itemize}
+	et généralement une combinaison de ces critères
+	
+	\item On utilise de préférence des critères en valeur \alert{relative}, \eg
+	\eq{
+		\frac{\abs{f(x_{k+1})-f(x_k)}}{\abs{f(x_k)}} \quad \text{ou} \quad \frac{\norm{x_{k+1}-x_k}}{\norm{x_k}}
+	}
+\end{itemize}
+\end{frame}
+
+
+\section{Méthodes de descente de gradient}
+\begin{frame}
+\frametitle{Programme du cours}
+\tableofcontents[currentsection]
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Algorithme de descente de gradient}
+
+\begin{tcolorbox}
+	A partir d'un point initial $x_0 \in \RR^n$, itérer:
+	\eq{
+		x_{k+1} = x_k - \al_k \nabla f(x_k)
+	}
+\end{tcolorbox}
+
+	Si le pas $\al_k$ est bien choisi, $x_k$ converge vers un point stationaire de $f$ (\ie $\nabla f(x_k) = 0$)
+	
+	\alert{Stratégies de pas}:
+	\begin{itemize}[label=-]
+		\item pas constant: on fixe $\al_k = \al$ pour tout $k$
+		\item pas optimal: à chaque itération $k$ on résout
+		\eq{
+			\al_k = \uargmin{\al \geq 0} f(x_k - \al \nabla f(x_k))
+		}
+		\item méthode de recherche de ligne ou \alert{backtracking}
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Stratégie de pas constant}
+
+\textbf{\alert{Descente de gradient à pas constant}}
+\begin{tcolorbox}
+	A partir d'un point initial $x_0$, itérer
+	\eq{
+		x_{k+1} = x_k - \al \nabla f(x_k)
+	}
+\end{tcolorbox}
+
+Intuitivement
+\begin{itemize}[label=\tiny$\blacksquare$]
+	\item $\al$ trop petit: convergence lente (en terme du nombre d'itérations)
+	\item $\al$ trop grand: \textcolor{red}{risque de divergence}
+\end{itemize}
+
+$\rightarrow$ Le pas doit être choisi de manière à équilibrer entre vitesse de convergence et garanties de convergence
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Stratégie de pas constant: un résultat important}
+
+\textbf{\alert{Descente de gradient à pas constant}}
+\begin{tcolorbox}
+	A partir d'un point initial $x_0$, itérer
+	\eq{
+		x_{k+1} = x_k - \al \nabla f(x_k)
+	}
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=teal!20]
+\begin{thm}[Convergence dans le cas Lipschitz]
+	
+	Si $f$ a un gradient $L$-Lipschitz, \ie si
+	\eq{
+		\forall\, \xx,\yy \in \RR^n, \quad \norm{\nabla f(x) - \nabla f(y)} \leq L \norm{x - y}
+	}
+	et si \eq{0 < \al < \frac{L}{2}} alors l'algorithme converge vers un point stationaire de $f$.
+\end{thm}
+\end{tcolorbox}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Un exemple en 2D}
+
+\begin{figure}
+	\includesvg[width=0.9\textwidth]{figs/exemple-step-gd-constant-traj}
+\end{figure}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Un exemple en 2D}
+
+\begin{figure}
+	\includesvg[width=0.9\textwidth]{figs/exemple-step-gd-constant-cv}
+\end{figure}
+\end{frame}
+
+
+
+
+
+
+\begin{frame}
+\frametitle{Stratégie de pas optimal}
+
+\textbf{Descente de gradient à pas optimal}
+\begin{tcolorbox}
+	A partir d'un point initial $x_0 \in \RR^n$, itérer
+	\eq{
+		x_{k+1} = x_k - \al_{\alert{k}} \nabla f(x_k)
+	}
+	où $\al_k$ est obtenu en résolvant le problème de minimisation
+	\eq{
+		\al_k = \argmin_{\al \geq 0} f(\xx_k - \al\nabla f(\xx_k))
+	}
+	à chaque itération.
+\end{tcolorbox}
+
+\pause
+
+Stratégie \alert{optimale en théorie}
+
+\alert{En pratique}, calculer le pas optimal peut se révéler aussi difficile que le problème original, ou être très coûteux numériquement
+
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Le même exemple en 2D}
+
+\eq{
+	f(\xx) = \frac{1}{2}\xx^\top Q \xx, \qacq Q = \begin{bmatrix}1 & 0 \\ 0 & \ga \end{bmatrix}, \ga >0
+}
+
+\begin{itemize}[label=-]
+	\item Calculer $\nabla f(\xx)$
+	\item Exprimer $\xx_{k+1}$ en fonction de $\xx_k$
+	\item Exprimer $\xx_1$ en fonction de $\al_0$ si $\xx_0 = [\ga,1]^\top$
+	\item Calculer le pas optimal pour cette itération
+	\item Montrer que les itérations avec pas optimal sont données par
+	\eq{
+		\xx_k = \ga\left(\frac{\ga-1}{\ga+1}\right)^k \begin{bmatrix} 1 \\ (-1)^k \end{bmatrix}
+	}
+\end{itemize}
+
+
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Exemple pour $\ga=10$}
+
+\begin{figure}
+	\includesvg[width=0.9\textwidth]{exemple-step-gd-constant-vs-optimal}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Exemple pour $\ga=10$}
+
+\begin{figure}
+	\includesvg[width=0.9\textwidth]{exemple-step-gd-constant-vs-optimal2}
+\end{figure}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Stratégie de recherche de ligne "backtracking"}
+
+\begin{itemize}[label=\tiny$\blacksquare$]
+	\item On cherche un pas $\al_k$ qui minimise \alert{suffisamment} la fonction objectif $f$
+
+	\eq{
+		\al_k \simeq \argmin_{\al \geq 0} f(\xx_k - \al\nabla f(\xx_k))
+	}
+	
+	\item Approche la plus utilisée en pratique: on réduit $\alpha$ ("\alert{backtracking}") jusqu'à ce qu'un certain critère soit vérifié (\eg condition d'\alert{Armijo}, condition de \alert{Wolfe}, ...)
+	
+	\item \textbf{Exemple} Armijo dans le cas convexe:
+	on fixe $s \in (0,0.5)$ et $\eta \in (0,1)$ et un pas initial $\al = 1$
+	
+	\begin{tcolorbox}[width=0.7\textwidth]
+	\begin{algorithmic}
+	\STATE $\al := 1$
+	\WHILE{$f(\xx_k-\al\nabla f(\xx_k)) > f(\xx_k) - \al s \norm{\nabla f(\xx_k)}^2$} 
+		\STATE $\al = \eta \al$
+	\ENDWHILE
+	\end{algorithmic}
+	\end{tcolorbox}
+	
+	\item Les stratégies approchées du choix de pas sont construites de manière à assurer la convergence de l'algorithme
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Exemple ($f(x) = x^2$)}
+\begin{figure}
+	\includesvg[width=0.9\textwidth]{exemple-step-gd-backtracking01}
+\end{figure}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Exemple}
+\begin{figure}
+	\includesvg[width=0.9\textwidth]{exemple-step-gd-backtracking02}
+\end{figure}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Exemple}
+\begin{figure}
+	\includesvg[width=0.9\textwidth]{exemple-step-gd-backtracking03}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Exemple}
+\begin{figure}
+	\includesvg[width=0.9\textwidth]{exemple-step-gd-backtracking04}
+\end{figure}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Comparaison des stratégies de pas}
+
+\begin{figure}
+	\includesvg[width=0.9\textwidth]{exemple-step-gd-fix-opt-back-traj}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Comparaison des stratégies de pas}
+
+\includesvg[width=0.9\textwidth]{exemple-step-gd-fix-opt-back-cv}
+\end{frame}
+
+
+\section{Méthode de Newton}
+\begin{frame}
+\frametitle{Programme du cours}
+\tableofcontents[currentsection]
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Algorithme de Newton}
+
+\begin{tcolorbox}
+	A partir d'un point initial $x_0 \in \RR^n$, itérer:
+	\eq{
+		x_{k+1} = x_k - \al_k \left[\nabla^2 f(\xx_k)\right]^{-1} \nabla f(x_k)
+	}
+\end{tcolorbox}
+
+	$\dd_k \eqdef - \left[\nabla^2 f(\xx_k)\right]^{-1} \nabla f(x_k)$ est bien une direction de descente dès lors que la Hessienne de $f$ en $\xx_k$ est définie positive
+	
+	\eq{
+		\nabla f(\xx_k) \cdot \dd_k = - \nabla f(\xx_k) \left[\nabla^2 f(\xx_k)\right]^{-1} \nabla f(x_k) < 0
+	}
+	
+	\alert{Stratégies de choix du pas}
+	\begin{itemize}[label=-]
+		\item pas constant: on fixe $\al_k = \al$ pour tout $k$ (souvent $\al=1$)
+		\item utilisation du backtracking possible
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Un exemple en 2D: le retour}
+
+\eq{
+	f(\xx) = \frac{1}{2}\xx^\top \Q \xx - \bb^\top \xx, \qacq \Q \succ 0
+}
+
+\begin{itemize}[label=-]
+	\item Calculer $\nabla f(\xx)$ et en déduire le minimiseur de $f$
+	\item Calculer $\nabla^2 f(x)$
+	\item Donner l'expression explicite de $\xx_{k+1}$ en fonction de $\xx_k$ pour la méthode de Newton à pas constant
+	\item Qu'en déduit-on?
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Exemple non quadratique}
+
+\includesvg[width=0.9\textwidth]{figs/exemple-newton-vs-gd-traj}
+\end{frame}
+
+\begin{frame}
+\frametitle{Exemple non quadratique}
+
+\includesvg[width=0.9\textwidth]{figs/exemple-newton-vs-gd-cv}
+\end{frame}
+
+
+
+\section{Méthodes de quasi-Newton}
+\begin{frame}
+\frametitle{Programme du cours}
+\tableofcontents[currentsection]
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Motivation}
+
+Malgré ses nombreux avantages, la méthode de Newton souffre de 2 inconvénients:
+\begin{itemize}[label=-]
+	\item il faut calculer et inverser la matrice Hessienne, ce qui devient très coûteux en grande dimension
+	\item la Hessienne n'est pas toujours définie positive, il n'est donc pas toujours possible de calculer son inverse
+\end{itemize}
+
+\bigbreak
+
+$\rightarrow$ \textbf{\alert{Méthodes de quasi-Newton}}
+\begin{tcolorbox}
+	On remplace la matrice Hessienne par une approximation
+	\eq{
+		\B_k \approx \nabla^2 f(\xx_k)
+	}
+	de telle sorte que les itérations deviennent
+	\eq{
+		\xx_{k+1} = \xx_k - \al_k \B_k^{-1} \nabla f(\xx_k)
+	}
+\end{tcolorbox}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Principe des méthodes de quasi-Newton}
+
+
+\begin{itemize}[label=\tiny$\blacksquare$]
+	\item On cherche à estimer récursivement les matrices $\B_k$ (ou $\Hbold_k$) telles que 
+  \[
+    \B_k \approx \nabla^2 f(\xx^{(k)}) \quad \text{ ou } \quad \Hbold_k \approx \left[\nabla^2 f(\xx^{(k)})\right]^{-1}
+    \]
+
+\begin{tcolorbox}[width=0.85\textwidth]
+ \item Une règle de mise à jour $\rightarrow$ une méthode de quasi-Newton\end{tcolorbox}
+\end{itemize}
+
+\alert{Quelques exemples}
+\begin{itemize}[label=\alert{-}]
+  \item Broyden-Fletcher-Goldfarb-Shanno (BFGS): la plus populaire
+  \item L-BFGS: BFGS à faible coût mémoire
+  \item Symmetric rank-one (SR1)
+  \item Davidon–Fletcher–Powell (DFP)
+  \item[] ...
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Broyden-Fletcher-Goldfarb-Shanno (BFGS)}
+
+\begin{itemize}[label=\tiny$\blacksquare$]
+\item A l'itération $k$, 
+\eq{
+  \xx_{k+1} =  \xx_k - \alpha_k \Hbold_k \nabla f(\xx_k)
+}
+
+\item On pose
+\eq{
+  \sbold_k = -\alpha_k \Hbold_k \nabla f(\xx_k), \quad \yy_k = \nabla f(\xx_{k+1}) - \nabla f(\xx_k), \quad \rho_k = \frac{1}{\sbold_k^\top \yy_k}
+}
+
+\textbf{\alert{Mise à jour de $\Hbold_k$ dans BFGS:}}
+\eq{\tcbhighmath{
+	\Hbold_{k+1} = \left(\I_n - \rho_k \sbold_k\yy_k^\top\right)\Hbold_k\left(\I_n - \rho_k \yy_k\sbold_k^\top\right) + \rho_k \sbold_k\sbold_k^\top
+}}
+
+\item le choix du pas $\alpha_k$ se fait par une technique de recherche de ligne (backtracking, par exemple)
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Exemple non quadratique ($\Hbold_0 = \left[ \nabla^2 f(\xx_0) \right]^{-1}$}
+
+\includesvg[width=0.9\textwidth]{figs/exemple-BFGS-comparison-traj}
+\end{frame}
+
+\begin{frame}
+\frametitle{Exemple non quadratique ($\Hbold_0 = \left[ \nabla^2 f(\xx_0) \right]^{-1}$}
+
+\includesvg[width=0.9\textwidth]{figs/exemple-BFGS-comparison-cv}
+\end{frame}
+
+
+
+\section{Moindres carrés non-linéaires}
+\begin{frame}
+\frametitle{Programme du cours}
+\tableofcontents[currentsection]
+\end{frame}
+
+
+
+\begin{frame}{Moindres carrés non-linéaires}
+
+\begin{itemize}[label=\tiny$\blacksquare$]
+  \item Forme générale
+\eq{
+  \min_{\xx\in \RR^n} \quad f(\xx) := \frac{1}{2} \sum_{j=1}^m r_j(\xx)^2, \quad r_j: \RR^n \rightarrow \RR
+}
+
+\pause
+
+\item Si on pose
+\eq{
+  R(\xx) = \left(r_1(\xx),r_2(\xx), \ldots, r_m(\xx)\right)^\top
+}
+On peut réécrire le problème de la manière suivante
+\eq{
+  \min_{\xx\in R^n} \quad f(\xx) := \frac{1}{2} \norm{R(\xx)}_2^2, \quad R(\xx): \RR^n \rightarrow \RR^m
+}
+  \item \alert{Remarque}
+    si $R(\xx)= \A\xx - \bb$, on retrouve un problème de moindres carrés linéaires
+   \end{itemize}
+\end{frame}
+
+
+
+\begin{frame}{Moindres carrés non-linéaires: matrice Jacobienne}
+  La forme particulière de $f(\xx)$ peut être exploitée pour construire des algorithmes efficaces. \bigskip
+
+
+  \alert{Outil clé: matrice Jacobienne de $R: \RR^n \rightarrow \RR^m$}
+
+  \eq{
+    \J(\xx) = \begin{bmatrix}
+      \frac{\partial r_1}{\partial x_1}(\xx) & \ldots & \frac{\partial r_1}{\partial x_N}(\xx)\\
+      \frac{\partial r_2}{\partial x_1}(\xx) & \ldots & \frac{\partial r_2}{\partial x_N}(\xx)\\
+      \vdots & & \vdots\\
+      \frac{\partial r_M}{\partial x_1}(\xx) & \ldots & \frac{\partial r_M}{\partial x_N}(\xx)\\
+    \end{bmatrix} = 
+    \begin{bmatrix}
+      \nabla r_1(\xx)^\top\\
+      \nabla r_2(\xx)^\top\\
+      \vdots\\
+      \nabla r_M(\xx)^\top\\
+    \end{bmatrix}
+    \in \RR^{m\times n}
+    }
+\end{frame}
+
+
+
+\begin{frame}{Expression du gradient et de la Hessienne}
+  L'utilisation de la matrice Jacobienne permet d'expremier simplement le gradient et le Hessien de $f(\xx) = \frac{1}{2}\norm{ \R(\xx)}^2_2$. \\[1em]
+
+  \alert{Gradient de $f$}
+
+  \eq{
+    \nabla f(\xx) = \sum_{j=1}^m r_j(\xx)\nabla r_j(\xx) = \mathbf{J}(\xx)^\top \mathbf{R}(\xx)
+  }
+  
+  \alert{Hessienne de $f$}
+\eq{
+\begin{aligned}
+  \nabla^2 f(\xx) & = \sum_{j=1}^m \nabla r_j(\xx)\nabla r_j(\xx)^\top + \sum_{j=1}^m r_j(\xx)\nabla^2 r_j(\xx) \\
+  &=  \J(\xx)^\top\J(\xx) + \sum_{j=1}^m r_j(\xx)\nabla^2 r_j(\xx)
+\end{aligned}
+}
+\end{frame}
+
+
+
+
+
+\begin{frame}{Pourquoi est-ce intéressant?}
+  Dans de nombreuses applications:
+  \begin{itemize}[label=-]
+    \item Calculer le Jacobien $\mathbf{J}(\xx)$ est \alert{peu coûteux} (ou facile à obtenir)
+    \item On en déduit directement le gradient $ \nabla f(\xx) = \mathbf{J}(\xx)^\top \mathbf{R}(\xx)$
+    \item Dans le Hessien, bien souvent le second terme peut être \alert{négligé} (notamment près de la solution) de telle sorte que 
+    \[  \nabla^2 f(\xx) \approx \J(\xx)^\top\J(\xx)\]
+    c'est à dire que la Hessienne se calcule \alert{sans dérivée seconde}.
+  \end{itemize}
+  \vfill 
+  $\rightarrow$ on exploite ces propriétés pour construire des algorithmes
+  \begin{itemize}[label=-]
+    \item méthode de \alert{Gauss-Newton}
+    \item méthode de \alert{Levenberg-Marquardt}
+  \end{itemize}
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Algorithmes pour les moindres carrés non-linéaires}
+
+\alert{Méthode de Gauss-Newton}
+\begin{tcolorbox}
+c'est une méthode de quasi-Newton avec $\B_k = \J(\xx_k)^\top\J(\xx_k)$
+
+A l'itération $k$, ($\al_k = 1$)
+\eq{
+	\xx_{k+1} = \xx_k - \left[ \J(\xx_k)^\top \J(\xx_k) \right]^{-1} \nabla f(\xx_k)
+}
+\end{tcolorbox}
+
+\bigbreak
+
+\alert{Méthode de Levenberg-Marquardt}
+\begin{tcolorbox}
+peut aussi s'interpréter comme une méthode de quasi-Newton
+
+A l'itération $k$, ($\al_k = 1$), on pose $\C_k = \J(\xx_k)^\top\J(\xx_k)$
+\eq{
+	\xx_{k+1} = \xx_k - \left[ \C_k + \la_k \diag \C_k \right]^{-1} \nabla f(\xx_k)
+}
+où $\la_k$ est un paramètre de régularisation.
+\end{tcolorbox}
+
+\end{frame}
+
+
+
+
+\section{Comparaison: compromis vitesse de convergence - complexité}
+\begin{frame}
+\frametitle{Programme du cours}
+\tableofcontents[currentsection]
+\end{frame}
+
+
+\begin{frame}{Comment choisir un algorithme pour un problème donné?}
+
+Pour un problème donné, le choix d'un algorithme peut se faire en fonction de:
+
+\begin{itemize}[label=-]
+  \item \alert{sa vitesse de convergence}: elle indique la vitesse à laquelle les itérées se rapprochent de leur limite, mesurée par la distance 
+  \eq{\varepsilon_k = \norm{\xx_k - \xx_\star}_2 \text{ où $\xx_\star$ est un minimiseur local}}
+  
+  La vitesse de convergence est \emph{asymptotique}, au sens où elle apparait pour $k \rightarrow \infty$
+  \item \alert{sa complexité}: elle mesure le coût calculatoire associé à un algorithme (en général, une itération de celui-ci)
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}{Différents types de convergence}
+	\begin{tcolorbox}
+  Distance à un minimiseur local 
+  \eq{\varepsilon_k = \norm{\xx_k - \xx_\star}_2 \text{ où $\xx^\star$ est un minimiseur local}}
+  \end{tcolorbox}
+
+  \begin{itemize}[label=\tiny$\blacksquare$]
+    \item Convergence linéaire:
+    \eq{\frac{\varepsilon_{k+1}}{\varepsilon_k} \underset{k\rightarrow \infty}{\rightarrow} \mu, \quad 0 < \mu < 1}
+    \item Convergence super-linéaire:
+    \eq{\frac{\varepsilon_{k+1}}{\varepsilon_k}\underset{k\rightarrow \infty}{\rightarrow} 0}
+    \item Convergence quadratique:
+    \eq{\frac{\varepsilon_{k+1}}{\varepsilon_k^2} \underset{k\rightarrow \infty}{\rightarrow} \mu, \quad 0 < \mu < 1}
+  \end{itemize}
+\end{frame}
+
+
+
+
+
+\begin{frame}{Complexité numérique}
+
+\begin{itemize}[label=\tiny$\blacksquare$]
+  \item La complexité se mesure en flops = nombre d'opérations élementaires
+  (addition, multiplication)
+  \bigskip
+
+  \item \alert{Complexité des opérations de base}
+  \begin{itemize}[label=-]
+    \item produit scalaire $\abold^\top \bb$ avec $\abold, \bb \in \RR^n$ \hfill $\Oo(n) \text{ flops}$
+    \item produit matrice-vecteur $\A \bb$ avec $\A \in \RR^{m\times n}, \bb \in \RR^n$ \hfill $\Oo(mn) \text{ flops}$
+    \item  produit matriciel $\A \bb$ avec $\A \in \RR^{m\times n}, \bb \in \RR^{n\times p}$ \hfill $\Oo(mnp) \text{ flops}$
+    \item inversion matricielle $\A^{-1}$ avec $\A \in \RR^{n\times n}$  \hfill $\Oo(n^3) \text{ flops}$
+  \end{itemize}
+\vfill
+
+ \item La complexité globale d'une suite d'opérations peut parfois être ardue à calculer, ou ne pas être suffisante pour caractériser le coût computationnel (problèmes liés à l'empreinte mémoire / swap, notamment)
+ \end{itemize}
+\end{frame}
+
+
+
+\begin{frame}{Complexité algorithmique}
+  $$\min_{x\in \RR^n} f(\xx)$$ 
+  \bigbreak
+\begin{itemize}[label=\tiny$\blacksquare$]
+  \item   \alert{méthode du gradient à pas constant}
+  \[\xx_{k+1} = \xx_k - \alpha \nabla f(\xx_k)\]
+  \begin{itemize}[label=-]
+    \item Complexité: $\Oo(n)$ par itération
+    \item Vitesse de convergence linéaire
+  \end{itemize}
+  \vfill
+  \item \alert{méthode de Newton}
+  \[\xx_{k+1} = \xx_k - \alpha_k \left[\nabla^2 f(\xx_k)\right]^{-1}\nabla f(\xx_k)\]
+  \begin{itemize}[label=-]
+    \item Complexité: $\Oo(n^3)$ par itération
+    \item Vitesse de convergence quadratique
+  \end{itemize}
+\end{itemize}
+
+\end{frame}
 
 
 %\bibliographystyle{apalike}
