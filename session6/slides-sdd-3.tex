@@ -1,0 +1,461 @@
+\documentclass[9pt,table]{beamer} % options fleqn
+
+\usepackage{/home/paul/Workspace/build/macros}
+
+
+\usetheme[titleformat frame = smallcaps]{metropolis}
+%\usepackage{FiraSans}
+\usepackage{FiraMono}
+
+\metroset{sectionpage=none}
+
+%\usepackage[T1]{fontenc}
+
+
+\setbeamersize{text margin left=5mm,text margin right=5mm} 
+%\setbeamersize{text margin left=9mm,text margin right=3mm} 
+
+\setbeamertemplate{section in toc}[sections numbered]
+
+% algorithms
+\usepackage[ruled,linesnumbered]{algorithm2e}
+\SetKwInput{KwInput}{Input}
+\SetKwInput{KwOutput}{Output}
+
+% typography
+\usepackage{soul}
+
+\usepackage{caption}
+
+\usepackage{varwidth}
+
+\usepackage{dsfont}
+
+% figures
+\usepackage{svg}
+%\svgpath{{figs/}}
+
+% drawings
+\usepackage{tikz}
+\usetikzlibrary{shapes,shapes.misc,shapes.geometric}
+\usetikzlibrary{positioning,fit,backgrounds}
+\usetikzlibrary{trees,matrix}
+\usetikzlibrary{decorations.pathreplacing,calligraphy}
+%
+\tikzset{cross/.style={cross out, draw=red, minimum size=3pt, line width=0.25mm, inner sep=0pt, outer sep=0pt}, cross/.default={1pt}}
+%
+\usepackage[skins,theorems]{tcolorbox}
+\tcbset{highlight math style={colback=mLightBrown!20,colframe=black!2,sharp corners},bottom=2pt,top=2pt}
+\tcbset{left skip={-.01\linewidth}, colback=mLightBrown!20,colframe=black!2,sharp corners,left=0pt,right=0pt}
+%
+\newcommand{\point}[1]{\textbf{\textcolor{mDarkTeal}{#1}}\quad}
+%
+%\definecolor{cobalt}{HTML}{0047AB}
+\definecolor{aqua}{HTML}{00FFFF}
+\newcommand{\kw}[1]{\textbf{\alert{#1}}}
+\newcommand{\invsible}[1]{\textcolor{black!2}{#1}}
+%
+\definecolor{myteal}{rgb}{0.21, 0.46, 0.53}
+
+\usepackage[position=bottom]{subfig}
+
+\usepackage{tabularx}
+\usepackage{booktabs}% http://ctan.org/pkg/booktabs
+\newcommand{\tabitem}{\llap{\tiny$\blacksquare$}~~}
+
+% handling lists
+\usepackage{enumitem}
+
+\usepackage{multimedia}
+
+% tcolorbox
+\usepackage[skins,theorems]{tcolorbox}
+\tcbset{highlight math style={colback=mLightBrown!20,colframe=black!2,sharp corners},bottom=2pt,top=2pt}
+\tcbset{left skip={-.01\linewidth}, colback=mLightBrown!20,colframe=black!2,sharp corners,left=0pt,right=0pt}
+
+
+% references
+\usepackage[backend=biber,style=authoryear]{biblatex}
+%\usepackage[backend=biber,style=alphabetic]{biblatex}
+\bibliography{/home/paul/Workspace/build/biblio}
+\usepackage{bibentry}
+\newcommand{\mycite}[2]{\footnotetext[#1]{\emph{\tiny{\citeauthor{#2},\,\citeyear{#2},}}\,\tiny{\citefield{#2}{title}}}}
+
+%\renewcommand{\cite}[1]{\textcolor{myteal}{[\citeauthor{#1},\,\citeyear{#1}]}}%
+%\newcommand{\mycite}[1]{\textcolor{myteal}{\cite{#1}}}%
+\AtBeginEnvironment{frame}{\setcounter{footnote}{0}}
+
+\usepackage{hyperref}
+
+
+\graphicspath{{figs/}{examples/}{/home/paul/Workspace/data/standard_test_images}}
+
+
+
+
+% add a sommaire
+%\makeatletter
+%\setbeamertemplate{headline}{%
+%  \begin{beamercolorbox}[colsep=1.5pt]{upper separation line head}
+%  \end{beamercolorbox}
+%  \begin{beamercolorbox}{section in head/foot}
+%    \vskip2pt\insertnavigation{\paperwidth}\vskip2pt
+%  \end{beamercolorbox}%
+%  \begin{beamercolorbox}[colsep=1.5pt]{lower separation line head}
+%  \end{beamercolorbox}
+%}
+%\makeatother
+
+\setbeamertemplate{theorem begin}
+{%
+  \inserttheoremheadfont% \bfseries
+  \inserttheoremname \inserttheoremnumber
+  \ifx\inserttheoremaddition\@empty\else\ (\inserttheoremaddition)\fi%
+  \inserttheorempunctuation
+  \normalfont
+}
+\setbeamertemplate{theorem end}{%
+  % empty
+}
+\makeatother
+
+\setbeamercolor{section in head/foot}{fg=normal text.bg, bg=structure.fg}
+
+
+
+\title{Optimisation Numérique et Sciences des Données}
+\subtitle{Sciences des données -- Introduction aux réseaux de neurones}
+\author{Paul Catala (CRAN, UL) \hfill Master Ingénierie des Systèmes Complexes M2 ISC 925}
+%\date{Postdoctorant à l'université d'Osnabrück, Allemagne}
+\date{paul.catala(at)univ-lorraine.fr \hfill Semestre 9 -- 2024 \\}
+
+%\usepackage{uoslogo}
+%\titlegraphic{\uoslogored{4cm}}
+
+
+
+\begin{document}
+\maketitle
+
+
+
+\section{Introduction}
+
+\begin{frame}
+\frametitle{Programme du cours}
+\tableofcontents[currentsection]
+\end{frame}
+
+\begin{frame}
+\frametitle{Contexte: apprentissage statistique}
+
+\begin{itemize}[label=\tiny$\blacksquare$]
+	\item Données \alert{labellisées}
+	\eq{
+		(\xx_i,y_i) \in \RR^n \times \Yy
+	}
+	
+	\item \alert{Apprentissage supervisé}: trouver une fonction \alert{paramétrée} $f_\theta : \RR^n \to \Yy$ t.q.
+	\eq{
+		f_\theta(\xx_i) = y_i
+	}
+	où $\theta$ est un vecteur des \alert{paramètres} (qui caractérisent le classifieur).
+	
+	\pause
+	\item Pour des tâches de classification binaire ($\Yy = \{0,1\}$), nous avons vu les \alert{machines à vecteurs de support}: étant donnée une transformation $\phi:\RR^n \to \RR^m$,
+	\eq{
+		f_\theta(\xx) = \sgn(\abold^\top \phi(\xx) + b ) \qquad (\theta = (\abold,b) \in \RR^{m+1})
+	}
+	où le $\theta$ est choisi de manière à \alert{maximiser la marge} par rapport aux données (transformées) $\phi(\xx_i)$
+		
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Contexte: apprentissage statistique}
+
+\begin{itemize}[label=\tiny$\blacksquare$]
+	\item L'apprentissage statistique ne se réduit pas à de la classification binaire supervisée
+	
+	\item \textbf{Classication supervisée, semi-supervisée, non supervisée}: méthode des K plus proches voisins ($K$-means), forêt d'arbres décisionnels (random forest), SVM multi-classes, \alert{réseaux de neurones}
+	
+	\item \textbf{Régression}
+\end{itemize}
+\end{frame}
+
+
+
+
+\begin{frame}
+\frametitle{Réseau de neurones}
+
+\newlength{\spacing}
+\setlength{\spacing}{1.5cm}
+
+\vspace{-1cm}
+
+\centering
+
+\begin{tikzpicture}[every node/.style={circle,minimum width = .5cm}]
+
+% first layer
+\node[draw] (n10) at (0,0) {$x_1$};
+\node[draw,below=5pt of n10] (n11) {$x_2$};
+\node[draw,below=5pt of n11] (n12) {$x_3$};
+\node[draw,below=5pt of n12] (n13) {$x_4$};
+
+
+% second layer
+\node[draw,above right = 0.77cm and \spacing of n10] (n20) {};
+\node[draw,below=5pt of n20] (n21) {};
+\node[draw,below=5pt of n21] (n22) {};
+\node[draw,below=5pt of n22] (n23) {};
+\node[draw,below=5pt of n23] (n24) {};
+\node[draw,below=5pt of n24] (n25) {};
+\node[draw,below=5pt of n25] (n26) {};
+\node[draw,below=5pt of n26] (n27) {};
+
+% connections
+\draw[] (n10) -- (n20);
+\draw[] (n10) -- (n21);
+\draw[] (n10) -- (n22);
+\draw[] (n10) -- (n23);
+\draw[] (n10) -- (n24);
+\draw[] (n10) -- (n25);
+\draw[] (n10) -- (n26);
+\draw[] (n10) -- (n27);
+%
+\draw[] (n11) -- (n20);
+\draw[] (n11) -- (n21);
+\draw[] (n11) -- (n22);
+\draw[] (n11) -- (n23);
+\draw[] (n11) -- (n24);
+\draw[] (n11) -- (n25);
+\draw[] (n11) -- (n26);
+\draw[] (n11) -- (n27);
+%
+\draw[] (n12) -- (n20);
+\draw[] (n12) -- (n21);
+\draw[] (n12) -- (n22);
+\draw[] (n12) -- (n23);
+\draw[] (n12) -- (n24);
+\draw[] (n12) -- (n25);
+\draw[] (n12) -- (n26);
+\draw[] (n12) -- (n27);
+%
+\draw[] (n13) -- (n20);
+\draw[] (n13) -- (n21);
+\draw[] (n13) -- (n22);
+\draw[] (n13) -- (n23);
+\draw[] (n13) -- (n24);
+\draw[] (n13) -- (n25);
+\draw[] (n13) -- (n26);
+\draw[] (n13) -- (n27);
+
+
+% third layer
+\node[draw,below right = 0.3cm and \spacing of n20] (n30) {};
+\node[draw,below=5pt of n30] (n31) {};
+\node[draw,below=5pt of n31] (n32) {};
+\node[draw,below=5pt of n32] (n33) {};
+\node[draw,below=5pt of n33] (n34) {};
+\node[draw,below=5pt of n34] (n35) {};
+
+% connections
+\draw[] (n20) -- (n30);
+\draw[] (n20) -- (n31);
+\draw[] (n20) -- (n32);
+\draw[] (n20) -- (n33);
+\draw[] (n20) -- (n34);
+\draw[] (n20) -- (n35);
+%
+\draw[] (n21) -- (n30);
+\draw[] (n21) -- (n31);
+\draw[] (n21) -- (n32);
+\draw[] (n21) -- (n33);
+\draw[] (n21) -- (n34);
+\draw[] (n21) -- (n35);
+%
+\draw[] (n22) -- (n30);
+\draw[] (n22) -- (n31);
+\draw[] (n22) -- (n32);
+\draw[] (n22) -- (n33);
+\draw[] (n22) -- (n34);
+\draw[] (n22) -- (n35);
+%
+\draw[] (n23) -- (n30);
+\draw[] (n23) -- (n31);
+\draw[] (n23) -- (n32);
+\draw[] (n23) -- (n33);
+\draw[] (n23) -- (n34);
+\draw[] (n23) -- (n35);
+%
+\draw[] (n24) -- (n30);
+\draw[] (n24) -- (n31);
+\draw[] (n24) -- (n32);
+\draw[] (n24) -- (n33);
+\draw[] (n24) -- (n34);
+\draw[] (n24) -- (n35);
+%
+\draw[] (n25) -- (n30);
+\draw[] (n25) -- (n31);
+\draw[] (n25) -- (n32);
+\draw[] (n25) -- (n33);
+\draw[] (n25) -- (n34);
+\draw[] (n25) -- (n35);
+%
+\draw[] (n26) -- (n30);
+\draw[] (n26) -- (n31);
+\draw[] (n26) -- (n32);
+\draw[] (n26) -- (n33);
+\draw[] (n26) -- (n34);
+\draw[] (n26) -- (n35);
+%
+
+\draw[] (n27) -- (n30);
+\draw[] (n27) -- (n31);
+\draw[] (n27) -- (n32);
+\draw[] (n27) -- (n33);
+\draw[] (n27) -- (n34);
+\draw[] (n27) -- (n35);
+
+
+% fourth layer
+\node[draw,above right = 0.3cm and \spacing of n30] (n40) {};
+\node[draw,below=5pt of n40] (n41) {};
+\node[draw,below=5pt of n41] (n42) {};
+\node[draw,below=5pt of n42] (n43) {};
+\node[draw,below=5pt of n43] (n44) {};
+\node[draw,below=5pt of n44] (n45) {};
+\node[draw,below=5pt of n45] (n46) {};
+\node[draw,below=5pt of n46] (n47) {};
+
+
+% connections
+\draw[] (n30) -- (n40);
+\draw[] (n30) -- (n41);
+\draw[] (n30) -- (n42);
+\draw[] (n30) -- (n43);
+\draw[] (n30) -- (n44);
+\draw[] (n30) -- (n45);
+\draw[] (n30) -- (n46);
+\draw[] (n30) -- (n47);
+%
+\draw[] (n31) -- (n40);
+\draw[] (n31) -- (n41);
+\draw[] (n31) -- (n42);
+\draw[] (n31) -- (n43);
+\draw[] (n31) -- (n44);
+\draw[] (n31) -- (n45);
+\draw[] (n31) -- (n47);
+%
+\draw[] (n32) -- (n40);
+\draw[] (n32) -- (n41);
+\draw[] (n32) -- (n42);
+\draw[] (n32) -- (n43);
+\draw[] (n32) -- (n44);
+\draw[] (n32) -- (n45);
+\draw[] (n32) -- (n46);
+\draw[] (n32) -- (n47);
+%
+\draw[] (n33) -- (n40);
+\draw[] (n33) -- (n41);
+\draw[] (n33) -- (n42);
+\draw[] (n33) -- (n43);
+\draw[] (n33) -- (n44);
+\draw[] (n33) -- (n45);
+\draw[] (n33) -- (n46);
+\draw[] (n33) -- (n47);
+%
+\draw[] (n34) -- (n40);
+\draw[] (n34) -- (n41);
+\draw[] (n34) -- (n42);
+\draw[] (n34) -- (n43);
+\draw[] (n34) -- (n44);
+\draw[] (n34) -- (n45);
+\draw[] (n34) -- (n46);
+\draw[] (n34) -- (n47);
+%
+\draw[] (n35) -- (n40);
+\draw[] (n35) -- (n41);
+\draw[] (n35) -- (n42);
+\draw[] (n35) -- (n43);
+\draw[] (n35) -- (n44);
+\draw[] (n35) -- (n45);
+\draw[] (n35) -- (n46);
+\draw[] (n35) -- (n47);
+%
+
+% output layer
+\node[draw,below right = 2cm and \spacing of n40] (n50) {$y$};
+%\node[below=5pt of n50] (n51) {$y_2$};
+%\node[below=5pt of n51] (n52) {$y_3$};
+
+
+% connections
+\draw[] (n40) -- (n50);
+%\draw[] (n40) -- (n51);
+%\draw[] (n40) -- (n52);
+%
+\draw[] (n41) -- (n50);
+%\draw[] (n41) -- (n51);
+%\draw[] (n41) -- (n52);
+%
+\draw[] (n42) -- (n50);
+%\draw[] (n42) -- (n51);
+%\draw[] (n42) -- (n52);
+%
+\draw[] (n43) -- (n50);
+%\draw[] (n43) -- (n51);
+%\draw[] (n43) -- (n52);
+%
+\draw[] (n44) -- (n50);
+%\draw[] (n44) -- (n51);
+%\draw[] (n44) -- (n52);
+%
+\draw[] (n45) -- (n50);
+%\draw[] (n45) -- (n51);
+%\draw[] (n45) -- (n52);
+%
+\draw[] (n46) -- (n50);
+%\draw[] (n46) -- (n51);
+%\draw[] (n46) -- (n52);
+%
+\draw[] (n47) -- (n50);
+%\draw[] (n47) -- (n51);
+%\draw[] (n47) -- (n52);
+
+
+\begin{scope}[on background layer]
+\node [rectangle, fill=mLightBrown!20, minimum height = 5.6cm, fit={(n10) (n11) (n12) (n13) }, label={[label distance = -23pt]\color{mLightBrown}Couche d'entrée}] (layer-1) {};
+
+\node [rectangle, fill=teal!20, minimum height = 5.6cm, fit={(n20) (n21) (n22) (n23) (n24) (n25) (n26) (n27)}] (layer-2) {};
+
+\node [rectangle, fill=teal!20, minimum height = 5.6cm, fit={(n30) (n31) (n32) (n33) (n34) (n35) }, label={[label distance = -25pt]\color{teal}Couches latentes}] (layer-3) {};
+
+\node [rectangle, fill=teal!20, minimum height = 5.6cm, fit={(n40) (n41) (n42) (n43) (n44) (n45) (n46) (n47)}] (layer-4) {};
+
+\node [rectangle, fill=purple!20, minimum height = 5.6cm, fit={(n50)}, label={[label distance = -25pt]\color{purple}Couche de sortie}] (layer-5) {};
+\end{scope}
+
+\draw[-latex,thick] ([yshift=-.3cm]layer-1.south west) -- ([yshift=-.3cm]layer-5.south east) node[rectangle,midway,fill=black!2] {$y = f_\theta(x)$};
+
+\end{tikzpicture}
+
+Objectif: minimiser l'erreur $\sum_j \ell(f_\theta(x^{(j)}),y^{(j)})$ sur des données $(x^{(j)},y^{(j)})$
+
+Variables: $\sim 10^6$ à $10^9$ paramètres $\theta$
+
+\end{frame}
+
+
+
+
+
+
+%\bibliographystyle{apalike}
+%\printbibliography
+%\bibliography{/export/home/pcatala/Workspace/build/biblio}
+
+\end{document}
