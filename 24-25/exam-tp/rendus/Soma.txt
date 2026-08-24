@@ -1,0 +1,25 @@
+% Soma
+
+1. 1/1 peux pas vérifier
+2. 1/1
+5. 1/1
+6. 0.5/0.5
+7. 0.5/0.5
+8. 1/1
+9. 2/2
+10. 0/0.5 mauvaise compréhension
+11. 0.5/0.5
+12. 0.5/0.5
+13. 0.5/1.5 model mismatch, aucun commentaires
+14. 1/2 mauvaise gestion de la taille. Pour les moindres carrés, pas besoin de recourir à la méthode deconv
+15. 0.5/1 pb d'alignement
+16. 1/1
+17. 1/2 aucun commentaires, résultats faussés par l'absence d'un minimum de régularisation (?)
+18. - 
+19. 1.5/2 explications?
+20. 2/2
+
+Code commenté 0/1
+Rendu conforme 0/1
+
+Note finale 15,5

@@ -1,0 +1,79 @@
+\documentclass[11pt,twoside,a4paper]{book}
+
+%\usepackage{/home/paul/Workspace/build/macros}
+\usepackage{macros}
+
+\usepackage[hmargin=2.5cm,vmargin=2.5cm]{geometry}
+\usepackage{matlab-prettifier}
+\usepackage{listings}
+\lstset{
+	style = Matlab-editor,
+	breaklines = true,
+	basicstyle = \footnotesize\ttfamily,
+	extendedchars = true,
+	frame = single
+}
+
+\usepackage[french]{babel}
+
+\usepackage{hyperref}
+
+\usepackage{multicol}
+
+\usepackage{enumitem}
+
+\usepackage{subfig}
+
+\usepackage{svg}
+
+\usepackage{pgfplots}
+
+\usepackage{dsfont}
+
+% toggle solution
+\usepackage{environ}
+\usepackage{etoolbox}
+
+\newtoggle{print}
+\NewEnviron{hide}{%
+	\iftoggle{print}{\BODY}{}}
+
+\usepackage{fancyhdr}
+\addto\captionsfrench{\renewcommand{\chaptername}{TD}}
+\addto\captionsfrench{\renewcommand\thesection{Exercice~\arabic{chapter}.\arabic{section}}}
+
+% afficher les sous-sous-sections
+\setcounter{secnumdepth}{3}
+
+%\counterwithout{section}{chapter}
+
+\setlength{\parindent}{0cm} \sloppy
+
+\usepackage{titletoc}
+
+\begin{document}
+
+\titlecontents{section}[3em]
+{\vskip 0.5ex}%
+{\thecontentslabel \hspace{0.5cm}}% numbered sections formatting
+{}% unnumbered sections formatting
+{}%
+
+\pagenumbering{roman}
+\include{pagedegarde}
+
+\cleardoublepage
+\tableofcontents
+
+%\toggletrue{print} % comment to hide solutions
+
+\pagenumbering{arabic}
+
+\include{td1/td1-optim}
+\include{td2/td2-optim}
+\include{td3/td3-optim}
+\include{td4/td4-svd}
+\include{td5/td5-tenseurs}
+\include{td6/td6-classif}
+
+\end{document}

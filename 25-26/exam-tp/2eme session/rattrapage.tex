@@ -1,0 +1,168 @@
+\documentclass{article}
+
+\usepackage{/home/paul/Workspace/build/macros}
+
+\title{Devoir maison}
+\author{Paul Catala}
+
+\usepackage[T1]{fontenc}
+
+\usepackage{matlab-prettifier}
+\usepackage{listings}
+\lstset{
+	style = Matlab-editor,
+	breaklines = true,
+	basicstyle = \footnotesize\ttfamily,
+	extendedchars = true,
+	frame = single
+}
+
+\usepackage{geometry}
+\geometry{letterpaper}    
+\usepackage{graphicx}
+
+\usepackage[french]{babel}
+\usepackage{enumitem}
+
+%\newtheorem{exercise}{Exercise}
+
+%\title{Devoir en optimisation numérique -- ISC 962}
+
+\newenvironment{solution}[1][\it{Solution}]{\textcolor{blue}{\textbf{#1. } }}{\textcolor{blue}{$\blacksquare$}}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhead{}
+
+\begin{document}
+
+\begin{minipage}{0.5\textwidth}
+\includegraphics[height=1.6cm]{/home/paul/Workspace/build/logos/fst-couleur}
+\includegraphics[height=1.6cm]{/home/paul/Workspace/build/logos/udl}\\[1ex]
+\end{minipage}
+\hfill
+\begin{minipage}{0.4\textwidth}
+\begin{flushright}
+M2 ISC\\
+2025-2026
+\end{flushright}
+\end{minipage}
+
+\bigbreak
+
+%\noindent Traitement statistique du signal \hfill Master SNIM\\
+%Paul Catala  \hfill 2024/2025
+
+
+
+
+\begin{center}
+\textbf{\Large Devoir à rendre \\ \: \\ Session 2: \guillemotleft Pratique de l'optimisation numérique et sciences des données \guillemotright}
+
+\hrulefill
+
+\end{center}
+
+
+\medbreak
+
+\paragraph{Livrables}: Il est demandé de me remettre par mail (paul.catala@univ-lorraine.fr) au plus tard le \textbf{vendredi 13 février 2026 à 18h} un code matlab et un compte-rendu au format PDF du devoir ci-dessous.
+
+\paragraph{Consignes}: Le compte-rendu pourra être manuscrit (puis scanné ou photographié) ou bien dactlyographié au choix. Indiquez à chaque fois le numéro des questions. Le code matlab sera remis sous la forme d'un fichier zip contenant:
+\begin{itemize}
+\item[-] un script matlab contenant le code principal;
+\item[-] les fonctions matlab additionnelles demandées dans le sujet.
+\end{itemize}
+
+\noindent Le code devra être commenté. Le fichier principal sera divisé en sections correspondant aux sous-parties du sujet
+
+\noindent Indiquez les difficultés que vous avez rencontrées, et vos tentatives pour les surmonter; signalez vos sources d'information et les outils utilisés.
+
+\newpage
+
+\pagenumbering{arabic}
+
+L'objectif de ce devoir est de mettre en oeuvre des méthodes d'optimisation par descente de gradient, en particulier, d'implémenter vous-même des méthodes itératives de descente en testant plusieurs stratégies de pas et de critère d'arrêt
+
+\section{Méthodes de premier ordre}
+
+On s'intéresse dans un premier temps aux méthodes de descente de gradient.
+
+\subsection{Exemple quadratique}
+
+On considère le problème d'optimisation suivant
+\eq{
+	\min_{x_1,x_2\in \RR} f(x_1,x_2)
+}
+où
+\eq{
+	f_\eta(x_1,x_2) = \frac{1}{2}x_1^2 + \frac{\eta}{2}x_2^2 - x_1 -x_2, \quad \eta > 0.
+}
+\begin{enumerate}
+	\item Donner l'expression de $\nabla f_\eta(x_1,x_2)$.
+	\item Donner un minimiseur de $f_\eta$, et son minimum. La fonction $f_\eta$ a-t-elle un minimiseur unique?
+	\item Ecrire une fonction \texttt{objectif(x1,x2,eta)} qui renvoie la valeur de $f_\eta(x_1,x_2)$ pour $\eta$, $x_1$ et $x_2$ donnés.
+	\item Ecrire une fonction \texttt{gradient(x1,x2,eta)} qui renvoie la valeur de $\nabla f_\eta(x_1,x_2)$ pour $\eta$, $x_1$ et $x_2$ donnés.
+	\item En vous aidant de la documentation pour la fonction \texttt{contourf}, afficher la fonction $f_5$ ($\eta = 5$) sur la grille $[-1, 1] \times [-1, 1]$, avec par exemple 100 points sur chaque axe. On pourra générer les points $(x_1,x_2)$ de cette grille à l'aide de la commande:
+\begin{lstlisting}
+axe1 = linspace(-1,1,100);
+axe2 = linspace(-1,1,100);
+[X2,X1] = meshgrid(axe1,axe2);
+\end{lstlisting}
+	\item Rappeler, sous forme de pseudo-code, le principe d'un algorithme de descente de gradient.
+	\item Descente de gradient à pas constant:
+	\begin{enumerate}
+		\item Implémenter un algorithme qui effectue $N=50$ itérations de descente de gradient avec pas constant à partir du point initial $x^{(0)} = (0,0)$.
+		\item Tracer les itérées (commande \texttt{plot}) sur la même figure que la fonction objectif (commande \texttt{contourf}).
+		\item Tracer (à part) l'évolution des valeurs de
+		\eq{
+			\frac{\abs{f_5(x^{(k+1)}) - f_5(x^{(k)})}}{\abs{f_5(x^{(k)})}}
+			\qetq
+			\frac{\norm{\nabla f_5(x^{(k)})}}{\norm{\nabla f_5(x^{(0)})}}
+		}
+		au cours des itérations.
+		\item Modifier l'algorithme de sorte qu'il s'arrête dès que le premier critère ci-dessus passe en dessous du seuil $\eps = 10^{-2}$.
+		\item Tester plusieurs valeurs de pas.
+	\end{enumerate}
+\end{enumerate}
+
+\subsection{Exemple non quadratique}
+\label{sec:non-quad}
+
+On considère maintenant le problème suivant (tiré de Boyd et Vanderberghe)
+\eq{
+	\min_{x_1,x_2\in \RR} h(x_1,x_2)
+}
+où
+\eq{
+	h(x_1,x_2) = e^{x_1 + 3x_2-0.1} + e^{x_1-3x_2-0.1} + e^{-x_1-0.1}.
+}
+
+\begin{enumerate}	
+	\setcounter{enumi}{7}
+	\item Donner l'expression de $\nabla h(x_1,x_2)$.
+	\item Ecrire des fonctions \texttt{objectif2(x1,x2}) et \texttt{gradient2(x1,x2)} qui renvoient les valeurs de $h(x_1,x_2)$ et $\nabla h(x_1,x_2)$ respectivement, pour $x_1$ et $x_2$ donnés.
+	\item Afficher la fonction objectif sur la grille $[-2,0.5]\times[-0.5,0.5]$ avec par exemple 100 points sur chaque axe.
+	\item Descente avec backtracking:
+	\begin{enumerate}
+		\item Implémenter un algorithme qui effectue $N=50$ itérations de descente de gradient avec pas constant à partir du point initial $x^{(0)} = (0,0)$.
+		\item Tracer la fonction objectif (\texttt{contourf}) et les itérées obtenues sur la même figure.
+		\item Rappeler sous forme de pseudo-code, le principe d'une recherche du pas de descente par backtracking.
+		\item Modifier l'algorithme pour intégrer une étape de backtracking, en prenant comme paramètre de backtracking par exemple $s=0.3$ et $\eta = 0.5$.
+		\item Tracer les itérées obtenues sur la même figure que précédemment. Commenter.
+		
+	\end{enumerate}
+\end{enumerate}
+
+\section{Méthodes de deuxième ordre}
+
+On utilise dans cette section le méme exemple que dans la section~\ref{sec:non-quad}.
+\begin{enumerate}
+	\setcounter{enumi}{11}
+	\item Calculer la Hessienne de $h$.
+	\item Rappeler sous forme de pseudo-code les principes des méthodes de Newton et de quasi-Newton.
+	\item Implémenter l'algorithme de Newton avec pas constant pour ce problème, en utilisant $x^{(0)} = (0,0)$ comme point inital. Tracer les itérées.
+	\item Comparer avec les résultats de la descente de gradient obtenus dans la section précédente.
+\end{enumerate}
+
+\end{document}

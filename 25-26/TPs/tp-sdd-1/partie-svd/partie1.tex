@@ -1,0 +1,56 @@
+\chapter{Décompositions matricielles}
+
+
+\section{Décomposition en valeurs singulières (SVD)}
+
+Charger une image monochromatique dans Matlab :
+\begin{lstlisting}
+X = double(imread('cameraman.tif'));
+X = X(:,1:220);
+\end{lstlisting}
+
+Pour cette matrice :
+\begin{enumerate}
+\item Visualiser les données à l'aide de la fonction \lstinline{imagesc}. Utiliser \lstinline{colorbar}  pour montrer la gamme de couleurs. 
+Choisir la gamme << niveaux de gris >> (\lstinline{'gray'}) avec la fonction \lstinline{colormap}.
+\item Calculer la SVD  de $\mathbf{X} \in \mathbb{R}^{m\times n}$ à l'aide de la fonction \lstinline{svd}.  Tracer la courbe de valeurs singulières avec la fonction \lstinline{plot}. Vérifier l'orthonormalité de $\mathbf{U}$ et $\mathbf{V}$.
+
+\item Calculer les valeurs propres de la matrice $\mathbf{X}^{\top} \mathbf{X}$ (fonction \lstinline{eig}). Vérifier que les valeurs propres sont les carrés des valeurs singulières $\sigma_k$ de $\mathbf{X}$.
+
+\end{enumerate}
+
+\section{Approximations de faible rang}
+
+\begin{enumerate}
+\item Pour quelques valeurs de $r$  ($r=2,5,20,80$), calculer la meilleure approximation de rang $r$ selon la formule suivante (\emph{SVD << tronquée >>}) :
+\[
+\mathbf{X}_r = \mathbf{U}_{:,1:r} \mathbf{\Sigma}_{1:r,1:r} \mathbf{V}_{:,1:r}^{\top},
+\]
+où $\mathbf{U}$, $\mathbf{\Sigma}$, $\mathbf{V}$ sont les facteurs  de la SVD. Les matrices $\mathbf{U}_{:,1:r}$ et $\mathbf{V}_{:,1:r}$ sont-elles orthonormales?
+
+Pour chaque $r$, afficher l'approximation avec \texttt{imagesc}. Que se passe-t-il lorsqu'on augmente le rang de l'approximation ?
+
+\item Pour chaque $r=1,...,80$, calculer l'erreur d'approximation
+\[
+\varepsilon_r = \|\mathbf{X}  - \mathbf{X}_r \|_F,
+\]
+où   $\|\cdot\|_F$  est la norme de Frobenius. Utiliser la fonction \texttt{norm} de MATLAB.
+
+\item Calculer les valeurs suivantes:
+\[
+\delta_{r} = \sqrt{\sum\limits_{k=r+1}^{\min(n,m)} \sigma_k^2}
+\]
+et  comparer (en utilisant  \texttt{plot}) avec les $\varepsilon_r$ obtenues pendant l'étape précédente.
+
+
+\item Vérifier que $\mathbf{X}_r = \mathbf{U} \begin{bmatrix} \mathbf{\Sigma}_{1:r,1:r} & \bm{0} \\  \bm{0} & \bm{0} \end{bmatrix} \mathbf{V}^\top$. En déduire par le calcul que $\epsilon_r = \delta_r$ (on rappelle que $\norm{\mathbf{X}}_F = \sqrt{\Tr(\mathbf{X}^\top \mathbf{X})}$).
+
+%\subsection{Cas bruité}
+
+%\begin{enumerate}
+%\item Ajouter du bruit blanc gaussien à l'image $\mathbf{X}$
+%\item 
+%\end{enumerate}
+
+
+\end{enumerate}

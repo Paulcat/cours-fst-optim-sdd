@@ -1,0 +1,40 @@
+\documentclass[11pt,twoside,a4paper]{article}
+
+%\usepackage{/home/paul/Workspace/build/macros}
+\usepackage{macros}
+
+\usepackage[hmargin=2.5cm,vmargin=2.5cm]{geometry}
+\usepackage{matlab-prettifier}
+\usepackage{listings}
+\lstset{
+	style = Matlab-editor,
+	breaklines = true,
+	basicstyle = \footnotesize\ttfamily,
+	extendedchars = true,
+	frame = single
+}
+
+\usepackage[french]{babel}
+\usepackage{enumitem}
+
+% afficher les sous-sous-sections
+\setcounter{secnumdepth}{3}
+
+\setlength{\parindent}{0cm} \sloppy
+
+\begin{document}
+
+\pagenumbering{roman}
+\include{pagedegarde}
+
+\cleardoublepage
+\tableofcontents
+\newpage
+
+Un live script Matlab \texttt{sdd\_tp2.mlx} avec l'énoncé est également fourni parmi les fichiers du tp.
+
+\pagenumbering{arabic}
+\input{partie-data/partie1}
+\input{partie-svm/partie2}
+\input{partie-bonus/partie3}
+\end{document}

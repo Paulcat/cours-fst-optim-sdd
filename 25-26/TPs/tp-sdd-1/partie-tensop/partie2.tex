@@ -1,0 +1,78 @@
+\chapter{Manipulations tensorielles}
+
+\section{Opérations de base}
+Les données pour cette partie de TD sont stockées dans le fichier \lstinline{td_tenseurs.mat} (elles peuvent être chargées avec \lstinline{load}).
+
+Les données chargées contiennent un tenseur (un tableau multidimensionnel) $\mathcal{X} \in \mathbb{R}^{I \times J\times K}$.
+\begin{enumerate}
+\item Vectoriser le tenseur  $\mathcal{X}$ (transformer le tenseur en  vecteur $\textrm{vec}\, \mathcal{X}$).% : {\tt X(:)}. 
+\item Construire un tenseur $\mathcal{Y}$ à partir du vecteur $[1,2, \ldots, 24]$ de la même taille en utilisant la fonction \texttt{reshape}.
+%\begin{lstlisting}
+%Y = reshape(1:24, [size(X,1), size(X,2),size(X,3)]);
+%\end{lstlisting}
+Les tenseurs $\mathcal{X}$ et  $\mathcal{Y}$, sont-ils différents?
+
+\item Trouver toutes les tranches frontales ($\mathcal{X}_{:,:,k}$). S'il est nécessaire, utiliser la fonction {\tt squeeze} pour obtenir les matrices.
+\end{enumerate}
+
+\section{Dépliement, indexation}
+\begin{enumerate}
+\item Calculer le dépliement  $\mathbf{X}_{(1)}$ du tenseur $\mathcal{X}$ selon le mode $1$ : 
+\begin{lstlisting}
+X1 = reshape(X, [size(X,1), size(X,2)*size(X,3)]);
+\end{lstlisting}
+
+Quel est le lien entre $\mathbf{X}_{(1)}$ et les tranches frontales?
+\item Calculer une permutation des indices du tenseur $\mathcal{X}$ :
+\begin{lstlisting}
+Z = permute(Z,[1,3,2]);
+\end{lstlisting}
+Quelle est la différence entre :
+\begin{itemize}
+\item les tenseurs $\mathcal{Z}$ et $\mathcal{X}$?
+\item les dépliements $\mathbf{X}_{(1)}$ et $\mathbf{Z}_{(1)}$?
+\end{itemize}
+
+\item Vérifier  que toutes les fibres $\mathcal{X}_{:,j,k}$ sont les colonnes de $\mathbf{X}_{(1)}$ et $\mathbf{Z}_{(1)}$. Dans quel ordre sont-elles ordonnées?
+\begin{itemize}
+\item $(1,1) \to (1,2) \to (2,1) \to  (2,2) \to (3,1) ...$
+\item ou $(1,1) \to (2,1) \to (3,1) \to ... \to (1,2) \to (2,2)\to (3,2)  ...$?
+\end{itemize}
+
+
+\item Calculer le dépliement  $\mathbf{X}_{(2)}$ du tenseur $\mathcal{X}$ selon le mode $2$ : 
+\begin{lstlisting}
+X2 = reshape(permute(X,[2,1,3]), [size(X,2), size(X,1)*size(X,3)]);
+\end{lstlisting}
+
+Quel est le  lien entre $\mathbf{X}_{(2)}$ et tranches frontales? 
+Et avec les tranches laterales ($\mathcal{X}_{:,j,:}$)?
+\end{enumerate}
+
+\section{Produits tensoriels}
+Le fichier \texttt{td\_tenseurs.mat} contient trois matrices $A$, $B$ et $C$. Ces données correspondant à des données de spectroscopie de fluorescence (voir exercice suivant), mais nous les utilisons ici simplement pour réaliser quelques opérations tensorielles.
+\begin{enumerate}
+\item Construire le tenseur $\mathcal{T} \in \mathbb{R}^{I \times J \times K}$ comme 
+\[
+\mathcal{T} = \sum_{k=1}^{R} \mathbf{a}_k \circ  \mathbf{b}_k  \circ  \mathbf{c}_k 
+\]
+Pour calculer le  produit extérieur $\circ$, il faut utiliser la fonction suivante :
+\begin{lstlisting}
+function X = outerprod(A, B)
+%function X = outerprod(A, B)
+% A, B : Tenseurs
+% X : Résultat du produit extérieur.
+
+sA = size(A); sA = sA(sA>1);
+sB = size(B); sB = sB(sB>1);
+sX = [sA sB];
+
+X = reshape(kron(B(:),A(:)), sX);
+\end{lstlisting}
+fournie dans les fichiers du TP. Quelle opération effectue la commande \texttt{kron}?
+
+\item   Calculer le dépliage $\mathbf{T}_{(1)}$ et une matrice $\mathbf{Y} = \mathbf{A} (\mathbf{C} \odot \mathbf{B})^{\top}$, où $\odot$ est le produit Khatri-Rao (fonction {\tt kr}). Les matrices $\mathbf{Y}$ et  $\mathbf{T}_{(1)}$, sont-elles différentes?
+
+\item Verifier que $(\mathbf{C} \odot \mathbf{B})^{\top}(\mathbf{C} \odot \mathbf{B}) = (\mathbf{C}\mathbf{C}^{\top}) {.\ast} (\mathbf{B}\mathbf{B}^{\top})$, où $.\ast$ est le produit de Hadamard.
+
+\end{enumerate}

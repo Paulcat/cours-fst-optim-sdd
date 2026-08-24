@@ -1,0 +1,22 @@
+Nafti
+
+1. 0.5/0.5
+2. 0.5/0.5
+3. 1.5/2 % pas besoin de centrer
+4. 1/1
+5. 0.5/1 % -1/1
+6. 0.5/0.5
+7. 0/0.5 % vraiment bizarre...
+8. 1/1
+9. 1/1
+10. 1.5/2 % commentaire décalé "RBF"
+11. 1.5/2 % donner le sigma exact
+12. 1/1
+13. 1.5/2 % explication des figures
+14. 1.5/3 % manque recadrage + classe + conclusion décalée avec le résultat
+15. 0.5/3 % ecoc pas le but, sans source
+
+% bonne présentation, bonne analyse +1
+% pas de sources, pas de difficultés -2
+
+Total: 13

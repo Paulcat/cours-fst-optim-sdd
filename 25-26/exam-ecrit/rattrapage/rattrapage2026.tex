@@ -1,0 +1,400 @@
+\documentclass[11pt]{article}
+
+\usepackage{/home/paul/Workspace/build/macros}
+
+
+\usepackage{geometry}
+\geometry{margin=0.9in}
+\geometry{letterpaper}    
+\usepackage{graphicx}
+
+\usepackage{subfig}
+
+\usepackage{pgfplots}
+
+\usepackage{enumitem}
+
+\setlist[enumerate,1]{%
+	label=\arabic*.,
+}
+\newlist{inlinelist}{enumerate*}{1}
+\setlist*[inlinelist,1]{%
+  label=(\alph*),
+}
+
+\usepackage[francais]{babel}
+
+\usepackage{matlab-prettifier}
+\usepackage{listings}
+\lstset{
+	style = Matlab-editor,
+	breaklines = true,
+	basicstyle = \footnotesize\ttfamily,
+	extendedchars = true,
+	frame = single
+}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhead{}
+
+\usepackage[style=alphabetic]{biblatex}
+%\usepackage[backend=biber,style=alphabetic]{biblatex}
+\bibliography{/home/paul/Workspace/build/biblio}
+
+%\newtheorem{exercise}{Exercice}
+
+%\newenvironment{solution}[1][\it{Solution}]{\textcolor{blue}{\textbf{#1. } }}{\textcolor{blue}{$\blacksquare$}}
+
+\usepackage{lipsum}
+
+\fancyfoot{} % clear all footer fields position of footer line
+\fancyfoot[RE,LO]{\hrulefill \\ Session2.ONSDD.2526 \hfill \textbf{\thepage /\textcolor{red}{4}}}
+
+
+\begin{document}
+
+\begin{minipage}{0.5\textwidth}
+\includegraphics[height=1.6cm]{/home/paul/Workspace/build/logos/fst-couleur}
+\includegraphics[height=1.6cm]{udl}\\[1ex]
+\end{minipage}
+\hfill
+\begin{minipage}{0.4\textwidth}
+\begin{flushright}
+M2 ISC\\
+Paul Catala\\
+El-Hadi Djermoune\\
+13 mars 2026
+\end{flushright}
+\end{minipage}
+
+\bigbreak
+
+%\noindent Traitement statistique du signal \hfill Master SNIM\\
+%Paul Catala  \hfill 2024/2025
+
+
+
+
+\begin{center}
+\textbf{\Large Examen Seconde Session \\ \guillemotleft Optimisation Numérique et Sciences des Données \guillemotright}
+
+Durée 2 heures \bullet{} Feuille manuscrite au format A4 autorisée \bullet{} Calculatrice non autorisée
+
+\hrulefill
+\end{center}
+
+
+
+\section{Optimisation}
+
+\subsection{Formulation d'un problème d'optimisation}
+On souhaite déterminer un parallélépipède rectangle de volume unité $(V=1)$ avec une surface $S$ minimale.
+\begin{enumerate}
+	\item Formuler ce problème comme un problème d'optimisation en précisant les variables du problème, le critère et les contraintes.
+	\item Transformer l'expression du critère pour faire apparaître une fonction de deux variables. Que devient le nouveau problème d'optimisation?
+	\item Représenter le critère dans le plan d’une seule variable, en fixant une valeur pour l’autre variable. Donner sur le graphe les valeurs du critère pour quelques valeurs de la variable libre.
+\end{enumerate}
+
+\subsection{Méthode de Newton}
+Soit un problème d'optimisation à deux variables $x$ et $y$ dont le critère (convexe) est donné par l'expression suivante:
+\eq{
+	f(x,y) = \frac{1}{2}x^2 + \frac{9}{2}y^2 -x - 18y +20.
+}
+
+\begin{enumerate}
+	\item Expliquer pourquoi la convexité est une propriété importante en optimisation.
+	\item Donner l'expression du gradient $\mathbf{J}(x,y)$ du critère et calculer le.
+	\item Donner l'expression de la matrice Hessienne $\mathbf{H}(x,y)$ du critère et calculer la.
+	\item Que vaut le minimiseur? Que vaut le minimum du critère?
+	\item En considérant que l'algorithme de Newton est initialisé à des valeurs quelconques $x_0$ et $y_0$, dérouler cet algorithme pour déterminer les valeurs suivantes notées $x_1$ et $y_1$ en expliquant vos calculs.
+	\item Que constatez-vous? Commenter.
+\end{enumerate}
+
+
+\section{Classification}
+
+\subsection{Séparateur linéaire}
+On considère un jeu de données constitué de $8$ échantillons dans $\RR^2$, labellisés positivement et négativement:
+	\begin{itemize}
+		\item[-] classe $+1$ : $(1,2)$, $(3/2,3)$, $(3,2)$, $(3,4)$
+		\item[-] classe $-1$ : $(1,0)$, $(2,1)$, $(3,0)$, $(2,-1)$
+	\end{itemize}
+	
+\begin{enumerate}
+	\item Représenter les observations sur la Figure \ref{fig:jeu-1} en utilisant 2 couleurs (ou 2 formes) différentes pour distinguer les classes.
+	\item Représenter l'hyperplan optimal au sens des SVM. Donner son équation et calculer sa marge.
+	\item Quels sont les vecteurs de support?
+\end{enumerate}
+
+\subsection{Astuce du noyau}
+On considère un nouveau jeu de données, constitué de $4$ échantillons étiquetés positivement: $(2,2)$, $(2,-2)$, $(-2,-2)$, $(-2,2)$ et $4$ échantillons étiquetés négativement: $(1,1)$, $(1,-1)$, $(-1,-1)$, $(-1,1)$.
+
+\begin{enumerate}
+	\item Représenter ces observations sur la Figure \ref{fig:jeu-2} avec deux couleurs différentes. Les classes sont-elles linéairement séparables?
+	
+	\item Expliquer en quelques lignes le principe de l'astuce du noyau.
+	
+	\item On considère la fonction de redescription suivante:
+	\eq{
+		\phi(\mathbf{x}) = \left\{\begin{array}{ll}
+			(4-x_2 + \abs{x_1-x_2} + 1, 4-x_1 + \abs{x_1-x_2} + 1) &\text{si}\;\; x_1^2 + x_2^2 > 4\\
+			(x_1,x_2) &\text{sinon}
+			\end{array}\right.
+	}
+	Calculer les coordonnées des échantillons dans l'espace de redescription et les représenter en Figure \ref{fig:jeu-t} en utilisant les mêmes couleurs qu'en 1.
+	
+	\item Tracer sur la même figure l'hyperplan optimal au sens des SVM, donner son équation et calculer sa marge.
+	
+	\item Quelle est la classe attribuée à un échantillon de coordonnée $(6,6)$ dans l'espace d'origine?
+	
+	\item Donner un exemple d'une autre fonction de redescription $\psi : \RR^2 \to \RR^3$ qui aurait pu être utilisée pour classifier ces données.
+\end{enumerate}
+
+
+
+\section{Décompositions matricielles}
+Soit $\X$ une matrice réelle de dimensions $m \times n$ avec $m > n$. On définit une matrice $\C = \X\X^\top$.
+\begin{enumerate}
+	\item Les valeurs propres $\lambda_i$ de la matrice $\C$ correspondent-elles aux:
+	\begin{enumerate}
+		\item valeurs singulières $\sigma_i$ de $\X$?
+		\item valeurs singulières de $\C$?
+		\item carrés des valeurs singulières $\sigma_i$ de $\X$?
+	\end{enumerate}
+	\item Les vecteurs propres de la matrice $\C$ correspondent-ils aux:
+	\begin{enumerate}
+		\item vecteurs propres de $\X$?
+		\item vecteurs singuliers droits de $\X$?
+		\item vecteurs singuliers gauches de $\X$?
+	\end{enumerate}
+\end{enumerate}
+Considérons la matrice $\X$ suivante:
+\eq{
+	\X = \begin{bmatrix} 0 & 1\\ 1 & 2\\ 2 & 0\end{bmatrix}.
+}
+
+\begin{enumerate}
+\setcounter{enumi}{2}
+	\item Calculer le produit $\C = \X\X^\top$.
+	\item Quels vecteurs parmi les suivants sont des vecteurs propres de la matrice $\C$? (Rappel: les vecteurs et valeurs propres $(\lambda,\xx$) sont des solutions de $\C\xx = \la\xx$)
+	
+	\begin{inlinelist}
+		\item $\begin{bmatrix} 0 \\ 0 \\ 2\end{bmatrix}$
+		\item $\begin{bmatrix} 1 \\ 0 \\ -1\end{bmatrix}$
+		\item $\begin{bmatrix} 2 \\ -1 \\ \frac{1}{2}\end{bmatrix}$
+		\item $\begin{bmatrix} 3 \\ 3 \\ 3\end{bmatrix}$
+		\item $\begin{bmatrix} 1 \\ 3 \\ 2\end{bmatrix}$
+		\item $\begin{bmatrix} 1 \\ 1 \\ -2\end{bmatrix}$
+	\end{inlinelist}
+	\item Quelles sont les valeurs propres associées? Combien y a-t-il de valeurs propres strictement positives?
+	\item Quel est le rang de la matrice $\C$?
+	\item Trouver les valeurs singulières $\sigma_1 \geq \sigma_2 \geq \sigma_3$ de $\X$.
+	\item Calculer l'approximation $\X_1 = \sigma_1 \uu_1\vv_1^\top$, en utilisant les propriétés suivantes:
+	\begin{itemize}[label=-]
+		\item les vecteurs singuliers gauches doivent être normalisés ($\norm{\uu_k}_2 = 1$);
+		\item les vecteurs singuliers droits peuvent être obtenus par $\vv_k = \frac{1}{\sigma_k}\X^\top \uu_k$ à partir des vecteurs singuliers gauches $\uu_k$ (normalisés) et des valeurs singulières $\sigma_k$. 
+	\end{itemize}
+	\item Calculer l'erreur d'approximation $\norm{X-X_1}_F$, où $\norm{Y}_F$ est la norme de Frobenius:
+	\eq{
+		\norm{Y}_F^2 = \sum_{i,j}(Y(i,j))^2.
+	}
+\end{enumerate}
+
+
+%\section{Classification}
+%On considère un jeu de $8$ données labellisées $(\mathbf{x}^{(i)},y^{(i)})$, avec $\mathbf{x}^{(i)} \in \RR^2$ et $y^{(i)} \in \{-1,+1\}$, pour $i=1,\ldots,8$. Ces données sont représentées en Figure~\ref{fig:donnees}. On cherche à classsifier automatiquement ces données à l'aide de la méthode des machines à vecteurs de support (SVM).
+%\begin{enumerate}
+%	\item On rappelle qu'une SVM classique consiste à résoudre le problème d'optimisation
+%	\eql{\label{eq:svm}
+%		\min_{\mathbf{a} \in \RR^2, \; b\in \RR} \quad \frac{1}{2}\norm{\mathbf{a}}^2 \qscq y^{(i)}(\mathbf{a}^\top \mathbf{x}^{(i)} + b) \geq 1 \quad i=1,\ldots,8
+%	}
+%	\begin{enumerate}
+%		\item Quelles sont les contraintes de ce problème? Expliquer ce qu'elles représentent.
+%		\item Quel est la fonction critère? Expliquer brièvement ce qu'elle représente.
+%	\end{enumerate}
+%	
+%	\item Expliquer pourquoi résoudre le problème \eqref{eq:svm} pour les données considérées ici ne permettra pas d'identifier les deux classes.
+%
+%\item Expliquer le principe de l'astuce du noyau.
+%
+%\item On applique aux données une transformation $\phi:\RR^2\to\RR^2$. Le résultat est montré en Figure~\ref{fig:transformees}. Parmi les quatre transformations $\phi$ proposées ci-dessous, laquelle conduit au résultat observé?
+%
+%\begin{tabular}{ll}
+%\\
+%	(a) $\displaystyle \phi(\mathbf{x}) = \begin{bmatrix} x_1 & x_1^2+x_2^2 \end{bmatrix}$
+%	&
+%	\qquad (b) $\displaystyle \phi(\mathbf{x}) = \begin{bmatrix} x_1 & x_1+2x_2 \end{bmatrix}$\\ \\
+%	(c) $\displaystyle \phi(\mathbf{x}) = \begin{bmatrix} x_2 & x_1^2-x_2^2 \end{bmatrix}$
+%	&
+%	\qquad (c) $\displaystyle \phi(\mathbf{x}) = \begin{bmatrix} x_2 & x_1^2 \end{bmatrix}$
+%	\\ \\
+%\end{tabular}
+%
+%\noindent Indiquer sur la Figure~\ref{fig:transformees} à côté de chaque point la donnée initiale correspondante. 
+%
+%\item Représenter l'hyperplan séparateur optimal sur la Figure~\ref{fig:transformees}. Donner son équation, et déterminer sa marge. Quels sont les vecteurs de support?
+%
+%\item On considère une nouvelle donnée $\mathbf{x}^{(9)} = (-1,-\sqrt{2})$ et $y^{(9)} = -1$. Représenter cette nouvelle donnée sur la Figure~\ref{fig:donnees} (on donne $\sqrt{2}\simeq 1.414$). Cette donnée sera-t-elle correctement classifiée par la SVM à noyau appris sur le jeu de données initial? Justifier votre réponse.
+%
+%\begin{figure}[h]
+%\centering
+%\begin{tikzpicture}
+%\begin{axis}[
+%  %cycle list={
+%  %  only marks,mark=o,draw=red,fill=red,mark size=3pt\\
+%  %  only marks,mark=o,draw=cyan,mark size=3pt\\
+%  %},
+%  %domain=0:360,
+%  %samples=5,
+%  grid,
+%  axis equal,
+%  xtick = {-2,-1,...,2},
+%  ytick = {-2,-1,...,3},
+%  width=300pt,
+%  height=300pt
+%]
+%
+%%\addplot ({(1)*cos(x)},{(1)*sin(x)});
+%%\addplot ({(2*sqrt(2))*cos(x+45)},{(2*sqrt(2))*sin(x+45)});
+%\addplot[only marks,mark=square,draw=cyan,mark size=3pt]( {-2},{-1} );
+%\addplot[only marks,mark=square,draw=cyan,mark size=3pt]( {-2},{2} );
+%\addplot[only marks,mark=square,draw=cyan,mark size=3pt]( {-1},{sqrt(3)} );
+%\addplot[only marks,mark=square,draw=cyan,mark size=3pt]( {2},{-2} );
+%
+%\addplot[only marks,mark=o,draw=red,mark size=3pt]( {1},{0} );
+%\addplot[only marks,mark=o,draw=red,mark size=3pt]( {0},{0} );
+%\addplot[only marks,mark=o,draw=red,mark size=3pt]( {1},{1} );
+%\addplot[only marks,mark=o,draw=red,mark size=3pt]( {0},{-1} );
+%
+%\node[above] at (axis cs: -2, -0.9) {\textcolor{cyan}{$\mathbf{x}^{(1)}$}};
+%\node[below] at (axis cs: -2, 1.9) {\textcolor{cyan}{$\mathbf{x}^{(2)}$}};
+%\node[above] at (axis cs: -1, 1.832) {\textcolor{cyan}{$\mathbf{x}^{(3)}$}};
+%\node[above] at (axis cs: 2, -1.9) {\textcolor{cyan}{$\mathbf{x}^{(4)}$}};
+%
+%\node[left] at (axis cs: -0.1, -1) {\textcolor{red}{$\mathbf{x}^{(5)}$}};
+%\node[left] at (axis cs: -0.1, 0) {\textcolor{red}{$\mathbf{x}^{(6)}$}};
+%\node[right] at (axis cs: 1.1, 0) {\textcolor{red}{$\mathbf{x}^{(7)}$}};
+%\node[right] at (axis cs: 1.1, 1) {\textcolor{red}{$\mathbf{x}^{(8)}$}};
+%
+%%\addplot [domain=-2:2, dashed] {sqrt(4-x^2)};
+%%\addplot [domain=-2:2, dashed] {-sqrt(4-x^2)};
+%
+%\end{axis}
+%
+%\end{tikzpicture}
+%\caption{Jeu de données (rouge:$-1$, cyan:$+1$)}
+%\label{fig:donnees}
+%\end{figure}
+%
+%\begin{figure}
+%\centering
+%\begin{tikzpicture}
+%\begin{axis}[
+%	grid,
+%	ytick={0,1,...,9},
+%	xtick={-5,-4,...,5},
+%	axis equal,
+%	width=300pt,
+%	height=300pt
+%]
+%\addplot[only marks,mark=square,draw=cyan,mark size=3pt] ({-2},{5} );
+%\addplot[only marks,mark=square,draw=cyan,mark size=3pt] ({-2},{8} );
+%\addplot[only marks,mark=square,draw=cyan,mark size=3pt] ({-1},{4} );
+%\addplot[only marks,mark=square,draw=cyan,mark size=3pt] ({2},{8} );
+%
+%\addplot[only marks,mark=o,draw=red,mark size=3pt]( {1},{1} );
+%\addplot[only marks,mark=o,draw=red,mark size=3pt]( {0},{0} );
+%\addplot[only marks,mark=o,draw=red,mark size=3pt]( {1},{2} );
+%\addplot[only marks,mark=o,draw=red,mark size=3pt]( {0},{1} );
+%
+%\end{axis}
+%\end{tikzpicture}
+%\caption{Données après transformation}
+%\label{fig:transformees}
+%\end{figure}
+%	
+%\end{enumerate}
+
+
+\begin{figure}[h!]
+\centering
+\subfloat[Jeu n°1\label{fig:jeu-1}]{
+\begin{tikzpicture}
+
+\draw[step=0.5,gray] (-1,-2) grid (5,4);
+
+
+\node at (-1.5,-1) {-1};
+\node at (-1.5,0) {0};
+\node at (-1.5,1) {1};
+\node at (-1.5,2) {2};
+\node at (-1.5,3) {3};
+
+\draw[-latex,thick] (-1,0) -- (5,0);
+\draw[-latex,thick] (0,-2) -- (0,4);
+
+\node at (0,-2.5) {0};
+\node at (1,-2.5) {1};
+\node at (2,-2.5) {2};
+\node at (3,-2.5) {3};
+\node at (4,-2.5) {4};
+
+\end{tikzpicture}
+}
+%
+\subfloat[Jeu n°2\label{fig:jeu-2}]{
+\begin{tikzpicture}
+
+\draw[step=0.5,gray] (-3,-3) grid (3,3);
+
+
+\node at (-3.5,-2) {-2};
+\node at (-3.5,-1) {-1};
+\node at (-3.5,0) {0};
+\node at (-3.5,1) {1};
+\node at (-3.5,2) {2};
+
+\draw[-latex,thick] (-3,0) -- (3,0);
+\draw[-latex,thick] (0,-3) -- (0,3);
+
+
+\node at (-2,-3.5) {-2};
+\node at (-1,-3.5) {-1};
+\node at (0,-3.5) {0};
+\node at (1,-3.5) {1};
+\node at (2,-3.5) {2};
+
+\end{tikzpicture}
+}
+
+\subfloat[Jeu n°2 - redescription\label{fig:jeu-t}]{
+\begin{tikzpicture}
+
+\draw[step=0.5,gray] (-1,-1) grid (6,6);
+
+
+\node at (-1.5,0) {0};
+\node at (-1.5,1) {2};
+\node at (-1.5,2) {4};
+\node at (-1.5,3) {6};
+\node at (-1.5,4) {8};
+\node at (-1.5,5) {10};
+
+\draw[-latex,thick] (-1,0) -- (6,0);
+\draw[-latex,thick] (0,-1) -- (0,6);
+
+
+\node at (0,-1.5) {0};
+\node at (1,-1.5) {2};
+\node at (2,-1.5) {4};
+\node at (3,-1.5) {6};
+\node at (4,-1.5) {8};
+\node at (5,-1.5) {10};
+
+\end{tikzpicture}
+}
+\caption{Classification}
+\end{figure}
+
+\end{document}

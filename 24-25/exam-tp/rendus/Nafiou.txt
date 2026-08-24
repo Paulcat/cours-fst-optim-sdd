@@ -1,0 +1,25 @@
+% Nafiou
+
+1. 1/1
+2. 1/1
+5. 1/1
+6. 0.5/0.5
+7. 0.5/0.5
+8. 1/1 
+9. 2/2
+10. 0/0.5 mauvaise compréhension de l'erreur de troncature
+11. 0.5/0.5
+12. 0.5/0.5
+13. 0.5/1.5 model mismatch, il faut générer les données avec le nouveau h (+ pb de taille)
+14. 1.5/2 on ne demandait pas de régularisation ici
+15. 0.5/1 manque l'énergie
+16. 1/1
+17. 1.5/2 courbe étrange (mais plus convaincante que mes propres résultats)
+18. - 
+19. 1.5/2 explication formule
+20. 2/2
+
+Code commenté 1/1
+Rendu conforme 1/1
+
+Note finale 18.5

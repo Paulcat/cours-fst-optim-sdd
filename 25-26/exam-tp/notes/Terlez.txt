@@ -1,0 +1,25 @@
+Terlez
+
+1. 0/0.5 % transposition
+2. 0.5/0.5
+3. 2/2
+4. 0/1 % affichage?
+5. 1/1
+6. 0.5/0.5
+7. 0.5/0.5
+8. 1/1
+9. 1/1
+10. 1.5/2 % commentaire?
+11. 1.5/2 % commentaire?
+12. 1/1
+13. 1/2 % confusion classes 7/9 et 6/8
+14. 2/3 % affichage, recadrage
+15. 2/3 % commentaires
+
+rendu en retard 
+-0.5
+
+sources, difficultés? -2
+
+13
+

@@ -1,0 +1,12 @@
+% covariance of gaussian vector
+
+
+Sigma1 = eye(2);
+Sigma2 = diag([1,10]);
+mu = [0;0];
+
+X = mvnrnd(mu,Sigma2,1000);
+
+scatter(X(:,1),X(:,2),25,'filled')
+xlim([-6,6]);
+ylim([-6,10]);

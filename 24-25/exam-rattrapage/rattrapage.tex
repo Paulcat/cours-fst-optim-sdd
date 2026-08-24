@@ -1,0 +1,249 @@
+\documentclass[11pt]{article}
+
+\usepackage{/home/paul/Workspace/build/macros}
+
+
+\usepackage{geometry}
+\geometry{margin=0.9in}
+\geometry{letterpaper}    
+\usepackage{graphicx}
+
+\usepackage{subfig}
+
+\usepackage{pgfplots}
+
+
+\usepackage[francais]{babel}
+
+\usepackage{matlab-prettifier}
+\usepackage{listings}
+\lstset{
+	style = Matlab-editor,
+	breaklines = true,
+	basicstyle = \footnotesize\ttfamily,
+	extendedchars = true,
+	frame = single
+}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhead{}
+
+\usepackage[style=alphabetic]{biblatex}
+%\usepackage[backend=biber,style=alphabetic]{biblatex}
+\bibliography{/home/paul/Workspace/build/biblio}
+
+%\newtheorem{exercise}{Exercice}
+
+%\newenvironment{solution}[1][\it{Solution}]{\textcolor{blue}{\textbf{#1. } }}{\textcolor{blue}{$\blacksquare$}}
+
+\usepackage{lipsum}
+
+\fancyfoot{} % clear all footer fields position of footer line
+\fancyfoot[RE,LO]{\hrulefill \\ Session2.ONSDD.2425 \hfill \textbf{\thepage /\textcolor{red}{3}}}
+
+
+\begin{document}
+
+\begin{minipage}{0.5\textwidth}
+\includegraphics[height=1.6cm]{/home/paul/Workspace/build/logos/fst-couleur}
+\includegraphics[height=1.6cm]{udl}\\[1ex]
+\end{minipage}
+\hfill
+\begin{minipage}{0.4\textwidth}
+\begin{flushright}
+M2 ISC\\
+Paul Catala\\
+El-Hadi Djermoune\\
+12 mars 2025
+\end{flushright}
+\end{minipage}
+
+\bigbreak
+
+%\noindent Traitement statistique du signal \hfill Master SNIM\\
+%Paul Catala  \hfill 2024/2025
+
+
+
+
+\begin{center}
+\textbf{\Large Examen Seconde Session \\ \guillemotleft Optimisation Numérique et Sciences des Données \guillemotright}
+
+Durée 2 heures \bullet{} Feuille manuscrite au format A4 autorisée \bullet{} Calculatrice non autorisée
+
+\hrulefill
+\end{center}
+
+
+
+\section{Optimisation}
+
+On considère la fonction convexe $f: \RR^2\to \RR$ suivante
+\eq{
+	f(x,y) = 3x^2 + 5y^2 -3x + 2y +9,
+}
+que l'on souhaite minimiser.
+
+\begin{enumerate}
+	\item Expliquer pourquoi la convexité est une propriété importante en optimisation.
+	\item Donner l'expression et calculer le vecteur gradient $\mathbf{J}(x,y)$ de $f$.
+	\item Donner l'expression et calculer la matrice Hessienne $\mathbf{H}(x,y)$ de $f$.
+	\item Quelles sont les conditions d'optimalité du problème de minimisation?
+	\item En déduire le minimiseur $(x_\star,y_\star)$, puis la valeur du minimum.
+	\item On minimise $f$ itérativement à l'aide de la méthode de Newton, avec un pas $\alpha$ constant. Déterminer, en expliquant vos calculs, le résultat $(x_1,y_1)$ d'une itération de cet algorithme, en initialisant à $(x_0,y_0) = (0,0)$. Quel serait un bon choix pour la valeur du pas $\alpha$?  Justifier.
+\end{enumerate}
+
+\section{Décompositions matricielles}
+\begin{enumerate}
+	\item Les décompositions suivantes sont-elles des décompositions en valeurs singulières? Justifier vos réponses.
+	
+	\begin{tabular}{ll}
+	\\
+		(a) $\displaystyle \begin{bmatrix} 0 & 0 \\ 1 & 1\end{bmatrix}  \begin{bmatrix} 2 & 0 \\ 0 & 1 \end{bmatrix} \begin{bmatrix} 0 & 1 \\ 1 & 0\end{bmatrix}$
+		&
+		(b) $\displaystyle \begin{bmatrix} 1 & 0 \\ 0 & 1\end{bmatrix}  \begin{bmatrix} -2 & 0 \\ 0 & 1 \end{bmatrix} \begin{bmatrix} 0 & 1 \\ 1 & 0\end{bmatrix}$\\ \\
+		(c) $\displaystyle \begin{bmatrix} 0 & 1 \\ -1 & 0\end{bmatrix}  \begin{bmatrix} 4 & 0 & 0 \\ 0 & 2 & 0 \end{bmatrix} \begin{bmatrix} 1 & 0 & 0 \\ 0 & -1 & 0 \\ 0 & 0 & 1 \end{bmatrix}$
+		&
+		(d) $\displaystyle \begin{bmatrix} 1 & 1 \\ -1 & 1\end{bmatrix}  \begin{bmatrix} 4 & 0 & 0 \\ 0 & 2 & 0 \end{bmatrix} \begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1 \end{bmatrix}$
+	\end{tabular}
+\end{enumerate}
+Dans la suite on considère la matrice
+\eq{
+	\mathbf{X} = \begin{bmatrix} 3 & 1\\ 1 & 3\\ 1 & -1 \end{bmatrix}
+}
+
+\begin{enumerate}
+	\setcounter{enumi}{1}
+	\item Quel est le rang de $\mathbf{X}$? Justifier.
+	\item Calculer la matrice $\mathbf{C} = \mathbf{X}\mathbf{X}^\top$.
+	\item Parmi les vecteurs suivants, lesquels sont des vecteurs propres de $\mathbf{C}$? Indiquer le cas échéant la valeur propre associée (on rappelle que $\mathbf{x}$ est un vecteur propre de $\mathbf{C}$ associé à la valeur propre $\lambda$ si $\mathbf{x}\neq 0$ et $\mathbf{C}\mathbf{x} = \lambda \mathbf{x}$). Justifier vos réponses.
+	
+	\begin{tabular}{lllll}
+		(a) $\begin{bmatrix} 1 \\ 1 \\ 0 \end{bmatrix}$ & (b) $\begin{bmatrix} 0 \\ 2 \\ 0 \end{bmatrix}$ & (c) $\begin{bmatrix} 1 \\ 0 \\ 1 \end{bmatrix}$ & (d) $\begin{bmatrix} 1 \\ -1 \\ 1 \end{bmatrix}$ & (e) $\begin{bmatrix} -1 \\ 1 \\ 2 \end{bmatrix}$
+	\end{tabular}
+	
+	\item En déduire les valeurs singulières de la matrice $\mathbf{X}$. Les vecteurs propres trouvés à la question précédente correspondent-ils à des vecteurs singuliers droits ou gauches de $\mathbf{X}$?
+	\item En déduire finalement la décomposition en valeurs singulière $\mathbf{U}\mathbf{\Sigma}\mathbf{V}^\top$ de $\mathbf{X}$ en utilisant les propriétés suivantes:
+	\begin{itemize}
+		\item[-] les vecteurs singuliers gauches doivent être normalisés, \ie $\norm{\mathbf{u}_k}_2 = 1$;
+		\item[-] les vecteurs singuliers droits s'obtiennent à partir des valeurs singulières non nulles et des vecteurs singuliers gauches correspondants comme $\mathbf{v}_k = \frac{1}{\sigma_k}\mathbf{X}^\top \mathbf{u}_k$.
+	\end{itemize}
+\end{enumerate}
+
+
+\section{Classification}
+On considère un jeu de $8$ données labellisées $(\mathbf{x}^{(i)},y^{(i)})$, avec $\mathbf{x}^{(i)} \in \RR^2$ et $y^{(i)} \in \{-1,+1\}$, pour $i=1,\ldots,8$. Ces données sont représentées en Figure~\ref{fig:donnees}. On cherche à classsifier automatiquement ces données à l'aide de la méthode des machines à vecteurs de support (SVM).
+\begin{enumerate}
+	\item On rappelle qu'une SVM classique consiste à résoudre le problème d'optimisation
+	\eql{\label{eq:svm}
+		\min_{\mathbf{a} \in \RR^2, \; b\in \RR} \quad \frac{1}{2}\norm{\mathbf{a}}^2 \qscq y^{(i)}(\mathbf{a}^\top \mathbf{x}^{(i)} + b) \geq 1 \quad i=1,\ldots,8
+	}
+	\begin{enumerate}
+		\item Quelles sont les contraintes de ce problème? Expliquer ce qu'elles représentent.
+		\item Quel est la fonction critère? Expliquer brièvement ce qu'elle représente.
+	\end{enumerate}
+	
+	\item Expliquer pourquoi résoudre le problème \eqref{eq:svm} pour les données considérées ici ne permettra pas d'identifier les deux classes.
+
+\item Expliquer le principe de l'astuce du noyau.
+
+\item On applique aux données une transformation $\phi:\RR^2\to\RR^2$. Le résultat est montré en Figure~\ref{fig:transformees}. Parmi les quatre transformations $\phi$ proposées ci-dessous, laquelle conduit au résultat observé?
+
+\begin{tabular}{ll}
+\\
+	(a) $\displaystyle \phi(\mathbf{x}) = \begin{bmatrix} x_1 & x_1^2+x_2^2 \end{bmatrix}$
+	&
+	\qquad (b) $\displaystyle \phi(\mathbf{x}) = \begin{bmatrix} x_1 & x_1+2x_2 \end{bmatrix}$\\ \\
+	(c) $\displaystyle \phi(\mathbf{x}) = \begin{bmatrix} x_2 & x_1^2-x_2^2 \end{bmatrix}$
+	&
+	\qquad (c) $\displaystyle \phi(\mathbf{x}) = \begin{bmatrix} x_2 & x_1^2 \end{bmatrix}$
+	\\ \\
+\end{tabular}
+
+\noindent Indiquer sur la Figure~\ref{fig:transformees} à côté de chaque point la donnée initiale correspondante. 
+
+\item Représenter l'hyperplan séparateur optimal sur la Figure~\ref{fig:transformees}. Donner son équation, et déterminer sa marge. Quels sont les vecteurs de support?
+
+\item On considère une nouvelle donnée $\mathbf{x}^{(9)} = (-1,-\sqrt{2})$ et $y^{(9)} = -1$. Représenter cette nouvelle donnée sur la Figure~\ref{fig:donnees} (on donne $\sqrt{2}\simeq 1.414$). Cette donnée sera-t-elle correctement classifiée par la SVM à noyau appris sur le jeu de données initial? Justifier votre réponse.
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+  %cycle list={
+  %  only marks,mark=o,draw=red,fill=red,mark size=3pt\\
+  %  only marks,mark=o,draw=cyan,mark size=3pt\\
+  %},
+  %domain=0:360,
+  %samples=5,
+  grid,
+  axis equal,
+  xtick = {-2,-1,...,2},
+  ytick = {-2,-1,...,3},
+  width=300pt,
+  height=300pt
+]
+
+%\addplot ({(1)*cos(x)},{(1)*sin(x)});
+%\addplot ({(2*sqrt(2))*cos(x+45)},{(2*sqrt(2))*sin(x+45)});
+\addplot[only marks,mark=square,draw=cyan,mark size=3pt]( {-2},{-1} );
+\addplot[only marks,mark=square,draw=cyan,mark size=3pt]( {-2},{2} );
+\addplot[only marks,mark=square,draw=cyan,mark size=3pt]( {-1},{sqrt(3)} );
+\addplot[only marks,mark=square,draw=cyan,mark size=3pt]( {2},{-2} );
+
+\addplot[only marks,mark=o,draw=red,mark size=3pt]( {1},{0} );
+\addplot[only marks,mark=o,draw=red,mark size=3pt]( {0},{0} );
+\addplot[only marks,mark=o,draw=red,mark size=3pt]( {1},{1} );
+\addplot[only marks,mark=o,draw=red,mark size=3pt]( {0},{-1} );
+
+\node[above] at (axis cs: -2, -0.9) {\textcolor{cyan}{$\mathbf{x}^{(1)}$}};
+\node[below] at (axis cs: -2, 1.9) {\textcolor{cyan}{$\mathbf{x}^{(2)}$}};
+\node[above] at (axis cs: -1, 1.832) {\textcolor{cyan}{$\mathbf{x}^{(3)}$}};
+\node[above] at (axis cs: 2, -1.9) {\textcolor{cyan}{$\mathbf{x}^{(4)}$}};
+
+\node[left] at (axis cs: -0.1, -1) {\textcolor{red}{$\mathbf{x}^{(5)}$}};
+\node[left] at (axis cs: -0.1, 0) {\textcolor{red}{$\mathbf{x}^{(6)}$}};
+\node[right] at (axis cs: 1.1, 0) {\textcolor{red}{$\mathbf{x}^{(7)}$}};
+\node[right] at (axis cs: 1.1, 1) {\textcolor{red}{$\mathbf{x}^{(8)}$}};
+
+%\addplot [domain=-2:2, dashed] {sqrt(4-x^2)};
+%\addplot [domain=-2:2, dashed] {-sqrt(4-x^2)};
+
+\end{axis}
+
+\end{tikzpicture}
+\caption{Jeu de données (rouge:$-1$, cyan:$+1$)}
+\label{fig:donnees}
+\end{figure}
+
+\begin{figure}
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+	grid,
+	ytick={0,1,...,9},
+	xtick={-5,-4,...,5},
+	axis equal,
+	width=300pt,
+	height=300pt
+]
+\addplot[only marks,mark=square,draw=cyan,mark size=3pt] ({-2},{5} );
+\addplot[only marks,mark=square,draw=cyan,mark size=3pt] ({-2},{8} );
+\addplot[only marks,mark=square,draw=cyan,mark size=3pt] ({-1},{4} );
+\addplot[only marks,mark=square,draw=cyan,mark size=3pt] ({2},{8} );
+
+\addplot[only marks,mark=o,draw=red,mark size=3pt]( {1},{1} );
+\addplot[only marks,mark=o,draw=red,mark size=3pt]( {0},{0} );
+\addplot[only marks,mark=o,draw=red,mark size=3pt]( {1},{2} );
+\addplot[only marks,mark=o,draw=red,mark size=3pt]( {0},{1} );
+
+\end{axis}
+\end{tikzpicture}
+\caption{Données après transformation}
+\label{fig:transformees}
+\end{figure}
+	
+\end{enumerate}
+
+\end{document}

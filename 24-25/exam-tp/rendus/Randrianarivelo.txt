@@ -1,0 +1,25 @@
+% Randrianarivelo
+
+1. 1/1
+2. 1/1 en double??
+5. 1/1
+6. 0.5/0.5
+7. 0.5/0.5 (?)
+8. 0/1
+9. 2/2 pourquoi plusieurs méthodes?
+10. 0/0.5 mauvaise compréhension
+11. 0.5/0.5
+12. 0.5/0.5
+13. 0/1.5 pas traité
+14. 0/2 LS pas traité
+15. 0/1
+16. 0/1
+17. 0/2 mettre une tolérance plus faible
+18. - 
+19. 0/2
+20. 0/2 erreur aberrante, pas de commentaires...
+
+Code commenté 0/1 code très pénible à lire
+Rendu conforme 1/1
+
+Note finale 8

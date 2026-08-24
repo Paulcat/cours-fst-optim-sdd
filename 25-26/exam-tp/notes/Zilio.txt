@@ -1,0 +1,22 @@
+Zilio
+
+1. 0.5/0.5
+2. 0.5/0.5
+3. 1.5/2 % pas besoin de centrer
+4. 1/1
+5. 0.5/1 % -1/1
+6. 0.5/0.5
+7. 0/0.5 % trop compliqué
+8. 1/1
+9. 1/1
+10. 2/2
+11. 1/2 % quel est le paramètre final? commentaire approximatif
+12. 0/1 % commentaires? conclusion?
+13. 1/2 % comparaison?
+14. 2.5/3 % recadrage? affichage?
+15. 2/3
+
+% presque aucun commentaire -1
+% difficultés, sources: -2
+
+Total: 11.5

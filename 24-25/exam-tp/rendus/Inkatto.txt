@@ -1,0 +1,25 @@
+% Inkatto
+
+1. 1/1 x = [] complètement inutiles
+2. 1/1
+5. 1/1
+6. 0.5/0.5
+7. 0.5/0.5
+8. 1/1
+9. 2/2
+10. 0/0.5 mauvaise compréhension de la troncation
+11. 0.5/0.5
+12. 0.5/0.5
+13. 0.5/1.5 tester en changeant les données, sinon model mismatch
+14. 2/2
+15. 1/1
+16. 1/1
+17. 1.5/2 commentaires, échelle plu adaptée
+18. - 
+19. 0/2
+20. 0/2
+
+Code commenté 0.5/1 figure jamais commentées
+Rendu conforme 1/1
+
+Note finale 15.5

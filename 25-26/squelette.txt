@@ -1,0 +1,13 @@
+*********
+OPTIMISATION
+*********
+
+- rappels calculs diff, algèbre linéaire (vecteurs, matrices, gradient, convexité, etc...)
+- méthodes itératives
+
+
+**********
+SCIENCES DES DONNEES
+**********
+
+- données: matrices, tenseurs

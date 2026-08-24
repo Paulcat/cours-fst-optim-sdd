@@ -1,0 +1,2176 @@
+\documentclass[9pt,table]{beamer} % options fleqn
+
+\usepackage{/home/paul/Workspace/build/macros}
+
+
+\usetheme[titleformat frame = smallcaps]{metropolis}
+%\usepackage{FiraSans}
+\usepackage{FiraMono}
+
+\metroset{sectionpage=none}
+
+%\usepackage[T1]{fontenc}
+
+
+\setbeamersize{text margin left=5mm,text margin right=5mm} 
+%\setbeamersize{text margin left=9mm,text margin right=3mm} 
+
+\setbeamertemplate{section in toc}[sections numbered]
+
+% algorithms
+\usepackage[ruled,linesnumbered]{algorithm2e}
+\SetKwInput{KwInput}{Input}
+\SetKwInput{KwOutput}{Output}
+
+% typography
+\usepackage{soul}
+
+\usepackage{caption}
+
+\usepackage{varwidth}
+
+\usepackage{dsfont}
+
+% figures
+\usepackage{svg}
+%\svgpath{{figs/}}
+
+% drawings
+\usepackage{tikz}
+\usetikzlibrary{shapes,shapes.misc,shapes.geometric}
+\usetikzlibrary{positioning,fit,backgrounds}
+\usetikzlibrary{trees,matrix}
+\usetikzlibrary{decorations.pathreplacing,calligraphy}
+\usetikzlibrary{calc,hobby,3d}
+%
+\tikzset{cross/.style={cross out, draw=red, minimum size=3pt, line width=0.25mm, inner sep=0pt, outer sep=0pt}, cross/.default={1pt}}
+%
+\usepackage[skins,theorems]{tcolorbox}
+\tcbset{highlight math style={colback=mLightBrown!20,colframe=black!2,sharp corners},bottom=2pt,top=2pt}
+\tcbset{left skip={-.01\linewidth}, colback=mLightBrown!20,colframe=black!2,sharp corners,left=0pt,right=0pt}
+%
+\newcommand{\point}[1]{\textbf{\textcolor{mDarkTeal}{#1}}\quad}
+%
+%\definecolor{cobalt}{HTML}{0047AB}
+\definecolor{aqua}{HTML}{00FFFF}
+\newcommand{\kw}[1]{\textbf{\alert{#1}}}
+\newcommand{\invsible}[1]{\textcolor{black!2}{#1}}
+%
+\definecolor{myteal}{rgb}{0.21, 0.46, 0.53}
+
+\usepackage[position=bottom]{subfig}
+
+\usepackage{tabularx}
+\usepackage{booktabs}% http://ctan.org/pkg/booktabs
+\newcommand{\tabitem}{\llap{\tiny$\blacksquare$}~~}
+
+% handling lists
+\usepackage{enumitem}
+
+\usepackage{multimedia}
+
+% tcolorbox
+\usepackage[skins,theorems]{tcolorbox}
+\tcbset{highlight math style={colback=mLightBrown!20,colframe=black!2,sharp corners},bottom=2pt,top=2pt}
+\tcbset{left skip={-.01\linewidth}, colback=mLightBrown!20,colframe=black!2,sharp corners,left=0pt,right=0pt}
+
+
+% references
+\usepackage[backend=biber,style=authoryear]{biblatex}
+%\usepackage[backend=biber,style=alphabetic]{biblatex}
+\bibliography{/home/paul/Workspace/build/biblio}
+\usepackage{bibentry}
+\newcommand{\mycite}[2]{\footnotetext[#1]{\emph{\tiny{\citeauthor{#2},\,\citeyear{#2},}}\,\tiny{\citefield{#2}{title}}}}
+
+%\renewcommand{\cite}[1]{\textcolor{myteal}{[\citeauthor{#1},\,\citeyear{#1}]}}%
+%\newcommand{\mycite}[1]{\textcolor{myteal}{\cite{#1}}}%
+\AtBeginEnvironment{frame}{\setcounter{footnote}{0}}
+
+\usepackage{hyperref}
+
+
+\graphicspath{{figs/}{examples/}{/home/paul/Workspace/data/standard_test_images}}
+
+
+
+
+% add a sommaire
+%\makeatletter
+%\setbeamertemplate{headline}{%
+%  \begin{beamercolorbox}[colsep=1.5pt]{upper separation line head}
+%  \end{beamercolorbox}
+%  \begin{beamercolorbox}{section in head/foot}
+%    \vskip2pt\insertnavigation{\paperwidth}\vskip2pt
+%  \end{beamercolorbox}%
+%  \begin{beamercolorbox}[colsep=1.5pt]{lower separation line head}
+%  \end{beamercolorbox}
+%}
+%\makeatother
+
+\setbeamertemplate{theorem begin}
+{%
+  \inserttheoremheadfont% \bfseries
+  \inserttheoremname \inserttheoremnumber
+  \ifx\inserttheoremaddition\@empty\else\ (\inserttheoremaddition)\fi%
+  \inserttheorempunctuation
+  \normalfont
+}
+\setbeamertemplate{theorem end}{%
+  % empty
+}
+\makeatother
+
+\setbeamercolor{section in head/foot}{fg=normal text.bg, bg=structure.fg}
+
+
+
+\title{Optimisation Numérique et Sciences des Données}
+\subtitle{Sciences des données -- Introduction aux réseaux de neurones}
+\author{Paul Catala (CRAN, UL) \hfill Master Ingénierie des Systèmes Complexes M2 ISC 925}
+%\date{Postdoctorant à l'université d'Osnabrück, Allemagne}
+\date{paul.catala(at)univ-lorraine.fr \hfill Semestre 9 -- 2024 \\}
+
+%\usepackage{uoslogo}
+%\titlegraphic{\uoslogored{4cm}}
+
+
+
+\begin{document}
+\maketitle
+
+
+\begin{frame}
+\frametitle{Références}
+
+\begin{itemize}[label=\tiny$\blacksquare$]
+	\item http://cedric-richard.fr/courses4.html
+	\item https://speakerdeck.com/gpeyre/the-mathematics-of-neural-networks
+	\item http://www.numerical-tours.com/
+\end{itemize}
+\end{frame}
+
+
+
+
+
+
+
+\section{Introduction}
+
+\begin{frame}
+\frametitle{Programme du cours}
+\tableofcontents[currentsection]
+\end{frame}
+
+
+
+
+
+
+
+
+
+\begin{frame}
+\frametitle{Intelligence artificielle}
+
+\centering
+
+\begin{tikzpicture}
+	\draw [thick, fill=mLightBrown!10] (0,-1) arc (-90:270:6cm and 3.5cm);
+	\draw [thick, fill=mLightBrown!30] (-0.3,-0.8) arc (-90:270:4.5cm and 2.5cm);
+	\draw [thick, fill=mLightBrown!60] (0.5,-0.5) arc (-90:270:3cm and 1.5cm);
+	\draw [thick, fill=mLightBrown!60] (0.8,-0.3) arc (-90:270:2cm and 0.8cm);
+	\node [xshift=0.6cm,yshift=0.6cm, text width=2.3cm] (0,0) (DL) {\textbf{\textsc{Apprentissage Profond}}};
+	\node [yshift=1.9cm] (0,0) (NN) {\textbf{\textsc{$\bullet$ Réseaux Neuronaux}}};
+	\node [xshift=-0.3cm,yshift=3.6cm] (0,0) (ML) {\textbf{\textsc{Apprentissage Machine}}};
+	\node [xshift=-0.6cm,yshift=5cm] (0,0) (AI) {\textbf{\textsc{Intelligence Articielle}}};
+	
+	\node[below left=1cm and 0cm of ML,text width=2.3cm] {$\bullet$\;{Support Vector Machines}};
+	\node[below=6ptof ML] {$\bullet$ {Décompositions matricielles/tensorielles}};
+\end{tikzpicture}
+
+\end{frame}
+
+
+
+
+
+
+
+
+\begin{frame}
+\frametitle{Apprentissage machine}
+
+\begin{center}
+\begin{tikzpicture}
+	\node[label=below:donnée] (x) {$x$};
+	\node[right=7cm of x,label=below:sortie] (y) {$\hat{y}$};
+	
+	\draw[-latex,line width=1mm] (x) -- (y);
+	
+	\begin{scope}
+		\coordinate (c1) at ([xshift=2cm,yshift=0.8cm]x);
+		\coordinate	(c2) at ([xshift=2cm]c1);
+		\coordinate (c3) at ([yshift=-2cm]c2);
+		\coordinate (c4) at ([yshift=-2cm]c1);
+		\coordinate (c5) at ([xshift=1cm,yshift=0.5cm]c1);
+		\coordinate (c6) at ([xshift=2cm]c5);
+		\coordinate (c7) at ([yshift=-2cm]c5);
+		\coordinate (c8) at ([yshift=-2cm]c6);
+	\end{scope}
+	
+	\fill[fill=black!40,fill opacity=0.4 ]
+		(c1)--(c2)--(c3)--(c4)--cycle;
+	\fill[fill=black!40,fill opacity=0.4]
+		(c1)--(c5)--(c6)--(c2)--cycle;
+	\fill[fill=black!40,fill opacity=0.4]
+		(c3)--(c2)--(c6)--(c8)--cycle;
+		
+	\draw[thick,color=black!40]
+		(c4)--(c7)--(c5)
+		(c7)--(c8);
+	\draw[thick,color=black]
+		(c1)--(c2)--(c3)--(c4)--cycle
+		(c1)--(c5)--(c6)--(c2)--cycle
+		(c3)--(c2)--(c6)--(c8)--cycle;
+		
+	
+		
+\end{tikzpicture}
+\end{center}
+
+
+
+\begin{itemize}
+	\item \alert{Apprentissage supervisé}: \textbf{prédiction}
+	
+	\qquad $\rightarrow$ régression, classification, $\ldots$
+	\break
+	\item \alert{Apprentissage non-supervisé}: \textbf{extraction d'information}
+	
+	\qquad $\rightarrow$ segmentation, réduction de dimension, modèles génératifs, $\ldots$
+	\break
+	\item \alert{Apprentissage auto-supervisé}
+\end{itemize}
+\end{frame}
+
+
+
+
+
+\begin{frame}
+\frametitle{Exemples -- Inpainting}
+
+\begin{figure}
+	\includegraphics[width=0.8\textwidth]{figs/inpainting}
+	\caption*{Suvorov et al., \textit{Resolution-robust Large Mask Inpainting ...}, 2021}
+\end{figure}
+\end{frame}
+
+
+
+
+
+\begin{frame}
+\frametitle{Exemples -- Transfert de style}
+
+\begin{figure}
+	\includegraphics[width=0.5\textwidth]{figs/examples};
+	\caption*{Gatys, Ecker et Bethge, \textit{A Neural Algorithm of Artistic Style}, 2016}
+\end{figure}
+
+\end{frame}
+
+
+
+
+
+
+
+
+
+
+
+\begin{frame}
+\frametitle{Exemples -- Modèle génératif}
+
+\begin{figure}
+	\includegraphics[width=0.6\textwidth]{figs/NN2B-top};
+	\includegraphics[width=0.6\textwidth]{figs/NN2B-bottom};
+	\caption*{Karras et al., \textit{Progressive Growing of GANs for ...}, 2018}
+\end{figure}
+
+\end{frame}
+
+
+
+
+
+
+
+
+
+\begin{frame}
+\frametitle{Exemples -- Langage naturel}
+
+\begin{figure}
+	\includegraphics[width=\textwidth]{figs/chatGPT};
+	\caption*{OpenAI, 2022}
+\end{figure}
+
+\end{frame}
+
+
+
+
+
+\begin{frame}
+\frametitle{Exemples}
+
+\begin{itemize}[label=\tiny$\blacksquare$]
+	\begin{tcolorbox}[colback=teal!20]
+	\item Séparation de sources audio
+	\item Transcriptions
+	\item Segmentation audio
+	\end{tcolorbox}
+	\begin{tcolorbox}[colback=green!20]
+	\item Reconnaissance d'objet
+	\item Recalage de forme
+	\item Super-résolution
+	\end{tcolorbox}
+	\begin{tcolorbox}
+	\item Recommandations publicitaires
+	\item Traduction
+	\item Génération de sous-titres
+	\end{tcolorbox}
+	\item etc...
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Réseaux de neurones}
+
+\begin{itemize}[label=\tiny$\blacksquare$]
+	\item \alert{Réseau de neurones} : ensemble de couches de "neurones" \alert{apprenant} comment transmettre l'information d'une couche à l'autre à partir des données, afin de réaliser une tâche spécifique (classification, prédiction, traduction, génération, etc...)
+\end{itemize}
+
+\centering
+\vspace{-2cm}
+
+\newlength{\spacing}
+\setlength{\spacing}{1.5cm}
+	
+\begin{tikzpicture}[every node/.style={circle,minimum width = .5cm}]
+% first layer
+\node[draw] (n10) at (0,0) {$x_1$};
+%\node[draw,below=5pt of n10] (n11) {$x_2$};
+\node[below=3pt of n10] (n11) {$\bm{\vdots}$};
+\node[draw,below=5pt of n11] (n12) {$x_d$};
+
+
+% second layer
+%\node[draw,above right = 0.77cm and \spacing of n10] (n20) {};
+\node[draw,above right = 0.1cm and \spacing of n10] (n21) {};
+\node[draw,below=5pt of n21] (n22) {};
+\node[draw,below=5pt of n22] (n23) {};
+\node[draw,below=5pt of n23] (n24) {};
+\node[draw,below=5pt of n24] (n25) {};
+
+% connections
+\draw[] (n10) -- (n21);
+\draw[] (n10) -- (n22);
+\draw[] (n10) -- (n23);
+\draw[] (n10) -- (n24);
+\draw[] (n10) -- (n25);
+%
+\draw[] (n12) -- (n21);
+\draw[] (n12) -- (n22);
+\draw[] (n12) -- (n23);
+\draw[] (n12) -- (n24);
+\draw[] (n12) -- (n25);
+%
+
+
+% third layer
+\node[draw,right =\spacing of n22] (n30) {};
+\node[draw,below=5pt of n30] (n31) {};
+\node[draw,below=5pt of n31] (n32) {};
+
+% connections
+\draw[] (n21) -- (n30);
+\draw[] (n21) -- (n31);
+\draw[] (n21) -- (n32);
+%
+\draw[] (n22) -- (n30);
+\draw[] (n22) -- (n31);
+\draw[] (n22) -- (n32);
+%
+\draw[] (n23) -- (n30);
+\draw[] (n23) -- (n31);
+\draw[] (n23) -- (n32);
+%
+\draw[] (n24) -- (n30);
+\draw[] (n24) -- (n31);
+\draw[] (n24) -- (n32);
+%
+\draw[] (n25) -- (n30);
+\draw[] (n25) -- (n31);
+\draw[] (n25) -- (n32);
+%
+
+
+% fourth layer
+\node[draw,above right = 0.3cm and \spacing of n30] (n40) {};
+\node[draw,below=5pt of n40] (n41) {};
+\node[draw,below=5pt of n41] (n42) {};
+\node[draw,below=5pt of n42] (n43) {};
+\node[draw,below=5pt of n43] (n44) {};
+
+
+% connections
+\draw[] (n30) -- (n40);
+\draw[] (n30) -- (n41);
+\draw[] (n30) -- (n42);
+\draw[] (n30) -- (n43);
+\draw[] (n30) -- (n44);
+%
+\draw[] (n31) -- (n40);
+\draw[] (n31) -- (n41);
+\draw[] (n31) -- (n42);
+\draw[] (n31) -- (n43);
+\draw[] (n31) -- (n44);
+%
+\draw[] (n32) -- (n40);
+\draw[] (n32) -- (n41);
+\draw[] (n32) -- (n42);
+\draw[] (n32) -- (n43);
+\draw[] (n32) -- (n44);
+
+% output layer
+\node[draw,below right =0.05cm and \spacing of n40] (n50) {$y_1$};
+\node[below=3pt of n50] (n51) {$\bm{\vdots}$};
+\node[draw,below =5pt of n51] (n52) {$y_p$};
+%\node[below=5pt of n50] (n51) {$y_2$};
+%\node[below=5pt of n51] (n52) {$y_3$};
+
+
+% connections
+\draw[] (n40) -- (n50);
+\draw[] (n40) -- (n52);
+%
+\draw[] (n41) -- (n50);
+\draw[] (n41) -- (n52);
+%
+\draw[] (n42) -- (n50);
+\draw[] (n42) -- (n52);
+%
+\draw[] (n43) -- (n50);
+\draw[] (n43) -- (n52);
+%
+\draw[] (n44) -- (n50);
+\draw[] (n44) -- (n52);
+
+\begin{scope}[on background layer]
+\node [rectangle, fill=mLightBrown!20, minimum height = 4cm, fit={(n10) (n11) (n12) }, label={[label distance = -23pt]\color{mLightBrown}Couche d'entrée}] (layer-1) {};
+
+\node [rectangle, fill=teal!20, minimum height = 4cm, fit={(n21) (n22) (n23) (n24) (n25)}] (layer-2) {};
+
+\node [rectangle, fill=teal!20, minimum height = 4cm, fit={(n30) (n31) (n32)}, label={[label distance = -52pt]\color{teal}Couches latentes (ou cachées)}] (layer-3) {};
+
+\node [rectangle, fill=teal!20, minimum height = 4cm, fit={(n40) (n41) (n42) (n43) (n44)}] (layer-4) {};
+
+\node [rectangle, fill=purple!20, minimum height = 4cm, fit={(n50) (n51) (n52)}, label={[label distance = -25pt]\color{purple}Couche de sortie}] (layer-5) {};
+\end{scope}
+
+\draw[-latex,thick] ([yshift=-.3cm]layer-1.south west) -- ([yshift=-.3cm]layer-5.south east) node[rectangle,midway,fill=black!2] {$y = f_\theta(x)$};
+
+\end{tikzpicture}
+
+	
+\end{frame}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\begin{frame}
+\frametitle{Réseaux de neurones}
+
+\begin{itemize}[label=\tiny$\blacksquare$]
+	\item Différentes tâches = différentes architectures de réseau, différents critères
+	
+	
+%\newlength{\spacing}
+\setlength{\spacing}{1.5cm}
+
+%\vspace{-1cm}
+
+\bigbreak
+
+\centering
+
+\begin{tikzpicture}[every node/.style={circle,minimum width = .5cm}]
+
+% first layer
+\node[draw] (n10) at (0,0) {$x_1$};
+\node[draw,below=5pt of n10] (n11) {$x_2$};
+\node[draw,below=5pt of n11] (n12) {$x_3$};
+\node[draw,below=5pt of n12] (n13) {$x_4$};
+
+
+% second layer
+\node[draw,above right = 0.77cm and \spacing of n10] (n20) {};
+\node[draw,below=5pt of n20] (n21) {};
+\node[draw,below=5pt of n21] (n22) {};
+\node[draw,below=5pt of n22] (n23) {};
+\node[draw,below=5pt of n23] (n24) {};
+\node[draw,below=5pt of n24] (n25) {};
+\node[draw,below=5pt of n25] (n26) {};
+\node[draw,below=5pt of n26] (n27) {};
+
+% connections
+\draw[] (n10) -- (n20);
+\draw[] (n10) -- (n21);
+\draw[] (n10) -- (n22);
+\draw[] (n10) -- (n23);
+\draw[] (n10) -- (n24);
+\draw[] (n10) -- (n25);
+\draw[] (n10) -- (n26);
+\draw[] (n10) -- (n27);
+%
+\draw[] (n11) -- (n20);
+\draw[] (n11) -- (n21);
+\draw[] (n11) -- (n22);
+\draw[] (n11) -- (n23);
+\draw[] (n11) -- (n24);
+\draw[] (n11) -- (n25);
+\draw[] (n11) -- (n26);
+\draw[] (n11) -- (n27);
+%
+\draw[] (n12) -- (n20);
+\draw[] (n12) -- (n21);
+\draw[] (n12) -- (n22);
+\draw[] (n12) -- (n23);
+\draw[] (n12) -- (n24);
+\draw[] (n12) -- (n25);
+\draw[] (n12) -- (n26);
+\draw[] (n12) -- (n27);
+%
+\draw[] (n13) -- (n20);
+\draw[] (n13) -- (n21);
+\draw[] (n13) -- (n22);
+\draw[] (n13) -- (n23);
+\draw[] (n13) -- (n24);
+\draw[] (n13) -- (n25);
+\draw[] (n13) -- (n26);
+\draw[] (n13) -- (n27);
+
+
+% third layer
+\node[draw,below right = 0.3cm and \spacing of n20] (n30) {};
+\node[draw,below=5pt of n30] (n31) {};
+\node[draw,below=5pt of n31] (n32) {};
+\node[draw,below=5pt of n32] (n33) {};
+\node[draw,below=5pt of n33] (n34) {};
+\node[draw,below=5pt of n34] (n35) {};
+
+% connections
+\draw[] (n20) -- (n30);
+\draw[] (n20) -- (n31);
+\draw[] (n20) -- (n32);
+\draw[] (n20) -- (n33);
+\draw[] (n20) -- (n34);
+\draw[] (n20) -- (n35);
+%
+\draw[] (n21) -- (n30);
+\draw[] (n21) -- (n31);
+\draw[] (n21) -- (n32);
+\draw[] (n21) -- (n33);
+\draw[] (n21) -- (n34);
+\draw[] (n21) -- (n35);
+%
+\draw[] (n22) -- (n30);
+\draw[] (n22) -- (n31);
+\draw[] (n22) -- (n32);
+\draw[] (n22) -- (n33);
+\draw[] (n22) -- (n34);
+\draw[] (n22) -- (n35);
+%
+\draw[] (n23) -- (n30);
+\draw[] (n23) -- (n31);
+\draw[] (n23) -- (n32);
+\draw[] (n23) -- (n33);
+\draw[] (n23) -- (n34);
+\draw[] (n23) -- (n35);
+%
+\draw[] (n24) -- (n30);
+\draw[] (n24) -- (n31);
+\draw[] (n24) -- (n32);
+\draw[] (n24) -- (n33);
+\draw[] (n24) -- (n34);
+\draw[] (n24) -- (n35);
+%
+\draw[] (n25) -- (n30);
+\draw[] (n25) -- (n31);
+\draw[] (n25) -- (n32);
+\draw[] (n25) -- (n33);
+\draw[] (n25) -- (n34);
+\draw[] (n25) -- (n35);
+%
+\draw[] (n26) -- (n30);
+\draw[] (n26) -- (n31);
+\draw[] (n26) -- (n32);
+\draw[] (n26) -- (n33);
+\draw[] (n26) -- (n34);
+\draw[] (n26) -- (n35);
+%
+
+\draw[] (n27) -- (n30);
+\draw[] (n27) -- (n31);
+\draw[] (n27) -- (n32);
+\draw[] (n27) -- (n33);
+\draw[] (n27) -- (n34);
+\draw[] (n27) -- (n35);
+
+
+% fourth layer
+\node[draw,above right = 0.3cm and \spacing of n30] (n40) {};
+\node[draw,below=5pt of n40] (n41) {};
+\node[draw,below=5pt of n41] (n42) {};
+\node[draw,below=5pt of n42] (n43) {};
+\node[draw,below=5pt of n43] (n44) {};
+\node[draw,below=5pt of n44] (n45) {};
+\node[draw,below=5pt of n45] (n46) {};
+\node[draw,below=5pt of n46] (n47) {};
+
+
+% connections
+\draw[] (n30) -- (n40);
+\draw[] (n30) -- (n41);
+\draw[] (n30) -- (n42);
+\draw[] (n30) -- (n43);
+\draw[] (n30) -- (n44);
+\draw[] (n30) -- (n45);
+\draw[] (n30) -- (n46);
+\draw[] (n30) -- (n47);
+%
+\draw[] (n31) -- (n40);
+\draw[] (n31) -- (n41);
+\draw[] (n31) -- (n42);
+\draw[] (n31) -- (n43);
+\draw[] (n31) -- (n44);
+\draw[] (n31) -- (n45);
+\draw[] (n31) -- (n47);
+%
+\draw[] (n32) -- (n40);
+\draw[] (n32) -- (n41);
+\draw[] (n32) -- (n42);
+\draw[] (n32) -- (n43);
+\draw[] (n32) -- (n44);
+\draw[] (n32) -- (n45);
+\draw[] (n32) -- (n46);
+\draw[] (n32) -- (n47);
+%
+\draw[] (n33) -- (n40);
+\draw[] (n33) -- (n41);
+\draw[] (n33) -- (n42);
+\draw[] (n33) -- (n43);
+\draw[] (n33) -- (n44);
+\draw[] (n33) -- (n45);
+\draw[] (n33) -- (n46);
+\draw[] (n33) -- (n47);
+%
+\draw[] (n34) -- (n40);
+\draw[] (n34) -- (n41);
+\draw[] (n34) -- (n42);
+\draw[] (n34) -- (n43);
+\draw[] (n34) -- (n44);
+\draw[] (n34) -- (n45);
+\draw[] (n34) -- (n46);
+\draw[] (n34) -- (n47);
+%
+\draw[] (n35) -- (n40);
+\draw[] (n35) -- (n41);
+\draw[] (n35) -- (n42);
+\draw[] (n35) -- (n43);
+\draw[] (n35) -- (n44);
+\draw[] (n35) -- (n45);
+\draw[] (n35) -- (n46);
+\draw[] (n35) -- (n47);
+%
+
+% output layer
+\node[draw,below right = 2cm and \spacing of n40] (n50) {$y$};
+%\node[below=5pt of n50] (n51) {$y_2$};
+%\node[below=5pt of n51] (n52) {$y_3$};
+
+
+% connections
+\draw[] (n40) -- (n50);
+%\draw[] (n40) -- (n51);
+%\draw[] (n40) -- (n52);
+%
+\draw[] (n41) -- (n50);
+%\draw[] (n41) -- (n51);
+%\draw[] (n41) -- (n52);
+%
+\draw[] (n42) -- (n50);
+%\draw[] (n42) -- (n51);
+%\draw[] (n42) -- (n52);
+%
+\draw[] (n43) -- (n50);
+%\draw[] (n43) -- (n51);
+%\draw[] (n43) -- (n52);
+%
+\draw[] (n44) -- (n50);
+%\draw[] (n44) -- (n51);
+%\draw[] (n44) -- (n52);
+%
+\draw[] (n45) -- (n50);
+%\draw[] (n45) -- (n51);
+%\draw[] (n45) -- (n52);
+%
+\draw[] (n46) -- (n50);
+%\draw[] (n46) -- (n51);
+%\draw[] (n46) -- (n52);
+%
+\draw[] (n47) -- (n50);
+%\draw[] (n47) -- (n51);
+%\draw[] (n47) -- (n52);
+
+
+\begin{scope}[on background layer]
+\node [rectangle, fill=mLightBrown!20, minimum height = 5.6cm, fit={(n10) (n11) (n12) (n13) }] (layer-1) {};
+
+\node [rectangle, fill=teal!20, minimum height = 5.6cm, fit={(n20) (n21) (n22) (n23) (n24) (n25) (n26) (n27)}] (layer-2) {};
+
+\node [rectangle, fill=teal!20, minimum height = 5.6cm, fit={(n30) (n31) (n32) (n33) (n34) (n35) }] (layer-3) {};
+
+\node [rectangle, fill=teal!20, minimum height = 5.6cm, fit={(n40) (n41) (n42) (n43) (n44) (n45) (n46) (n47)}] (layer-4) {};
+
+\node [rectangle, fill=purple!20, minimum height = 5.6cm, fit={(n50)}] (layer-5) {};
+\end{scope}
+
+\draw[-latex,thick] ([yshift=-.3cm]layer-1.south west) -- ([yshift=-.3cm]layer-5.south east) node[rectangle,midway,fill=black!2] {$y = f_\theta(x)$};
+
+\end{tikzpicture}
+
+%\alert{Classification}: minimiser l'erreur $\sum_j \ell(f_\theta(x^{(j)}),y^{(j)})$ sur des données $(x^{(j)},y^{(j)})$
+
+Variables: pour de la classification, typiquement $\sim 10^6$ à $10^9$ paramètres $\theta$
+\end{itemize}
+\end{frame}
+
+
+
+
+
+
+
+
+
+
+
+
+\begin{frame}
+\frametitle{Historique}
+
+\begin{tikzpicture}
+\node[rectangle,fill=mDarkTeal!20,draw,minimum height=1.3cm,thick] (l1) {};
+\node[isosceles triangle,
+		isosceles triangle apex angle = 70,
+		fill=teal!40,
+		right=1pt of l1.east,
+		anchor=west,
+		minimum width=1.3cm] (f1) {};
+%\node[trapezium,
+%		trapezium angle=35,
+%		fill=mLightBrown!30,
+%		rotate=-90,
+%		right=1pt of l1.east,
+%		anchor = south,
+%		minimum width=1.3cm] (f1) {};
+\node[rectangle,fill=mDarkTeal!20,draw,right=1pt of f1.east,thick] (o1) {};
+
+
+% *********************************************
+% *********************************************
+
+
+\node[rectangle,fill=mDarkTeal!20,draw,minimum height=0.8cm,thick,right=0.7cm of o1] (l2) {};
+\node[trapezium,
+		trapezium angle=60,
+		fill=teal!40,
+		rotate=90,
+		right=1pt of l2.east,
+		anchor = north,
+		minimum width=1.5cm] (f2) {};
+
+\node[rectangle,fill=mDarkTeal!20,draw,minimum height=1.5cm,thick,right=1pt of f2.south] (l2-l) {};
+
+\node[isosceles triangle,
+		isosceles triangle apex angle = 80,
+		fill=teal!40,
+		right=1pt of l2-l.east,
+		anchor=west,
+		minimum width=1.5cm] (f2-l) {};
+\node[rectangle,fill=mDarkTeal!20,draw,right=1pt of f2-l.east,thick] (o2) {};
+
+
+
+% ************************************
+% ************************************
+
+
+
+\node[rectangle,draw,below right=4pt and 0.7cm of o2,anchor=west,minimum height=1.2cm,thick,fill=mDarkTeal!20] (l3) {};
+
+\begin{scope}
+	\coordinate (c1) at ([xshift=1mm,yshift=0.11mm]l3.south);
+	\coordinate (c2) at ([xshift=0.4cm,yshift=0.5cm]c1);
+	\coordinate (c3) at ([yshift=1.2cm]c2);
+	\coordinate (c4) at ([xshift=1mm,yshift=-0.11mm]l3.north);
+\end{scope}
+\begin{scope}
+	\coordinate (c5) at ([xshift=-1.1mm,yshift=-0.11mm]l3.north);
+	\coordinate (c6) at ([xshift=0.4cm,yshift=0.5cm]c5);
+	\coordinate (c7) at ([xshift=2.1mm]c6);
+	\coordinate (c8) at ([xshift=1mm,yshift=-0.11mm]l3.north);
+\end{scope}
+\begin{scope}
+	\coordinate (i1) at ([xshift=1mm]l3.east);
+	\coordinate (i2) at ([xshift=0.7mm]i1);
+	\coordinate (i3) at ([xshift=1mm,yshift=1.3mm]i2);
+	\coordinate (i4) at ([yshift=3mm]i3);
+	\coordinate (i5) at ([yshift=3mm]i2);
+	\coordinate (i6) at ([yshift=3mm]i1);
+	\coordinate (i7) at ([xshift=-0.7mm]i4);
+\end{scope}
+
+\fill[fill=mDarkTeal!30,fill opacity=1](c1) -- (c2) -- (c3) -- (c4) -- cycle;
+\fill[fill=mDarkTeal!20,fill opacity=1](c5) -- (c6) -- (c7) -- (c8) -- cycle;
+\fill[fill=teal!40] 
+	(i1) -- (i2) -- (i5) -- (i6) -- cycle
+	(i5) -- (i6) -- (i7) -- (i4) -- cycle;
+\fill[fill=teal!50]
+	(i2) -- (i3) -- (i4) -- (i5) -- cycle;
+\draw[thick,join=round] (c1) -- (c2) -- (c3) -- (c4) -- cycle;
+\draw[thick,join=round] (c5) -- (c6) -- (c7) -- (c8) -- cycle;
+\draw[thick,join=round] 
+	(i1) -- (i2) -- (i5) -- (i6) -- cycle
+	(i2) -- (i3) -- (i4) -- (i5) -- cycle
+	(i5) -- (i6) -- (i7) -- (i4) -- cycle;
+
+
+
+\node[circle,draw,thick,below right=0pt and 1.9cm of o2,anchor=west] (n4) {};
+\node[right=3pt of n4] (n42) {\textbf{$\ldots$}};
+\node[circle,thick,draw,right=3pt of n42] (n43){};
+
+\begin{scope}
+	\coordinate (r1) at ([xshift=0.7cm]c1);
+	\coordinate (r2) at ([xshift=1.6cm]r1);
+	\coordinate (r3) at ([yshift=1.2cm]r2);
+	\coordinate (r4) at ([yshift=1.2cm]r1);
+	\coordinate (r5) at ([xshift=0.4cm,yshift=0.5cm]r4);
+	\coordinate (r6) at ([xshift=0.4cm,yshift=0.5cm]r3);
+	\coordinate (r7) at ([xshift=0.4cm,yshift=0.5cm]r2);
+\end{scope}
+
+\fill[fill=myteal!40,fill opacity=0.5]
+	(r1) -- (r2) -- (r3) -- (r4) -- cycle;
+\fill[fill=myteal!50,fill opacity=0.5]
+	(r4) -- (r5) -- (r6) -- (r3) -- cycle;
+\fill[fill=myteal!70,fill opacity=0.5]
+	(r2) -- (r3) -- (r6) -- (r7) -- cycle;
+\draw[thick,join=round]
+	(r1) -- (r2) -- (r3) -- (r4) -- cycle
+	(r4) -- (r5) -- (r6) -- (r3) -- cycle
+	(r2) -- (r3) -- (r6) -- (r7) -- cycle;
+	
+\draw[line width=0.3mm,teal!40] (i2) -- (n4);
+\draw[line width=0.3mm,teal!40] (i3) -- (n4);
+\draw[line width=0.3mm,teal!40] (i4) -- (n4);
+\draw[line width=0.3mm,teal!40] (i5) -- (n4);
+
+
+% *****************************************
+% *****************************************
+
+
+\node[rectangle,fill=mDarkTeal!20,draw,minimum height=0.7cm,thick,above right=-1pt and 1cm of n43,anchor=west] (l4) {};
+\node[trapezium,
+		trapezium angle=60,
+		fill=teal!40,
+		rotate=90,
+		right=1pt of l4.east,
+		anchor = north,
+		minimum width=1.5cm] (f4) {};
+
+\node[rectangle,fill=mDarkTeal!20,draw,minimum height=1.5cm,thick,right=1pt of f4.south] (l4-l) {};
+
+\node[trapezium,
+		trapezium angle = 60,
+		fill=teal!40,
+		rotate=-90,
+		right=1pt of l4-l.east,
+		anchor = south,
+		minimum width=1.5cm] (f4-l) {};
+\node[rectangle,fill=mDarkTeal!20,draw,right=1pt of f4-l.north,minimum height=0.7cm,thick] (o4) {};
+
+\draw[-latex,dashed,line width=0.5mm] (l4.south) -- ([yshift=-0.53cm]l4.south) -- ([yshift=-0.53cm]o4.south) -- (o4.south);
+
+
+% ************************************
+% ************************************
+
+\begin{pgfonlayer}{background}
+\node [fill=mLightBrown!20,fit=(l1) (f1) (o1),label={[label distance = -15pt] 1 couche},minimum height=3cm] (b1) {};
+\end{pgfonlayer}
+
+\begin{pgfonlayer}{background}
+\node [fill=mLightBrown!20,fit=(l2) (l2-l) (f2) (f2-l) (o2),label={[label distance = -15pt] $\geq$ 2 couches},minimum height=3cm] (b2) {};
+\end{pgfonlayer}
+
+\begin{pgfonlayer}{background}
+\node [fill=mLightBrown!20,fit=(l3) (c6) (r6) (r7),label={[label distance = -15pt] \eg Convolutif},minimum height=3cm] (b3) {};
+\end{pgfonlayer}
+
+\begin{pgfonlayer}{background}
+\node [fill=mLightBrown!20,fit=(l4) (l4-l) (f4) (f4-l) (o4),label={[label distance = -15pt] \eg ResNet},minimum height=3cm] (b4) {};
+\end{pgfonlayer}
+
+
+% *****************************************
+% *****************************************
+
+\draw[-latex,line width=0.5mm] (b1.north) -- ([yshift=0.5cm]b1.north) -- node[label=non-linéaire] {} ([yshift=0.5cm]b2.north) -- (b2.north);
+%
+\draw[-latex,line width=0.5mm] (b2.south) -- ([yshift=-0.5cm]b2.south) -- node[label={below:structuré}] {} ([yshift=-0.5cm]b3.south) -- (b3.south);
+%
+\draw[-latex,line width=0.5mm] (b3.north) -- ([yshift=0.5cm]b3.north) -- node[label=très profonds] {} ([yshift=0.5cm]b4.north) -- (b4.north);
+
+% ****************************************************
+% ****************************************************
+
+\node[below = 1.5cm of b2] (MLP) {\footnotesize \alert{MLP}, Rosenblatt, 1960s};
+
+\node[below = 1.5cm of b3] (CNN) {\footnotesize \alert{CNN}, \eg Lecun, 1990s};
+\node[below = 2pt of CNN] (CNN-2) {\footnotesize \alert{AlexNet}, 2012};
+\node[below = 2pt of CNN-2] (VAE) {\footnotesize \alert{VAE}, Welling, 2013};
+\node[below = 2pt of VAE] (GAN) {\footnotesize \alert{GAN}, Goodfellow, 2014};
+
+\draw[-latex] ([xshift=2mm]CNN.south west) -- ([xshift=2mm,yshift=-3mm]CNN.south west) -- (CNN-2.west);
+
+\node[below = 1.5cm of b4] (Resnet) {\footnotesize \alert{ResNet}, 2015};
+\node[below = 2pt of Resnet] (Transf) {\footnotesize \alert{Transformers}, 2017};
+\end{tikzpicture}
+
+\end{frame}
+
+
+
+
+
+\section{Modèle linéaire}
+
+\begin{frame}
+\frametitle{Programme du cours}
+\tableofcontents[currentsection]
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Graphe de calcul}
+
+\begin{itemize}[label=\tiny$\blacksquare$]
+	\item Un réseau de neurones est un \alert{graphe de calcul}: les connections représentent des opérations mathématiques de base
+\end{itemize}
+
+\begin{center}
+\begin{tikzpicture}
+	\node[circle,draw,thick,minimum width=0.8cm] (n1) {$x_1$};
+	\node[circle,draw,thick,minimum width=0.8cm,below=10pt of n1] (n2) {$x_2$};
+	\node[circle,draw,thick,minimum width=0.8cm,below right=8pt and 1.5cm of n1,anchor=west] (n3) {$y$};
+	
+	%\node[above right = 20pt and -5pt of n3] (biais) {b};
+	
+	\draw[-latex] (n1) -- node[label={$w_1$}] {} (n3);
+	\draw[-latex] (n2) -- node[label={below:$w_2$}] {} (n3);
+	%\draw[-latex,color=black!40] (biais) -- (n3);
+\end{tikzpicture}
+\end{center}
+
+\begin{itemize}[label=\tiny$\blacksquare$]
+	\item Sur cette représentation simple:
+	\begin{itemize}[label=-]
+		\item à chaque \alert{connection} ${i}$ est affecté un \alert{poids} multiplicatif $w_i$
+		\item un neurone de sortie \alert{additionne} les entrées
+	\end{itemize}
+	
+	\pause
+	
+	\item On note \alert{$\theta \eqdef (w_1,w_2)$} l'ensemble des paramètres du graphe. 
+	
+	Ici on a représenté la fonction
+	\eq{\tcbhighmath{
+		y = f_\theta(x) = \pause w_1 x_1 + w_2 x_2
+	}}
+\end{itemize}
+
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Modèle linéaire (1/2)}
+
+\begin{itemize}[label=\tiny$\blacksquare$]
+	\item Toute \alert{fonction linéaire}	 peut se modéliser comme un réseau à une couche
+\end{itemize}
+\begin{tikzpicture}
+	\node[circle,draw,thick] (n1) {$x_1$};
+	\node[circle,draw,thick,below=1pt of n1] (n2) {$x_2$};
+	\node[below=-5pt of n2] (n3) {$\vdots$};
+	\node[circle,draw,thick,below=1pt of n3] (n4) {$x_d$};
+	\node[circle,draw,thick,below right=1pt and 1.5cm of n2,anchor=west] (n5) {$y$};
+	
+	\draw (n1) -- node[label={$w_1$}] {} (n5);
+	\draw (n2) -- node[label={below left:$w_2$}] {} (n5);
+	\draw (n4) -- node[label={below:$w_d$}] {} (n5);
+	
+	\node[above=-5pt of n1,anchor=south] {$\displaystyle f_\theta(x) = \theta^\top x = \sum_k x_k w_k$};
+	
+	\onslide<1>{\node[right=0.5cm of n5,anchor = west,label={above: Regression: $y = f_\theta(x)$}] (p1) {
+		\includegraphics[height=0.2\textwidth]{figs/regression-lin}
+		};
+	}
+	\onslide<2>{\node[right=0.5cm of n5,anchor = west,label={above: Regression: $y = f_\theta(x)$}] (p1) {
+		\includegraphics[height=0.2\textwidth]{figs/regression}
+		};
+	}
+	\onslide<1>{\node[right=20pt of p1,anchor = west,label={above: Classification: $f_\theta(x)=0$}] (p2) {
+		\includegraphics[height=0.2\textwidth]{figs/classification-lin}
+		};
+	}
+	\onslide<2>{\node[right=20pt of p1,anchor = west,label={above: Classification: $f_\theta(x)=0$}] (p2) {
+		\includegraphics[height=0.2\textwidth]{figs/classification}
+		};
+	}
+\end{tikzpicture}
+
+\begin{itemize}[label=\tiny$\blacksquare$]
+	\item Critère d'optimisation: à partir de \alert{$n$ données labellisées} $(x^{(i)},y^{(i)}) \in \RR^d \times \Yy$
+	\eq{
+		\min_{\theta \in \RR^d} \sum_{i=1}^n \ell({\theta^\top x^{(i)}},y^{(i)})
+	}
+	où $\ell$ est une fonction perte adéquate.
+	
+	\pause
+	
+	\begin{tcolorbox}[bottom=0pt]
+	\item \alert{Remarque}: $\theta \mapsto f_\theta(x)$ est linéaire, mais pas nécessairement $x\mapsto f_\theta(x)$:
+	\begin{itemize}[label=-]
+		\item \alert{Méthodes à noyau}: remplacer $x$ par $\phi(x) \in \RR^D$, avec $D \gg d$
+		\item \alert{Apprentissage profond}: introduire de la non-linéarité pour apprendre $\phi$
+	\end{itemize}
+	\end{tcolorbox}
+\end{itemize}
+
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Modèle linéaire (2/2)}
+
+\begin{itemize}[label=\tiny$\blacksquare$]
+	\item Si la sortie est vectorielle
+\end{itemize}
+
+\begin{center}
+	\begin{tikzpicture}
+		\node[circle,fill,inner sep=1pt,label=left:$x_1$](x1){};
+		\node[circle,fill,inner sep=1pt,label=left:$x_2$,below=5pt of x1](x2){};
+		\node[circle,fill,inner sep=1pt,below=5pt of x2](x3){};
+		\node[circle,fill,inner sep=1pt,label={[xshift=-1.5mm]left:$\vdots$},below=5pt of x3](x4){};
+		\node[circle,fill,inner sep=1pt,below=5pt of x4](x5){};
+		\node[circle,fill,inner sep=1pt,label=left:$x_d$,below=5pt of x5](x6){};
+		
+		
+		
+		\node[circle,fill,inner sep=1pt,label=right:$y_1$,right=2cm of x2](y1){};
+		\node[circle,fill,inner sep=1pt,label={[xshift=1.5mm]right:$\vdots$},below=5pt of y1](y2){};
+		\node[circle,fill,inner sep=1pt,below=5pt of y2](y3){};
+		\node[circle,fill,inner sep=1pt,label=right:$y_p$,below=5pt of y3](y4){};
+		
+		\onslide<1>{
+		\draw (x1) -- node[label=$w_{11}$] {} (y1);
+		\draw (x1) -- (y2);
+		\draw (x1) -- (y3);
+		\draw (x1) -- (y4);
+		}
+		
+		\begin{scope}
+			\coordinate (s11) at (x1);
+			\coordinate (s12) at (y1);
+			\coordinate (s13) at (x6);
+			%
+			\coordinate (s22) at (y2);
+			\coordinate (s32) at (y3);
+			\coordinate (s42) at (y4);
+		\end{scope}
+		
+		\onslide<2->{
+		\fill[fill=teal!30,fill opacity = 0.7]
+			(s11) -- node[label=above:\textcolor{teal!}{$\ww_1$}]{} (s12) -- (s13) -- cycle;	
+		\fill[fill=red!30,fill opacity = 0.7]
+			(s11) -- (s22) -- (s13) -- cycle;	
+		\fill[fill=green!30,fill opacity = 0.7]
+			(s11) -- (s32) -- (s13) -- cycle;	
+		\fill[fill=mLightBrown!30,fill opacity = 0.7]
+			(s11) -- (s42) -- node[label=below:\textcolor{mLightBrown}{$\ww_p$}]{} (s13) -- cycle;
+		}
+		
+		\onslide<1>{
+		\draw (x2) -- (y1);
+		\draw (x2) -- (y2);
+		\draw (x2) -- (y3);
+		\draw (x2) -- (y4);
+		
+		\draw (x3) -- (y1);
+		\draw (x3) -- (y2);
+		\draw (x3) -- (y3);
+		\draw (x3) -- (y4);
+		
+		\draw (x4) -- (y1);
+		\draw (x4) -- (y2);
+		\draw (x4) -- (y3);
+		\draw (x4) -- (y4);
+		
+		\draw (x5) -- (y1);
+		\draw(x5) -- (y2);
+		\draw (x5) -- (y3);
+		\draw (x5) -- (y4);
+		
+		\draw (x6) -- (y1);
+		\draw (x6) -- (y2);
+		\draw (x6) -- (y3);
+		\draw (x6) -- node[label=below:$w_{pd}$]{} (y4);
+		}
+		
+		% HACK
+		\node[circle,fill,inner sep=1pt] at (x1) (x1){};
+		\node[circle,fill,inner sep=1pt,below=5pt of x1](x2){};
+		\node[circle,fill,inner sep=1pt,below=5pt of x2](x3){};
+		\node[circle,fill,inner sep=1pt,label={[xshift=-1.5mm]left:$\vdots$},below=5pt of x3](x4){};
+		\node[circle,fill,inner sep=1pt,below=5pt of x4](x5){};
+		\node[circle,fill,inner sep=1pt,below=5pt of x5](x6){};
+		% *****
+		
+		\node[right =1cm of y1,anchor=west] {$\displaystyle y_j = \sum_k w_{jk}x_k = \ww_j^\top x$};
+		
+		\onslide<1>{\node[below right = 6pt and 1cm of y4,anchor=west] {$\displaystyle \yy = \Wbold \xx$, \quad $\displaystyle \Wbold = \begin{bmatrix} w_{11} & w_{12} & \ldots \\ w_{21} & w_{22} & \ldots \\ \vdots & \vdots &  \end{bmatrix}$ };}
+		\onslide<2->{\node[below right = 6pt and 1cm of y4,anchor=west] {$\displaystyle \yy = \Wbold \xx$, \quad $\displaystyle \Wbold = \begin{bmatrix} w_{11} & w_{12} & \ldots \\ w_{21} & w_{22} & \ldots \\ \vdots & \vdots &  \end{bmatrix} = \begin{bmatrix} \textcolor{teal}{\ww_1^\top} \\ \textcolor{red}{\ww_2^\top}  \\ \vdots \\ \alert{\ww_p^\top}\end{bmatrix}$ };}
+	\end{tikzpicture}
+\end{center}
+
+
+\begin{itemize}[label=\tiny$\blacksquare$]
+\onslide<3->{
+	\item Si $y$ est une \alert{couche intermédiaire}, on affecte à chaque neurone $y_j$ un \alert{biais additif} $b_j$ (non représenté graphiquement)
+}
+\onslide<4>{
+	\begin{tcolorbox}
+	\item Dans ce cas, la couche modélise une fonction affine, \ie
+	\eq{
+		\yy = \bm{W} \xx + \bb.
+	}
+	\alert{$\theta \eqdef (\bm{W},\bb)$} sont les paramètres du réseau (pour cette couche).
+	\end{tcolorbox}
+}
+\end{itemize}
+\end{frame}
+
+
+\section{Réseaux multi-couches}
+
+\begin{frame}
+\frametitle{Programme du cours}
+\tableofcontents[currentsection]
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Perceptron multi-couches}
+
+\begin{itemize}[label=\tiny$\blacksquare$]
+	\item On ne gagne rien en rajoutant des couches de transmissions affines, puisque la composée de fonctions affines est une fonction affine
+	\bigbreak
+	\begin{center}
+\begin{tikzpicture}
+\node[rectangle,fill=mDarkTeal!20,draw,minimum height=0.8cm,thick,above right=-1pt and 1cm of n43,anchor=west,label=below:$x_0$] (x0) {};
+\node[trapezium,
+		trapezium angle=70,
+		fill=teal!40,
+		rotate=90,
+		right=1pt of x0.east,
+		anchor = north,
+		minimum width=1.5cm] (l0) {\rotatebox{-90}{$\theta_0$}};
+
+\node[rectangle,fill=mDarkTeal!20,draw,minimum height=1.6cm,thick,right=1pt of l0.south,label=below:$x_1$] (x1) {};
+
+\node[trapezium,
+		trapezium angle = 70,
+		fill=teal!40,
+		rotate=-90,
+		right=1pt of x1.east,
+		anchor = south,
+		minimum width=1.5cm] (l1) {\rotatebox{90}{$\theta_1$}};
+		
+\node[rectangle,fill=mDarkTeal!20,draw,right=1pt of l1.north,minimum height=0.8cm,thick,label=below:$x_2$] (x2) {};
+
+\begin{scope}
+	\coordinate (c1) at (x2.north east);
+	\coordinate (c2) at (x2.south east);
+	\coordinate (c3) at ([xshift=1cm,yshift=0.3cm]c1);
+	\coordinate (c4) at ([xshift=1cm,yshift=-0.3cm]c2);
+	\coordinate (c5) at ([xshift=0.7cm,yshift=-0.4cm]c3);
+	\coordinate (c6) at ([xshift=0.7cm,yshift=0.4cm]c4);
+\end{scope}
+
+\node[rectangle,fill=mDarkTeal!20,draw,right=3cm of x2,minimum height=1cm,thick,label=below:$x_{L+1}$] (xL) {};
+
+\draw[thick,dashed] (c1) -- (c3) -- (c5) -- (xL.north west);
+\draw[thick,dashed] (c2) -- (c4) -- (c6) -- (xL.south west);
+
+\end{tikzpicture}
+\end{center}
+\eq{
+	\xx_{L+1} = \Wbold_{L}\xx_{L} + b_{L} = \ldots = \left(\Wbold_{L} \circ \ldots \circ \Wbold_0\right) \xx_0 + \sum_{k=0}^{L} \left(\Wbold_L \circ \ldots \circ \Wbold_{k+1}\right) \bb_{k}
+}
+\end{itemize}
+
+\pause
+
+\begin{itemize}[label=\tiny$\blacksquare$]
+	\item Pour plus d'\alert{expressivité}, on introduit des \alert{non-linéarités} dans \alert{certaines} couches
+	\eq{\tcbhighmath{
+		\xx_{k+1} \eqdef \alert{\sigma}(\Wbold_k \xx_k + \bb_k)
+	}}
+	où $\sigma$ est une fonction non-linéaire. 
+	
+	\textit{Notation:} $\sigma(\zz)$ s'entend par $\sigma(z_i)$ appliqué à chaque composante $z_i$ de $\zz$
+	\break
+	\pause
+	\item Les réseaux résultants $(\theta_0,\theta_1,\ldots,\theta_L)$ (\ie \alert{entièrement connectés} + \alert{non-linéarités}) s'appellent des \alert{perceptrons}.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Fonctions d'activation}
+
+\begin{itemize}[label=\tiny$\blacksquare$]
+	\item Pour les fonctions non-linéaires $\sigma$, on parle de \alert{fonctions d'activation}.
+	\item Pour une meilleure expressivité, on les choisit non-polynomiale
+	
+	\begin{figure}
+		\includegraphics[width=0.3\textwidth]{figs/sigmoid}
+		\includegraphics[width=0.3\textwidth]{figs/relu}
+		\includegraphics[width=0.3\textwidth]{figs/swish}
+	\end{figure}
+\end{itemize}
+\end{frame}
+
+
+
+
+
+
+\begin{frame}
+\frametitle{Pour résumer}
+
+\setlength{\spacing}{1.5cm}
+
+\begin{center}
+\begin{tikzpicture}[every node/.style={circle,minimum width = .5cm}]
+% first layer
+\node[draw] (n10) at (0,0) {$x_1$};
+%\node[draw,below=5pt of n10] (n11) {$x_2$};
+\node[below=3pt of n10] (n11) {$\bm{\vdots}$};
+\node[draw,below=5pt of n11] (n12) {$x_d$};
+
+
+% second layer
+%\node[draw,above right = 0.77cm and \spacing of n10] (n20) {};
+\node[draw,above right = 0.1cm and \spacing of n10] (n21) {};
+\node[draw,below=5pt of n21] (n22) {};
+\node[draw,below=5pt of n22] (n23) {};
+\node[draw,below=5pt of n23] (n24) {};
+\node[draw,below=5pt of n24] (n25) {};
+
+% connections
+\draw[] (n10) -- (n21);
+\draw[] (n10) -- (n22);
+\draw[] (n10) -- (n23);
+\draw[] (n10) -- (n24);
+\draw[] (n10) -- (n25);
+%
+\draw[] (n12) -- (n21);
+\draw[] (n12) -- (n22);
+\draw[] (n12) -- (n23);
+\draw[] (n12) -- (n24);
+\draw[] (n12) -- (n25);
+%
+
+
+% third layer
+\node[draw,right =\spacing of n22] (n30) {};
+\node[draw,below=5pt of n30] (n31) {};
+\node[draw,below=5pt of n31] (n32) {};
+
+% connections
+\draw[] (n21) -- (n30);
+\draw[] (n21) -- (n31);
+\draw[] (n21) -- (n32);
+%
+\draw[] (n22) -- (n30);
+\draw[] (n22) -- (n31);
+\draw[] (n22) -- (n32);
+%
+\draw[] (n23) -- (n30);
+\draw[] (n23) -- (n31);
+\draw[] (n23) -- (n32);
+%
+\draw[] (n24) -- (n30);
+\draw[] (n24) -- (n31);
+\draw[] (n24) -- (n32);
+%
+\draw[] (n25) -- (n30);
+\draw[] (n25) -- (n31);
+\draw[] (n25) -- (n32);
+%
+
+
+% fourth layer
+\node[draw,above right = 0.3cm and \spacing of n30] (n40) {};
+\node[draw,below=5pt of n40] (n41) {};
+\node[draw,below=5pt of n41] (n42) {};
+\node[draw,below=5pt of n42] (n43) {};
+\node[draw,below=5pt of n43] (n44) {};
+
+
+% connections
+\draw[] (n30) -- (n40);
+\draw[] (n30) -- (n41);
+\draw[] (n30) -- (n42);
+\draw[] (n30) -- (n43);
+\draw[] (n30) -- (n44);
+%
+\draw[] (n31) -- (n40);
+\draw[] (n31) -- (n41);
+\draw[] (n31) -- (n42);
+\draw[] (n31) -- (n43);
+\draw[] (n31) -- (n44);
+%
+\draw[] (n32) -- (n40);
+\draw[] (n32) -- (n41);
+\draw[] (n32) -- (n42);
+\draw[] (n32) -- (n43);
+\draw[] (n32) -- (n44);
+
+% output layer
+\node[draw,below right =0.05cm and \spacing of n40] (n50) {$y_1$};
+\node[below=3pt of n50] (n51) {$\bm{\vdots}$};
+\node[draw,below =5pt of n51] (n52) {$y_p$};
+%\node[below=5pt of n50] (n51) {$y_2$};
+%\node[below=5pt of n51] (n52) {$y_3$};
+
+
+% connections
+\draw[] (n40) -- (n50);
+\draw[] (n40) -- (n52);
+%
+\draw[] (n41) -- (n50);
+\draw[] (n41) -- (n52);
+%
+\draw[] (n42) -- (n50);
+\draw[] (n42) -- (n52);
+%
+\draw[] (n43) -- (n50);
+\draw[] (n43) -- (n52);
+%
+\draw[] (n44) -- (n50);
+\draw[] (n44) -- (n52);
+
+\begin{scope}[on background layer]
+\node [rectangle, fill=mLightBrown!20, minimum height = 4cm, fit={(n10) (n11) (n12) }] (layer-1) {};
+
+\node [rectangle, fill=teal!20, minimum height = 4cm, fit={(n21) (n22) (n23) (n24) (n25)},label=below:$1$] (layer-2) {};
+
+\node [rectangle, fill=teal!20, minimum height = 4cm, fit={(n30) (n31) (n32)},label=below:$\ldots$] (layer-3) {};
+
+\node [rectangle, fill=teal!20, minimum height = 4cm, fit={(n40) (n41) (n42) (n43) (n44)},label=below:$L$] (layer-4) {};
+
+\node [rectangle, fill=purple!20, minimum height = 4cm, fit={(n50) (n51) (n52)}] (layer-5) {};
+\end{scope}
+
+%\draw[-latex,thick] ([yshift=-.3cm]layer-1.south west) -- ([yshift=-.3cm]layer-5.south east) node[rectangle,midway,fill=black!2] {$y = f_\theta(x)$};
+
+\end{tikzpicture}
+
+\vspace{-5mm}
+
+\begin{itemize}[label=\tiny$\blacksquare$]
+	\item La \alert{couche d'entrée} ne compte pas
+	\item Chaque \alert{couche cachée} $l$ est caractérisée par:
+	\begin{itemize}[label=-]
+		\item une matrice de poids $\Wbold_{l-1}$ et un vecteur de biais $\bb_{l-1}$
+		\item une fonction d'activation $\sigma$
+	\end{itemize}
+	\item La \alert{couche de sortie} est caractérisée par
+	\begin{itemize}[label=-]
+		\item une matrice de poids $\Wbold_L$
+	\end{itemize}
+	\item Le perceptron est entièrement défini par $\theta = ((W_0,b_0),\ldots,(W_{L-1},b_{L-1}),W_L)$
+\end{itemize}
+
+
+\end{center}
+
+
+\end{frame}
+
+
+
+
+
+\begin{frame}
+\frametitle{Théorème d'approximation universelle}
+
+\begin{center}
+	\begin{tikzpicture}
+		\node[circle,fill,inner sep=1pt,label=left:$x_1$](x1){};
+		\node[circle,fill,inner sep=1pt,below=5pt of x1](x2){};
+		\node[circle,fill,inner sep=1pt,label=left:$x_d$,below=5pt of x2](x3){};
+		
+		\node[circle,fill,inner sep=1pt,label=above:$z_1$,above right=6pt and 1cm of x1](h1){};
+		\node[circle,fill,inner sep=1pt,below=5pt of h1](h2){};
+		\node[circle,fill,inner sep=1pt,below=5pt of h2](h3){};
+		\node[circle,fill,inner sep=1pt,below=5pt of h3](h4){};
+		\node[circle,fill,inner sep=1pt,label=below:$z_n$,below=5pt of h4](h5){};
+		
+		
+		\begin{scope}
+			\coordinate (s1) at (x1);
+			\coordinate (s2) at (x3);
+			\coordinate (s31) at (h1);
+			\coordinate (s32) at (h2);
+			\coordinate (s33) at (h3);
+			\coordinate (s34) at (h4);
+			\coordinate (s35) at (h5);
+		\end{scope}
+		
+		\fill[fill=teal!40,fill opacity=0.5]
+			(s1) -- node[label=above:\textcolor{teal}{$\ww_1$}]{} (s31) -- (s2) -- cycle;
+		
+		\fill[fill=teal!40,fill opacity=0.5]
+			(s1) -- (s32) -- (s2) -- cycle;
+		
+		\fill[fill=teal!40,fill opacity=0.5]
+			(s1) -- (s33) -- (s2) -- cycle;
+			
+		\fill[fill=teal!40,fill opacity=0.5]
+			(s1) -- (s34) -- (s2) -- cycle;
+		
+		\fill[fill=teal!40,fill opacity=0.5]
+			(s1) -- (s35) -- (s2) -- cycle;
+			
+		% HACK
+		\node[circle,fill,inner sep=1pt] at (x1) (x1){};
+		\node[circle,fill,inner sep=1pt,below=5pt of x1](x2){};
+		\node[circle,fill,inner sep=1pt,below=5pt of x2](x3){};
+		%******
+		
+		
+		
+		\node[circle,fill=black!30,inner sep=1pt,below right=3pt and 1cm of h1](y1){};
+		\node[circle,fill,inner sep=1pt,label=right:$y$,below=5pt of y1](y2){};
+		\node[circle,fill=black!30,inner sep=1pt,below=5pt of y2](y3){};
+		\node[circle,fill=black!30,inner sep=1pt,below=5pt of y3](y4){};
+		
+		
+		\begin{scope}
+			\coordinate (c1) at (h1);
+			\coordinate (c2) at (h5);
+			\coordinate (c31) at (y1);
+			\coordinate (c32) at (y2);
+			\coordinate (c33) at (y3);
+			\coordinate (c34) at (y4);
+		\end{scope}
+		
+		%\fill[fill=teal!20,fill opacity=0.5]
+		%	(c2) -- (c1) -- (c31) -- cycle;
+			
+		\fill[fill=teal!40,fill opacity=0.5]
+			(c2) -- (c1) -- node[label=above:\textcolor{teal}{$\vv$}]{} (c32) -- cycle;
+			
+		%\fill[fill=teal!40,fill opacity=0.5]
+		%	(c1) -- (c2) -- (c33) -- cycle;
+			
+		%\fill[fill=teal!40,fill opacity=0.5]
+		%	(c1) -- (c2) -- (c34) -- cycle;
+			
+		
+		% HACK	
+		\node[circle,fill,inner sep=1pt] at(h1)(h1){};
+		\node[circle,fill,inner sep=1pt,below=5pt of h1](h2){};
+		\node[circle,fill,inner sep=1pt,below=5pt of h2](h3){};
+		\node[circle,fill,inner sep=1pt,below=5pt of h3](h4){};
+		\node[circle,fill,inner sep=1pt,below=5pt of h4](h5){};
+		% ****
+		
+		\node[below right = -15pt and 1cm of y2] {$\displaystyle y = \sum_{k=1}^n v_k \, \sigma(\ww_k^\top \xx+b_k)$};
+			
+\end{tikzpicture}
+\end{center}
+
+\begin{itemize}[label=\tiny$\blacksquare$]
+	\item Un perceptron avec seulement une couche cachée (mais de \alert{largeur arbitraire}) permet d'approcher n'importe quelle fonction continue (sur un compact)
+
+\begin{tcolorbox}
+\begin{theorem}[Cybenko-Hornik] Soit $f: \Cc \mapsto \RR$ une fonction continue. Alors pour tout $\eps >0$, il existe $n \in \NN$ et $\theta = (\Wbold,\bb,\vv) \in \RR^{n\times d} \times \RR^n \times \RR^d$ tels que
+\eq{
+	\forall \xx \in \Cc, \quad \abs{f_\theta(\xx) - f(\xx)} < \eps
+}
+\end{theorem}
+\end{tcolorbox}
+
+\end{itemize} 
+\end{frame}
+
+\section{Optimisation}
+
+\begin{frame}
+\frametitle{Programme du cours}
+\tableofcontents[currentsection]
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Apprentissage supervisé}
+
+\begin{itemize}[label=\tiny$\blacksquare$]
+	\item \alert{Entraînement} = optimisation des paramètres du réseau pour minimiser l'\alert{erreur empirique} entre la sortie et les données (labellisées)
+	\eq{
+		J(\theta) \eqdef \frac{1}{n}\sum_{k=0}^n \ell(f_\theta(\xx^{(k)}),\yy^{(k)})
+	}
+	
+	\item Exemples de fonctions perte $\ell(\hat{\yy},\yy)$
+	\begin{tikzpicture}
+		\node[fill=mLightBrown!20,label=below:\textcolor{mLightBrown}{pour la régression}] at (0,0) (n0) {
+		$\displaystyle \begin{array}{l|l}
+			\text{MSE} & \displaystyle \frac{1}{p}\sum_{k=1}^p \abs{\hat{y}_k - y_k}^2\\
+			\text{MAE} & \displaystyle \frac{1}{p}\sum_{k=1}^p \abs{\hat{y}_k - y_k}
+		\end{array}$};
+		
+		\node[fill=teal!20,right=0.7cm of n0,label=below:\textcolor{teal}{pour la classification}] (n1) {
+			$\displaystyle \begin{array}{l|l}
+			\text{Hinge} & \displaystyle \frac{1}{p}\sum_{k=1}^p \max(0,1-\hat{y}_ky_k)\\
+			\\
+			\text{Log} & \displaystyle \frac{1}{p}\sum(y_k \log(\hat{y}_k) + (1-y_k)\log(1-\hat{y}_k))\\
+		\end{array}
+		$};
+	\end{tikzpicture}
+\end{itemize}
+
+
+
+
+
+\end{frame}
+
+
+
+
+
+
+
+\begin{frame}
+\frametitle{Optimisation}
+\begin{center}
+
+\eq{
+		J(\theta) \eqdef \frac{1}{n}\sum_{k=0}^n \ell(f_\theta(\xx^{(k)}),\yy^{(k)})
+	}
+
+\begin{tikzpicture}
+	\node[rectangle, draw, thick, fill=mLightBrown!20, minimum height=1cm] at (0,0) (x0) {};
+	\node[rectangle, draw, thick, fill=teal!20, minimum height=1.5cm,right=1cm of x0] (h1) {};
+	\node[rectangle, draw, thick, fill=teal!20, minimum height=0.8cm,right=1cm of h1] (h2) {};
+	\node[rectangle, draw, thick, fill=teal!20, minimum height=1.2cm,right=1cm of h2] (h3) {};
+	\node[rectangle, draw, thick, fill=teal!20, minimum height=1.4cm,right=1cm of h3] (h4) {};
+	\node[rectangle, draw, thick, fill=red!20, minimum height=0.1cm,right=1cm of h4] (y) {};
+	
+	
+	\draw[thick,dashed] (x0.north east) -- (h1.north west);
+	\draw[thick,dashed] (x0.south east) -- (h1.south west);
+	\draw[thick,dashed] (h1.north east) -- (h2.north west);
+	\draw[thick,dashed] (h1.south east) -- (h2.south west);
+	\draw[thick,dashed] (h2.north east) -- (h3.north west);
+	\draw[thick,dashed] (h2.south east) -- (h3.south west);
+	\draw[thick,dashed] (h3.north east) -- (h4.north west);
+	\draw[thick,dashed] (h3.south east) -- (h4.south west);
+	\draw[thick,dashed] (h4.north east) -- (y.north west);
+	\draw[thick,dashed] (h4.south east) -- (y.south west);
+	
+	\node[left = 10pt of x0] (chien) {\includegraphics[width=0.12\textwidth]{figs/chien}};
+	\node[above=0pt of chien] (label) {$y = $ "chien"};
+	
+	\node[right = 0.7cm of y] (error) {$J(\theta)$};
+	
+	\draw[-latex,thick] (chien) -- (x0);
+	\draw[-latex,thick] (y) -- node[label=above:$\hat{y}$]{} (error);
+	
+	\draw[-latex,line width=0.5mm] (label.north) -- ([yshift=0.6cm]chien.north) -- ([yshift=1.1cm]error.north) -- (error.north);
+	\draw[-latex,line width=0.5mm] (error.south) -- ([yshift=-1.7cm]error.north) -- ([yshift=-0.7cm]h4.south) -- ([yshift=-0.8cm]h3.south) -- ([yshift=-1cm]h2.south) -- ([yshift=-0.65cm]h1.south) -- node[label=right:$\partial \theta_1$]{} (h1.south);
+	
+	\draw[-latex,line width=0.5mm] ([yshift=-0.7cm]h4.south) -- node[label=right:$\partial \theta_L$]{} (h4.south);
+	\draw[-latex,line width=0.5mm] ([yshift=-0.8cm]h3.south) -- (h3.south);
+	\draw[-latex,line width=0.5mm] ([yshift=-1cm]h2.south) -- (h2.south);
+\end{tikzpicture}
+\end{center}
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Calcul du gradient}
+
+\begin{itemize}[label=\tiny$\blacksquare$]
+	\item La minimisation de $J(\theta)$ nécessite de pouvoir dériver la sortie du réseau par rapport aux paramètres $\theta = (\theta_1,\ldots,\theta_L)$ du réseau.
+	
+	\item Autrement dit, on doit calculer
+	\eq{
+		\nabla J = \left( \frac{\partial J}{\partial \theta_1}, \ldots,  \frac{\partial J}{\partial \theta_L} \right)^\top
+	}
+	
+	\item Pour estimer ce gradient, on exploite le principe de la \alert{rétropropagation du gradient} ("backpropagation")
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Rétropropagation du gradient}
+
+\begin{center}
+\begin{tikzpicture}
+	\node[rectangle, draw, thick, fill=mLightBrown!20, minimum height=1cm] at (0,0) (x0) {};
+	\node[rectangle, draw, thick, fill=teal!20, minimum height=1.5cm,right=1.5cm of x0] (h1) {$\theta_1$};
+	\node[rectangle, draw, thick, fill=teal!20, minimum height=0.8cm,right=1.5cm of h1] (h2) {$\theta_2$};
+	\node[rectangle, draw, thick, fill=teal!20, minimum height=1.2cm,right=1.5cm of h2] (h3) {$\ldots$};
+	\node[rectangle, draw, thick, fill=teal!20, minimum height=1.4cm,right=1.5cm of h3] (h4) {$\theta_L$};
+	\node[rectangle, draw, thick, fill=red!20, minimum height=0.1cm,right=1cm of h4] (y) {$\hat{y}$};
+	
+	\draw[-latex,thick] (x0) -- node[fill=black!2]{$x_0$} (h1);
+	\draw[-latex,thick] (h1) -- node[fill=black!2]{$x_1$} (h2);
+	\draw[-latex,thick] (h2) -- node[fill=black!2]{$x_2$} (h3);
+	\draw[-latex,thick] (h3) -- node[fill=black!2]{$x_{L-1}$} (h4);
+	\draw[-latex,thick] (h4) -- (y);
+	\end{tikzpicture}
+\end{center}
+
+\begin{itemize}[label=\tiny$\blacksquare$]
+	\item Propagation avant dans le réseau:
+\eq{
+	\hat{y} = f_{\theta_L} \circ f_{\theta_{L-1}} \circ \ldots \circ f_1(x) = f_\theta(x)
+}
+
+	\item Propagation arrière: on introduit les étapes intermédiares $x_l$
+	\eq{
+		\hat{y} = f_{\theta_L} \circ \ldots \circ f_{\theta_{l+1}} (x_{l})
+	}
+	
+	\item On calcule le gradient à rebours $\partial \theta_L \rightarrow \partial \theta_{L-1} \rightarrow \ldots $
+\end{itemize}
+
+\end{frame}
+
+
+
+
+\begin{frame}
+\frametitle{Pour une couche}
+
+\begin{center}
+\begin{tikzpicture}[every node/.style={circle,minimum width = .5cm}]
+% second layer
+%\node[draw,above right = 0.77cm and \spacing of n10] (n20) {};
+\node[draw] at (0,0) (n21) {};
+\node[draw,below=5pt of n21] (n22) {};
+\node[draw,below=5pt of n22] (n23) {$x_i$};
+\node[draw,below=5pt of n23] (n24) {};
+
+
+% third layer
+\node[draw,below right =-1pt and 1.5cm of n21] (n30) {};
+\node[draw,below=5pt of n30] (n31) {$\hat{y}_j$};
+\node[draw,below=5pt of n31] (n32) {};
+
+% connections
+\draw[-latex] (n21) -- (n30);
+\draw[-latex] (n21) -- (n31);
+\draw[-latex] (n21) -- (n32);
+%
+\draw[-latex] (n22) -- (n30);
+\draw[-latex] (n22) -- (n31);
+\draw[-latex] (n22) -- (n32);
+%
+\draw[-latex] (n23) -- (n30);
+\draw[-latex] (n23) -- (n31);
+\draw[-latex] (n23) -- (n32);
+%
+\draw[-latex] (n24) -- (n30);
+\draw[-latex,color=mLightBrown] (n24) -- node[label={[yshift=-1mm]above:$w_{ji}$}]{} (n31);
+\draw[-latex] (n24) -- (n32);
+%
+
+\begin{scope}[on background layer]
+
+\node [rectangle, fill=mLightBrown!20, minimum height = 3.5cm, fit={(n21) (n22) (n23) (n24)},label=above:$x$] (layer-2) {};
+
+\node [rectangle, fill=teal!20, minimum height = 3.5cm, fit={(n30) (n31) (n32)},label=above:$\hat{y}$] (layer-3) {};
+\end{scope}
+
+\end{tikzpicture}
+\end{center}
+
+\vspace{-4mm}
+
+\eq{
+	\hat{\yy} = \sigma(W\xx+\bb), \quad \zz = W\xx + \bb, \quad J(\theta) = \ell(\hat{y}\textcolor{black!20}{(\theta)},y)
+}
+
+\eq{
+	\text{"Chain rule"} \qquad \left\{\begin{aligned}
+		& \frac{\partial J}{\partial w_{ji}} \pause = \frac{\partial J}{\alert{\partial z_j}} \cdot \frac{\alert{\partial z_j}}{\partial  w_{ji}} \pause = \frac{\partial J}{\partial \hat{y}_j} \cdot \sigma'(z_j) \cdot x_i \pause = \frac{\partial \ell}{\partial \hat{y}_j} \cdot \sigma'(z_j) \cdot x_i\\ \pause
+		&\frac{\partial J}{\partial b_j} = \frac{\partial \ell}{\partial \hat{y}_j} \cdot \sigma'(z_j)
+		\end{aligned}\right.
+}
+
+\pause 
+\eq{\tcbhighmath{
+	\nabla_W J(W,b) = \left[\sigma'(\zz) \odot \nabla \ell (\hat{\yy},\yy)\right] \cdot \xx^\top
+}
+\quad
+\tcbhighmath{
+	\nabla_b J(W,b) = \sigma'(\zz) \odot \nabla \ell (\hat{\yy},\yy)
+}
+}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Pour deux couches}
+
+
+Exercice
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Multi-couches}
+
+
+\begin{itemize}[label=\tiny$\blacksquare$]
+	\item Calcul du gradient de $J$ par rapport à $\theta$: une propagation avant, puis une rétropropagation
+
+	\begin{columns}[t]
+	\begin{column}{0.4\textwidth}
+	\centering
+	\begin{tcolorbox}[colback=teal!20,width=0.8\textwidth]
+	$\bullet$ $x_0 \leftarrow  x$
+	
+	$\bullet$ Pour $l$ de $0$ à $L-1$:
+	\begin{itemize}[label=-]
+		\item $\zz_{l+1} \leftarrow W_{l}\xx_{l} + \bb_{l}$
+		\item $\xx_{l+1} \leftarrow \sigma_{l}(\zz_l)$
+	\end{itemize}
+	$\bullet$ $\hat{\yy} \leftarrow x_{L}$
+	\end{tcolorbox}
+	\textcolor{teal}{Propagation}
+	
+	\end{column}
+	\begin{column}{0.4\textwidth}
+	\centering
+	\begin{tcolorbox}[colback=mLightBrown!20,width=0.9\textwidth]
+	$\bullet$ $\bm{g} \leftarrow  \nabla \ell(\hat{\yy},\yy)$
+	
+	$\bullet$ Pour $l$ de $L$ à $1$:
+	\begin{itemize}[label=-]
+		\item $\bm{g} \leftarrow \sigma_l'(\zz_{l}) \odot \bm{g}$
+		\item ${\nabla_{W} J} \leftarrow \bm{g}\xx_l^\top$
+		\item $\bm{g} \leftarrow W_l^\top \bm{g}$
+	\end{itemize}
+	$\bullet$ Renvoyer ${\nabla_W J}$
+	\end{tcolorbox}
+	\textcolor{mLightBrown}{Rétropropagation}
+	\end{column}
+	\end{columns}
+	
+	
+	\item Plus généralement: \alert{différentiation automatique}
+\end{itemize}
+
+
+\end{frame}
+
+
+
+\section{Réseaux convolutifs}
+\begin{frame}
+\frametitle{Programme du cours}
+\tableofcontents[currentsection]
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Coût de calcul MLP}
+
+\begin{itemize}[label=\tiny$\blacksquare$]
+	\item Pour une image $256\times 256\times 3$ pixels, le nombre de poids à optimiser pour un neurone de la première couche d'un MLP est de l'ordre de $2.10^5$ $\rightarrow$ \alert{trop coûteux}
+	\pause
+	\item Les MLP sont des réseaux entièrement connectés: aucun \alert{a priori} de structure, alors que les données sont toujours des propriétés structurelles fortes
+	\pause
+	\item Pour des images par exemple: corrélation spatiale, \alert{invariance par translation}, \ldots
+	
+	\bigbreak 
+	\begin{tikzpicture}
+		\node (0) at (0,0) {};
+		\node[right = 1pt of 0] (chien1) {\includegraphics[width=0.2\textwidth]{figs/chien}};
+		
+		\node (mid1) at (4.5,0) {};	
+		\node (mid2) at (5.5,0) {};		
+		
+		\node (1) at (10,0){};
+		\node[left = -3pt of 1] (chien2) {\includegraphics[width=0.2\textwidth]{figs/chien}};
+		
+		\begin{scope}[on background layer]
+
+		\node [draw,rectangle, minimum height = 3.5cm, fit={(mid1) (0)}] (b1) {};
+		
+		\node [draw,rectangle, minimum height = 3.5cm, fit={(mid2) (1)}] (b3) {};
+		\end{scope}
+	\end{tikzpicture}
+\end{itemize}
+\end{frame}
+
+
+
+
+
+
+\begin{frame}
+\frametitle{Convolution Neural Networks (CNN)}
+
+\begin{center}
+\begin{tikzpicture}
+\node[rectangle,draw,anchor=west,minimum height=1.2cm,thick,fill=mDarkTeal!20] at(0,0) (l3) {};
+
+\begin{scope}
+	\coordinate (c1) at ([xshift=1mm,yshift=0.11mm]l3.south);
+	\coordinate (c2) at ([xshift=0.4cm,yshift=0.5cm]c1);
+	\coordinate (c3) at ([yshift=1.2cm]c2);
+	\coordinate (c4) at ([xshift=1mm,yshift=-0.11mm]l3.north);
+\end{scope}
+\begin{scope}
+	\coordinate (c5) at ([xshift=-1.1mm,yshift=-0.11mm]l3.north);
+	\coordinate (c6) at ([xshift=0.4cm,yshift=0.5cm]c5);
+	\coordinate (c7) at ([xshift=2.1mm]c6);
+	\coordinate (c8) at ([xshift=1mm,yshift=-0.11mm]l3.north);
+\end{scope}
+\begin{scope}
+	\coordinate (i1) at ([xshift=1mm]l3.east);
+	\coordinate (i2) at ([xshift=0.7mm]i1);
+	\coordinate (i3) at ([xshift=1mm,yshift=1.3mm]i2);
+	\coordinate (i4) at ([yshift=3mm]i3);
+	\coordinate (i5) at ([yshift=3mm]i2);
+	\coordinate (i6) at ([yshift=3mm]i1);
+	\coordinate (i7) at ([xshift=-0.7mm]i4);
+\end{scope}
+
+\fill[fill=mDarkTeal!30,fill opacity=1](c1) -- (c2) -- (c3) -- (c4) -- cycle;
+\fill[fill=mDarkTeal!20,fill opacity=1](c5) -- (c6) -- (c7) -- (c8) -- cycle;
+\draw[thick,join=round] (c1) -- (c2) -- (c3) -- (c4) -- cycle;
+\draw[thick,join=round] (c5) -- (c6) -- (c7) -- (c8) -- cycle;
+
+%\onslide<2->{
+\fill[fill=teal!40] 
+	(i1) -- (i2) -- (i5) -- (i6) -- cycle
+	(i5) -- (i6) -- (i7) -- (i4) -- cycle;
+\fill[fill=teal!50]
+	(i2) -- (i3) -- (i4) -- (i5) -- cycle;
+\draw[thick,join=round] 
+	(i1) -- (i2) -- (i5) -- (i6) -- cycle
+	(i2) -- (i3) -- (i4) -- (i5) -- cycle
+	(i5) -- (i6) -- (i7) -- (i4) -- cycle;
+%}
+
+
+\node[circle,draw,thick,right=0pt and 1cm of l3,anchor=west] (n4) {};
+\node[right=3pt of n4] (n42) {\textbf{$\ldots$}};
+\node[circle,thick,draw,right=3pt of n42] (n43){};
+
+\begin{scope}
+	\coordinate (r1) at ([xshift=0.7cm]c1);
+	\coordinate (r2) at ([xshift=1.6cm]r1);
+	\coordinate (r3) at ([yshift=1.2cm]r2);
+	\coordinate (r4) at ([yshift=1.2cm]r1);
+	\coordinate (r5) at ([xshift=0.4cm,yshift=0.5cm]r4);
+	\coordinate (r6) at ([xshift=0.4cm,yshift=0.5cm]r3);
+	\coordinate (r7) at ([xshift=0.4cm,yshift=0.5cm]r2);
+\end{scope}
+
+\fill[fill=myteal!40,fill opacity=0.5]
+	(r1) -- (r2) -- (r3) -- (r4) -- cycle;
+\fill[fill=myteal!50,fill opacity=0.5]
+	(r4) -- (r5) -- (r6) -- (r3) -- cycle;
+\fill[fill=myteal!70,fill opacity=0.5]
+	(r2) -- (r3) -- (r6) -- (r7) -- cycle;
+\draw[thick,join=round]
+	(r1) -- (r2) -- (r3) -- (r4) -- cycle
+	(r4) -- (r5) -- (r6) -- (r3) -- cycle
+	(r2) -- (r3) -- (r6) -- (r7) -- cycle;
+	
+\draw[line width=0.3mm,teal!40] (i2) -- (n4);
+\draw[line width=0.3mm,teal!40] (i3) -- (n4);
+\draw[line width=0.3mm,teal!40] (i4) -- (n4);
+\draw[line width=0.3mm,teal!40] (i5) -- (n4);
+
+\begin{scope}
+	\coordinate (s1) at ([xshift=3.7cm]c1);
+	\coordinate (s2) at ([xshift=1.6cm]s1);
+	\coordinate (s3) at ([yshift=0.6cm]s2);
+	\coordinate (s4) at ([yshift=0.6cm]s1);
+	\coordinate (s5) at ([xshift=0.4cm,yshift=0.5cm]s4);
+	\coordinate (s6) at ([xshift=0.4cm,yshift=0.5cm]s3);
+	\coordinate (s7) at ([xshift=0.4cm,yshift=0.5cm]s2);
+\end{scope}
+
+\fill[fill=myteal!40,fill opacity=0.5]
+	(s1) -- (s2) -- (s3) -- (s4) -- cycle;
+\fill[fill=myteal!50,fill opacity=0.5]
+	(s4) -- (s5) -- (s6) -- (s3) -- cycle;
+\fill[fill=myteal!70,fill opacity=0.5]
+	(s2) -- (s3) -- (s6) -- (s7) -- cycle;
+\draw[thick,join=round]
+	(s1) -- (s2) -- (s3) -- (s4) -- cycle
+	(s4) -- (s5) -- (s6) -- (s3) -- cycle
+	(s2) -- (s3) -- (s6) -- (s7) -- cycle;
+	
+	
+\draw[thick,teal!40] (n43) -- ([yshift=0.3cm]s1);
+
+% *****************************************
+% *****************************************
+
+\end{tikzpicture}
+\end{center}
+
+
+\begin{itemize}[label=\tiny$\blacksquare$]
+	\item Chaque neurone n'est connecté qu'à un petit nombre de neurones
+	\item Un même poids s'applique à un groupe de neurones (masque de convolution)
+	\item Opération de convolution: favorise l'invariance par translation
+	\item Opération de pooling: réduit la dimension
+\end{itemize}
+\end{frame}
+
+
+
+
+\begin{frame}
+\frametitle{Architecture générale}
+
+Un CNN ets un empilement (en alternant) de 
+\begin{itemize}[label=-]
+	\item couches de convolution
+	\item couches d'activation
+	\item couches de pooling
+	\item couches entièrement connectées
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Convolution}
+
+\begin{tikzpicture}
+\matrix (R) [
+	draw,matrix of nodes,
+	nodes={rectangle,column sep=0cm,minimum width=0.7cm},
+	ampersand replacement=\&,
+	row 1/.style = {nodes={fill=mDarkTeal!20}},
+	column 1/.style = {nodes={fill=mDarkTeal!20}},
+	node 1/.style = {fill=blue}] {
+0  \& 0 \& 0 \& 0  \& 0 \\
+0  \& 193 \& 187 \& 200  \& \ldots\\
+0  \& 185 \& 163 \& 160  \& \ldots \\
+0  \& 185 \& 160 \& 161  \& \ldots \\
+0  \& 190 \& 189 \& 170  \& \ldots \\
+0  \& 193 \& 187 \& 171  \& \ldots \\
+0  \& 201 \& 180 \& 184  \& \ldots \\
+\ldots  \& \ldots \& \ldots \& \ldots  \& \ldots \\
+};
+
+\matrix (G) [right=5pt of R,
+	draw,matrix of nodes,
+	nodes={rectangle,column sep=0cm,minimum width=0.7cm},
+	ampersand replacement=\&,
+	row 1/.style = {nodes={fill=mDarkTeal!20}},
+	column 1/.style = {nodes={fill=mDarkTeal!20}}] {
+0  \& 0 \& 0 \& 0  \& 0 \\
+0  \& 168 \& 162 \& 163  \& \ldots \\
+0  \& 160 \& 161 \& 164  \& \ldots \\
+0  \& 156 \& 158 \& 162  \& \ldots \\
+0  \& 155 \& 155 \& 158  \& \ldots \\
+0  \& 154 \& 152 \& 157  \& \ldots \\
+0  \& 153 \& 152 \& 153  \& \ldots \\
+\ldots  \& \ldots \& \ldots \& \ldots  \& \ldots \\
+};
+
+\matrix (B) [right=5pt of G,
+	draw,matrix of nodes,
+	nodes={rectangle,column sep=0cm,minimum width=0.7cm},
+	ampersand replacement=\&,
+	row 1/.style = {nodes={fill=mDarkTeal!20}},
+	column 1/.style = {nodes={fill=mDarkTeal!20}}] {
+0  \& 0 \& 0 \& 0  \& 0\\
+0  \& 167 \& 166 \& 167  \& \ldots \\
+0  \& 164 \& 165 \& 168  \& \ldots \\
+0  \& 160 \& 162 \& 168  \& \ldots \\
+0  \& 156 \& 156 \& 159  \& \ldots \\
+0  \& 155 \& 158 \& 158  \& \ldots \\
+0  \& 157 \& 156 \& 159  \& \ldots \\
+\ldots  \& \ldots \& \ldots \& \ldots  \& \ldots \\
+};
+
+\matrix (maskR) [below = 10pt of R.south,minimum width=0.7cm,
+	draw,matrix of nodes,fill=red!20,
+	nodes={rectangle},
+	ampersand replacement=\&,] {
+	-1 \& 1 \& -1\\
+	1 \& -1 \& 1\\
+	-1 \& 1 \& -1\\
+	};
+	
+\matrix (maskG) [below = 10pt of G.south,minimum width=0.7cm,
+	draw,matrix of nodes,fill=green!20,
+	nodes={rectangle},
+	ampersand replacement=\&,] {
+	0 \& 1 \& 0\\
+	1 \& 1 \& 1\\
+	0 \& 1 \& 0\\
+	};
+	
+\matrix (maskB) [below = 10pt of B.south,minimum width=0.7cm,
+	draw,matrix of nodes,fill=blue!20,
+	nodes={rectangle},
+	ampersand replacement=\&,] {
+	-1 \& 1 \& 0\\
+	0 \& -1 \& 0\\
+	1 \& -1 \& 1\\
+	};
+	
+	
+	
+\node[below = 5pt of maskR.south] (vR) {\textcolor{red}{16}};
+\node[below = 5pt of maskG.south] (vG) {\textcolor{green}{490}};
+\node[below = 5pt of maskB.south] (vB) {\textcolor{blue}{-166}};
+
+\node[right = 1.3cm of vR] {$+$};
+\node[right = 1.3cm of vG] (+G) {$+$};
+\node[right = 0.8cm of vB] {$+$ biais};
+
+
+\matrix (A) [label=below:{Activation map},below = 10pt of +G.south,minimum width=0.7cm,minimum height=0.5cm,
+	draw,matrix of nodes,
+	nodes={rectangle},
+	ampersand replacement=\&,] {
+	349\& \ldots \& \ldots\\
+	\ldots \& \ldots \& \ldots\\
+	\ldots \& \ldots \& \ldots\\
+	};
+	
+\node[left = 1cm of A] {$=$};
+
+\node[below left = 3cm and -2cm of R] (p) {zero-padding};
+
+\draw[-latex] (p) to [bend left = 30] ([xshift=0.5cm,yshift=0.4cm]R.south west);
+
+
+
+
+%\begin{scope}[on background layer]
+	\fill[red!20,opacity=0.5] ([xshift=0.1cm,yshift=-0.11cm]R.north west) rectangle ([xshift=2.2cm,yshift=-1.4cm]R.north west);
+	\fill[green!20,opacity=0.5] ([xshift=0.1cm,yshift=-0.11cm]G.north west) rectangle ([xshift=2.2cm,yshift=-1.4cm]G.north west);
+	\fill[blue!20,opacity=0.5] ([xshift=0.1cm,yshift=-0.11cm]B.north west) rectangle ([xshift=2.2cm,yshift=-1.4cm]B.north west);
+%\end{scope}
+\end{tikzpicture}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Pooling}
+
+\begin{figure}
+	\includegraphics[width=0.8\textwidth]{figs/pooling}
+	\caption*{\url{http://cedric-richard.fr/assets/files/ML-CO-NN.pdf}}
+\end{figure}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Pour résumer}
+
+\begin{figure}
+	\includegraphics[width=0.9\textwidth]{figs/cnn}
+	\caption*{\url{http://cedric-richard.fr/assets/files/ML-CO-NN.pdf}}
+\end{figure}
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{LeNet5, LeCun 1998}
+
+\includegraphics[width=0.9\textwidth]{figs/Lenet5}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{VGG, Simonyan et al. 2014}
+
+\includegraphics[width=0.9\textwidth]{figs/VGG}
+
+\end{frame}
+
+
+
+%\bibliographystyle{apalike}
+%\printbibliography
+%\bibliography{/export/home/pcatala/Workspace/build/biblio}
+
+\end{document}

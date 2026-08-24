@@ -1,0 +1,68 @@
+\chapter{Tenseurs}
+
+\section{Manipulations de tenseurs}
+
+\begin{enumerate}
+\item On considère le tenseur suivant:
+\eq{
+	\Xx_{:,:,1} = \begin{bmatrix}
+		1 & -1 & 0 \\
+		2 & 0 & 1\\
+		1 & 2 & 3
+	\end{bmatrix},
+	\qquad
+	\Xx_{:,:,2} = \begin{bmatrix}
+		-1 & -1 & 1\\
+		0 & 0 & 2\\
+		3 & 2 & 1
+	\end{bmatrix}.
+}
+\begin{enumerate}
+	\item Quel est l'odre de ce tenseur? Quelles sont ses dimensions?
+	\item Expliciter les fibres suivantes: $\Xx_{:,2,1}$, $\Xx_{3,:,2}$, $\Xx_{1,2,:}$.
+	\item Expliciter les tranches suivantes: $\Xx_{:,2,:}$, $\Xx_{3,:,:}$. 
+\end{enumerate}
+
+\item On considère le tenseur suivant:
+\eq{\begin{aligned}
+	&\Yy_{:,:,1,1} = \begin{bmatrix} 1 & -3 \\ 0 & 1 \end{bmatrix},
+	\qquad
+	\Yy_{:,:,1,2} = \begin{bmatrix} 0 & -1 \\ 2 & -2 \end{bmatrix},
+	\qquad
+	\Yy_{:,:,2,1} = \begin{bmatrix} 4 & 0 \\ 0 & 1 \end{bmatrix},
+	\\
+	&\Yy_{:,:,2,2} = \begin{bmatrix} 1 & -1 \\ 1 & 2 \end{bmatrix},
+	\qquad
+	\Yy_{:,:,3,1} = \begin{bmatrix} 0 & 0 \\ -1 & 0 \end{bmatrix},
+	\qquad
+	\Yy_{:,:,3,2} = \begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix}.
+	\end{aligned}
+}
+\begin{enumerate}
+	\item Quel est l'ordre de ce tenseur? Quelles sont ses dimensions?
+	\item Expliciter les fibres suivantes: $\Xx_{:,2,3,1}$, $\Xx_{1,:,2,2}$, $\Xx_{2,2,:,1}$, $\Xx_{1,2,3,:}$.
+	\item Expliciter les tranches suivantes: $\Xx_{1,:,:,2}$, $\Xx_{:,2,:,2}$, $\Xx_{:,1,3,:}$, $\Xx_{2,:,2,:}$.
+\end{enumerate}
+
+\item Etant donné le tenseur $\Xx$ ci-dessus, déterminer le tenseur $\Zz$ tel que
+\eq{
+	\Zz_{ijk} = \Xx_{ikj}.
+}
+On donnera la solution en explicitant les tranches frontales de $\Zz$.
+\end{enumerate}
+
+
+
+\section{Calculs tensoriels}
+On donne:
+\eq{
+	\bm{a} = \begin{bmatrix} 1 \\ 0 \\ 2 \end{bmatrix}, \quad
+	\bm{b} = \begin{bmatrix} 0 \\ 1 \\ 1 \end{bmatrix}, \quad
+	\bm{c} = \begin{bmatrix} 1 & -1 \end{bmatrix}, \quad
+	\bm{M} = \begin{bmatrix} 1 & 1 \\ 0 & -1 \\ 2 & 0 \\ 3 & 1 \end{bmatrix}
+}
+\begin{enumerate}
+	\item Calculer les produits tensoriels suivants: $\bm{a} \circ \bm{b}$,\; $\bm{a} \circ \bm{c}$,\; $\bm{a} \circ \bm{b} \circ \bm{c}$.
+	\item Calculer les produits de Kronecker $\bm{c} \otimes \bm{M}$ et $\bm{M} \otimes \bm{c}$.
+	\item Calculer le produit $3$-mode $(\bm{a} \circ \bm{b} \circ \bm{c}) \times_3 \bm{M}$
+\end{enumerate}

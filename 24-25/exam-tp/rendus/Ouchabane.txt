@@ -1,0 +1,25 @@
+% Ouchabane
+
+1. 1/1
+2. 1/1
+5. 1/1
+6. 0.5/0.5
+7. 0.5/0.5
+8. 0/1
+9. 0.5/2 mauvaise utilisation de toeplitz, 1:31 à proscrire
+10. 0/0.5 mauvaise compréhension de "troncature"
+11. 0.5/0.5 pas de figure...
+12. 0.5/0.5
+13. 0.5/1.5 reconstruction pas testée
+14. 2/2
+15. 0.5/1 valeur de l'énergie pas affichée
+16. 0.5/1 calculer un quotient... pourqoui cond(H'*H)?
+17. 0/2
+18. - 
+19. 1.5/2 alpha ne doit pas être négatif!
+20. 1/2 plutôt échelle log
+
+Code commenté 1/1
+Rendu conforme 1/1 figures n'importe où?
+
+Note finale 13.5

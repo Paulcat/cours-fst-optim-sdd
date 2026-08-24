@@ -1,0 +1,85 @@
+\section{Classification SVM}
+
+Le classifieur SVM de Matlab est \texttt{fitcsvm}. La commande
+\begin{lstlisting}
+svm = fitcsvm(X,y);
+\end{lstlisting}
+renvoie un classifieur SVM entraîné sur les données contenues dans $\X$, avec labels $\yy$. Cette fonction prend par ailleurs plusieurs options (consulter son aide), notamment:
+\begin{itemize}[label=-]
+	\item \texttt{'BoxConstraint'}: si cette option est fixée à \texttt{inf}, le classifieur utilise une marge dure. Pour toute autre valeur strictement positive, la marge est souple (la valeur par défaut est 1)
+	\item \texttt{'KernelFunction'}: le noyau utilisé le cas échéant
+	\item \texttt{'KernelScale'}: dans le cas d'un noyau gaussien, ce paramètre correspond à l'écart-type
+	\item \texttt{'Verbose'}: affiche ou non les informations liées au classifieur pendant l'optimisation
+\end{itemize}
+
+\subsection{Classification}
+
+\begin{enumerate}
+	\setcounter{enumi}{7}
+	%\item Retrouver ces différentes options dans l'aide de \texttt{fitcsvm}.
+	\item Entraîner un classifieur SVM à marge souple et à noyau gaussien sur les données projetées. Attention: on utilisera l'option \texttt{..., 'Standardize', true, ...} pour normaliser les données.
+\end{enumerate}
+
+Une fois le classifieur entraîné, les valeurs de labels prédites à partir des données d'entraînement (après ACP) se calculent avec la commande \texttt{predict}, qui peut également renvoyer un score pour chaque label, correspondant à la probabilité que ce label soit le bon.
+\begin{lstlisting}
+[labels,scores] = predict(svm,X_ACP);
+\end{lstlisting}
+
+%Dans le cas de deux classes, disons par exemple 1 et 0, la commande Matlab \texttt{confusionmat} retourne la matrice de confusion associée aux prédictions, c'est-à-dire la matrice \eq{\begin{bmatrix} \mathrm{TP} & \mathrm{FN} \\ \mathrm{FP} & \mathrm{TN} \end{bmatrix}} avec
+%\begin{itemize}[label=-]
+%	\item TP: nombre de bonnes prédictions de la classe 1 ("true positive")
+%	\item FP: nombre de mauvaises prédictions de la classe 1 ("false positive")
+%	\item FN: nombre de mauvaises prédictions de la classe 0  ("false negative")
+%	\item TN: nombre de bonnes prédictions de la classe 0 ("true negative")
+%\end{itemize}
+%
+%Une mesure possible du taux d'erreur est donné par $\frac{FP+FN}{n}$ où $n$ est le nombre d'échantillons. 
+\begin{enumerate}
+\setcounter{enumi}{8}
+	\item Calculer le taux d'erreur de classification sur les données d'entraînement, c'est-à-dire le ratio entre le nombre de mauvaises classifications et le nombre total d'échantillons.
+	\item Réduire la dimension des données de validation avec la même matrice \texttt{U} qui a été utilisée pour les données d'entraînement. Calculer les prédictions et le taux d'erreurs de classification sur le jeu de validation.
+\end{enumerate}
+
+\subsection{Réglages des hyperparamètres}
+
+\begin{enumerate}
+\setcounter{enumi}{10}
+	\item Répéter les codes précédents pour différentes valeurs du paramètre \texttt{'KernelScale'} dans l'intervalle [0.5;20]. Tracer les courbes des erreurs d'apprentissage et de validation correspondant. Quelle est une bonne valeur de ce paramètre?
+\begin{lstlisting}
+sigma_list = 0.5:0.5:20;
+% Insérer votre code ici
+for i=1:length(sigma_list)
+    % Insérer votre code ici
+end
+% Insérer votre code ici (plot)
+\end{lstlisting}
+
+	\item Répéter la procédure pour deux autres classes (chiffres 6 et 8). Est-il plus difficile de séparer ces classes? La courbe d'erreur de validation est-elle différente de la précédente?
+
+	\item  Une façon courante et pratique de régler les hyperparamètres (comme \texttt{'KernelScale'}) est d'utiliser la méthode de validation croisée. Cette méthode n'utilise que les données d'apprentissage, en les sous-divisant d'une manière astucieuse en sous-ensembles d'entraînement et de validation. On peut optimiser le paramètre \texttt{'KernelScale'} de la façon suivante:
+\begin{lstlisting}
+svm_opt = fitcsvm(X,y,'Verbose',1, ...
+	'Standardize',true, ...
+	'KernelFunction','gaussian', ...
+	'KernelScale',1, ...
+	'OptimizeHyperparameters','KernelScale');
+sigma_opt = s_opt.KernelParameters.Scale;
+\end{lstlisting}
+
+	Comparer les résultats (paramètre optimal, taux d'erreur) avec l'erreur de validation obtenue à l'étape précédente.
+	
+	\end{enumerate}
+	
+	\subsection{Pré-traitements additionnels}
+	
+	\begin{enumerate}
+	\setcounter{enumi}{13}
+		\item Prenez deux photos (noir et blanc, carré) avec votre smartphone, représentant les deux classes (6 et 8), ou utilisez les photos fournies dans les fichiers du tp. Affichez-les dans Matlab (NB: une image peut-être lue depuis un fichier avec la commande \texttt{imread}). Classifiez-les après les étapes de pré-traitement suivantes:
+	\begin{itemize}[label=-]
+		\item Si l'image est en couleurs, conversion en niveaux de gris (en prenant par exemple la moyenne des canaux RGB)
+		\item Recadrage (si nécessaire)
+		\item Négatif (blanc sur fond noir)
+		\item Correction du contraste -- il faut normaliser les données de telle façon que les valeurs minimales et maximales deviennent 0 et 255: $f_{i,j} = \frac{f_{i,j}-f_{\min}}{f_{\max}-f_{\min}}\cdot 255$
+		\item Redimensionnement à l'aide de la fonction \texttt{imresize}.
+	\end{itemize}
+\end{enumerate}

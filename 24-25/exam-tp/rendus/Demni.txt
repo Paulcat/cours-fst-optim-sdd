@@ -1,0 +1,25 @@
+% Demni
+
+1. 1/1
+2. 1/1
+5. 1/1
+6. 0.5/0.5
+7. 0.5/0.5
+8. 0/1
+9. 0.5/2 mauvaise utilisation de toeplitz, 1:31 à proscrire, pas de commentaires
+10. 0/0.5 mauvaise compréhension de l'erreur de troncature
+11. 0.5/0.5
+12. 0.5/0.5
+13. 0/1.5
+14. 1.5/2 commentaires???
+15. 0.5/1 énergie = un réel positif ... quezaco matrix?
+16. 1/1
+17. 0/2
+18. - 
+19. 1.5/2 explications de la formule
+20. 1.5/2 commentaires???
+
+Code commenté 0/1
+Rendu conforme 0/1
+
+Note 11,5

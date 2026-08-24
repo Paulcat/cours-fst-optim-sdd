@@ -1,0 +1,40 @@
+\section{Pour aller plus loin}
+
+\subsection{Pré-traitements}
+
+\begin{enumerate}
+	\item Répétez la procédure pour deux autres classes (chiffres 6 et 8). Est-il plus difficile de séparer ces classes? La courbe d'erreur de validation est-elle différente de la précédente?
+	\item Prenez deux photos (noir et blanc, carré) avec votre smartphone, représentant les deux classes (6 et 8), ou utilisez les photos fournies dans les fichiers du tp. Classifiez-les après les étapes de pré-traitement suivantes:
+	\begin{itemize}[label=-]
+		\item Recadrage
+		\item Conversion en négatif (blanc sur fond noir)
+		\item Correction du contraste -- il faut normaliser les données de telle façon que les valeurs minimales et maximales deviennent 0 et 255: $f_{i,j} = \frac{f_{i,j}-f_{\min}}{f_{\max}-f_{\min}}\cdot 255$
+		\item Redimensionnement à l'aide de la fonction \texttt{imresize}.
+	\end{itemize}
+\end{enumerate}
+
+\subsection{Classification multi-classes}
+
+Cette partie de TP est proposée uniquement pour ceux qui auraient déjà tout fait.
+
+Il y a deux stratégies principales pour entraîner un classifieur multi-classe (avec M classes) à partir des outils de classification bi-classes que nous avons vues:
+
+\paragraph{One-vs-one:} on entraine des classifieurs SVM bi-classes pour chacune des  paires de classes. Par exemple : ’1’ vs. ’2’, ’1’ vs. ’3’, ..., ’1’ vs. ’0’, ’2’ vs.’3’, ..., ’2’ vs. ’0’, ... etc. Pour trouver une prediction, on évalue ensuite tous les classifieurs sur un nouvel echantillon, et on choisit la classe qui ressort le plus souvent. Par exemple :
+\begin{itemize}[label=-]
+	\item '1' vs. '2' : '1'
+	\item '1' vs. ’3’ : '1'
+	\item '2' vs. '3' : '3'
+\end{itemize}
+$\Rightarrow$ la classe '1' est choisie.
+
+\paragraph{One-vs-all:} On entraine M classifieurs pour la classification binaire :
+\begin{itemize}[label=-]
+	\item '1' vs. '2','3',...'0'
+	\item '2' vs. '1','3',...'0'
+	\item $\vdots$
+	\item '0' vs. '1','2',...'9'
+\end{itemize}
+
+\begin{enumerate}
+	\item Implémenter une des deux stratégies pour le jeu de données USPS. Calculer la matrice de confusion et le taux d'erreur. 
+\end{enumerate}

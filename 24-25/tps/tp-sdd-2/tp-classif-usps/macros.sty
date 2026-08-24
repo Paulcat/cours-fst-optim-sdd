@@ -1,0 +1,330 @@
+% --- Packages ---
+
+% Math packages (AMS)
+\usepackage{amsmath,amsfonts, amssymb, amsthm}
+
+% additional fonts / special characters
+\usepackage{mathrsfs} % script font
+%\usepackage{stmaryrd}
+%\usepackage{dsfont}
+\usepackage{bm}
+
+
+% drawings
+\usepackage{tikz}
+\usetikzlibrary{shapes,shapes.geometric}
+\usetikzlibrary{positioning}
+\usetikzlibrary{matrix}
+\usetikzlibrary{arrows.meta,decorations.pathreplacing,decorations.pathmorphing,calligraphy}
+\usetikzlibrary{calc} % for grid?
+%\usetikzlibrary{tikzmark}
+
+% colors
+\usepackage{xcolor}
+
+\usepackage{cancel}
+
+
+
+% --- Macros ---
+
+% symboles doubles lignes
+\newcommand{\CC}{\mathbb{C}}
+\newcommand{\EE}{\mathbb{E}}
+\newcommand{\HH}{\mathbb{H}}
+\newcommand{\KK}{\mathbb{K}}
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\PP}{\mathbb{P}}
+\newcommand{\QQ}{\mathbb{Q}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\TT}{\mathbb{T}}
+\newcommand{\VV}{\mathbb{V}}
+\newcommand{\WW}{\mathbb{W}}
+\newcommand{\XX}{\mathbb{X}}
+\newcommand{\ZZ}{\mathbb{Z}}
+
+% bold lower case
+\newcommand{\sbold}{\bm{s}}
+\newcommand{\vv}{\bm{v}}
+\newcommand{\xx}{\bm{x}}
+\newcommand{\yy}{\bm{y}}
+\newcommand{\zz}{\bm{z}}
+\newcommand{\dd}{\bm{d}}
+\newcommand{\abold}{\bm{a}}
+\newcommand{\bb}{\bm{b}}
+\newcommand{\ww}{\bm{w}}
+%\newcommand{\ss}{\bm{s}}
+\newcommand{\nnu}{\bm{\nu}}
+\newcommand{\lla}{\bm{\la}}
+\newcommand{\ttheta}{\bm{\theta}}
+
+% bold upper case
+\newcommand{\A}{\bm{A}}
+\newcommand{\C}{\bm{C}}
+\newcommand{\X}{\bm{X}}
+\newcommand{\Q}{\bm{Q}}
+\newcommand{\B}{\bm{B}}
+\newcommand{\R}{\bm{R}}
+\newcommand{\I}{\bm{I}}
+\newcommand{\J}{\bm{J}}
+\newcommand{\Hbold}{\bm{H}}
+\newcommand{\Wbold}{\bm{W}}
+
+% symboles arrondis
+\newcommand{\Aa}{\mathcal{A}}
+\newcommand{\Bb}{\mathcal{B}}
+\newcommand{\Cc}{\mathcal{C}}
+\newcommand{\Dd}{\mathcal{D}}
+\newcommand{\Ee}{\mathcal{E}}
+\newcommand{\Ff}{\mathcal{F}}
+\newcommand{\Gg}{\mathcal{G}}
+\newcommand{\Hh}{\mathcal{H}}
+\newcommand{\Ii}{\mathcal{I}}
+\newcommand{\Jj}{\mathcal{J}}
+\newcommand{\Kk}{\mathcal{K}}
+\newcommand{\Ll}{\mathcal{L}}
+\newcommand{\Mm}{\mathcal{M}}
+\newcommand{\Nn}{\mathcal{N}}
+\newcommand{\Oo}{\mathcal{O}}
+\newcommand{\Pp}{\mathcal{P}}
+\newcommand{\Qq}{\mathcal{Q}}
+\newcommand{\Rr}{\mathcal{R}}
+\newcommand{\Ss}{\mathcal{S}}
+\newcommand{\Tt}{\mathcal{T}}
+\newcommand{\Uu}{\mathcal{U}}
+\newcommand{\Vv}{\mathcal{V}}
+\newcommand{\Ww}{\mathcal{W}}
+\newcommand{\Xx}{\mathcal{X}}
+\newcommand{\Yy}{\mathcal{Y}}
+\newcommand{\Zz}{\mathcal{Z}}
+
+
+% Greek
+\newcommand{\al}{\alpha}
+\newcommand{\be}{\beta}
+\newcommand{\ga}{\gamma}
+\newcommand{\de}{\delta}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\la}{\lambda}
+\newcommand{\sig}{\sigma}
+\newcommand{\om}{\omega}
+\renewcommand{\th}{\theta}
+\renewcommand{\phi}{\varphi}
+%
+\newcommand{\Ga}{\Gamma}
+\newcommand{\De}{\Delta}
+\newcommand{\Eps}{\Ee}
+\newcommand{\La}{\Lambda}
+\newcommand{\Sig}{\Sigma}
+\newcommand{\Om}{\Omega}
+
+% useful shortcuts
+\newcommand{\ip}{\imath \pi}
+
+% locutions latines
+\newcommand{\ie}{\textit{i.e.\ }}
+\newcommand{\eg}{\textit{e.g.\ }}
+
+% in-text notes
+\newcommand{\todo}[1]{\textcolor{red}{[\textbf{TODO}: #1]}}
+\newcommand{\oral}[1]{\textcolor{olive}{\textbf{ORAL}: #1}}
+
+% exo
+\newcommand{\exo}[1]{\textcolor{blue}{Exo: #1}}
+
+% mots cles
+\newcommand{\kwb}[1]{\textcolor{blue}{\emph{#1}}}
+\newcommand{\kwr}[1]{\textcolor{red}{\emph{#1}}}
+\newcommand{\kwo}[1]{\textcolor{orange}{\emph{#1}}}
+
+% references
+%\newcommand{\mycite}[1]{\emph{\alert{\cite{#1}}}}
+
+% --- Math environments ---
+\newtheorem*{thm}{Theorem}
+\newtheorem*{prop}{Proposition}
+\newtheorem*{lem}{Lemma}
+\newtheorem*{cor}{Corollary}
+\newtheorem*{defn}{Définition}
+
+\theoremstyle{remark}
+\newtheorem*{exmp}{Exemple}
+\newtheorem*{rem}{Remark}
+\newtheorem*{memo}{Memo}
+
+% --- Maths symbols ---
+
+% symbols
+\newcommand{\cross}{\times}
+
+% standard math symbols
+%\newcommand{\eqdef}{\ensuremath{\stackrel{\mbox{\upshape\tiny def.}}{=}}}
+\newcommand{\eqdef}{:=}
+\newcommand{\defeq}{=:}
+% french symbols
+\renewcommand{\leq}{\leqslant}
+\renewcommand{\geq}{\geqslant}
+
+% ensembles
+\newcommand{\ens}[1]{ \{ #1 \} }
+\newcommand{\enscond}[2]{ \left\{ #1 \;;\; #2 \right\} }
+%
+\newcommand{\segi}[2]{\llbracket #1, #2 \rrbracket}
+
+% integrals
+\newcommand{\diff}{\mathrm{d}}
+
+% functions
+\newcommand{\cont}[1]{\Cc(#1)}
+
+% conjonctions
+\newcommand{\qandq}{\quad \text{and} \quad}
+\newcommand{\qinq}{\quad \text{in} \quad}
+\newcommand{\qonq}{\quad \text{on} \quad}
+\newcommand{\qwhereq}{\quad \text{where} \quad}
+\newcommand{\qwithq}{\quad \text{with} \quad}
+\newcommand{\qforq}{\quad \text{for} \quad}
+\newcommand{\qifq}{\quad \text{if} \quad}
+\newcommand{\qorq}{\quad \text{or} \quad}
+\newcommand{\qelse}{\quad \text{otherwise}}
+\newcommand{\qieq}{\quad \text{\ie}}
+\newcommand{\qsiq}{\quad \text{si}\quad }
+
+% --- Math structures -----
+
+% maths constructs
+\newcommand{\umin}[1]{\underset{#1}{\min}\;}
+\newcommand{\uargmin}[1]{\underset{#1}{\argmin}\;}
+\newcommand{\umax}[1]{\underset{#1}{\max}\;}
+\newcommand{\conj}[1]{\overline{#1}}
+%\newcommand{\conj}[1]{#1^*}
+\DeclareMathOperator{\argmin}{argmin}
+\DeclareMathOperator{\argmax}{argmax}
+%
+\newcommand{\restr}[2]{ {#1\vert}_{#2}}
+
+
+% standard operators
+\DeclareMathOperator{\Supp}{Supp}
+\DeclareMathOperator{\Span}{Span}
+\DeclareMathOperator{\Spanf}{Vect}
+\DeclareMathOperator{\Ker}{Ker}
+\DeclareMathOperator{\Tr}{Tr}
+\DeclareMathOperator{\Ima}{Ran}
+\DeclareMathOperator{\Vect}{Vect}
+\DeclareMathOperator{\Card}{Card}
+\DeclareMathOperator{\Diag}{Diag}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\dist}{dist}
+\DeclareMathOperator{\divg}{div}
+\DeclareMathOperator{\proj}{proj}
+\DeclareMathOperator{\id}{Id}
+\DeclareMathOperator{\lip}{Lip}
+\DeclareMathOperator{\ext}{Ext}
+\DeclareMathOperator{\rext}{RExt}
+\DeclareMathOperator{\dir}{Dir}
+\DeclareMathOperator{\Sp}{Sp}
+\DeclareMathOperator{\sgn}{sign}
+%
+\newcommand{\Grad}{\nabla}
+
+% Lp spaces / functional spaces
+\newcommand{\lun}{\ell^1}
+\newcommand{\ldeux}{\ell^2}
+\newcommand{\linfty}{\ell^\infty}
+\newcommand{\lzero}{\ell^0}
+\newcommand{\lp}{\ell^p}
+%
+\newcommand{\Lun}{\text{\upshape L}^1}
+\newcommand{\Ldeux}{\text{\upshape L}^2}
+\newcommand{\Linf}{\text{\upshape L}^\infty}
+%
+\newcommand{\Cont}[1]{\mathscr{C}(#1)}
+\newcommand{\Cun}[1]{\mathscr{C}^1(#1)}
+\newcommand{\Cinf}[1]{\mathscr{C}^\infty(#1)}
+%
+\newcommand{\Lin}{\Ll}
+
+% Hilbert spaces
+\newcommand{\Hilb}{\Hh}
+
+% norms, distances
+\newcommand{\abs}[1]{| #1 |}
+\newcommand{\norm}[1]{|\!| #1 |\!|}
+\newcommand{\normi}[1]{\norm{#1}_{\infty}}
+\newcommand{\normu}[1]{\norm{#1}_{1}}
+\newcommand{\normd}[1]{\norm{#1}_{2}}
+\newcommand{\normf}[1]{\norm{#1}_{F}}
+\newcommand{\normtv}[2]{| #1 |(#2)}
+%
+\newcommand{\dotp}[2]{\langle #1,\,#2\rangle}
+
+
+% specific to project.tex
+\newcommand{\mdist}{D}
+\newcommand{\madmi}{\Ss}
+
+% matrices
+\newcommand{\GL}{\mathrm{GL}}
+\newcommand{\Sym}{\mathbb{S}}
+\newcommand{\Herm}{\mathbb{H}}
+\newcommand{\mlt}{\mathfrak{T}}
+\newcommand{\sdp}{\Kk}
+
+% polynomials
+\newcommand{\Laur}{\CC[z,z^{-1}]}
+\newcommand{\Laurn}[1]{\CC_{#1}[z,z^{-1}]}
+\newcommand{\CausH}[1]{\CC[z,\conj{z}]}
+\newcommand{\Caus}{\CC[z]}
+\newcommand{\Causn}[1]{\CC_{#1}[z]}
+\newcommand{\Trig}{\Tt[x]}
+\newcommand{\Trign}[1]{\Tt_{#1}[x]}
+%
+\newcommand{\bihom}[1]{\RR[x,y]_{#1}}
+%
+%\newcommand{\Ideal}[1]{\langle #1 \rangle}
+%\newcommand{\Ideal}[1]{\Ii(#1)}
+\newcommand{\Ideal}[1]{\left(#1\right)}
+\newcommand{\VIdeal}[1]{\Ii(#1)}
+\newcommand{\Zeros}[1]{\Vv(#1)}
+\newcommand{\Zari}[1]{\overline{#1}}
+\newcommand{\Ld}[1]{L^2(#1)}
+\newcommand{\Ldn}[2]{L_{n}^2(#2)}
+
+
+% measures
+\newcommand{\Torus}{\TT}
+\newcommand{\Radon}[1]{\Mm(#1)}
+\newcommand{\Radonp}[1]{\Mm_+(#1)}
+\newcommand{\RadonTd}{\Mm(\Torus^d)}
+
+% conjonctions
+\newcommand{\qtqq}{\quad \text{t.q.} \quad}
+\newcommand{\qstq}{\quad \text{s.t.} \quad}
+\newcommand{\qscq}{\quad \text{s.c.} \quad}
+\newcommand{\qaq}{\quad \text{and} \quad}
+\newcommand{\qiffq}{\quad \text{iff} \quad}
+\newcommand{\qacq}{\quad \text{avec} \quad}
+
+% functions
+\newcommand{\loss}{\Ll}
+
+% --- Names ---
+\newcommand{\Lasso}{\textsc{Lasso}}
+\newcommand{\Blasso}{\textsc{Blasso}}
+
+
+% --- LaTex shortcuts ---
+
+\newcommand{\eq}[1]{\begin{equation*}#1\end{equation*}}
+\newcommand{\eql}[1]{\begin{equation}#1\end{equation}}
+
+\newcommand{\myfig}[1]{\begin{figure}\vspace{1mm} #1 \vspace{3mm}\end{figure}}
+
+
+% --- specific notations ---
+\newcommand{\finv}{f} % invariant
+\newcommand{\cost}{f} % optimal transport
+\newcommand{\ch}[2]{\la_{#1}(#2)} % christoffel
+\newcommand{\Textract}{\Ga}

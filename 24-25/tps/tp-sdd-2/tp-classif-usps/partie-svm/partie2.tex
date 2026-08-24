@@ -1,0 +1,58 @@
+\section{Classification SVM}
+
+\subsection{Classification}
+
+Le classifieur SVM de Matlab est fitcsvm. Cette fonction prend plusieurs options (consulter son aide), notamment:
+\begin{itemize}[label=-]
+	\item \texttt{'BoxConstraint'}: si cette option est fixée à \texttt{inf}, le classifieur utilise une marge dure. Pour toute autre valeur strictement positive, la marge est souple (la valeur par défaut est 1)
+	\item \texttt{'KernelFunction'}: le noyau utilisé le cas échéant (par exemple \texttt{'polynomial'}, \texttt{'gaussian'}, etc...)
+	\item \texttt{'KernelScale'}: dans le cas d'un noyau gaussien, ce paramètre correspond à l'écart-type (par défault, 1)
+	\item \texttt{'Verbose'}: affiche ou non les informations liées au classifieur pendant l'optimisation (par défault, 1)
+\end{itemize}
+
+\begin{enumerate}
+	\item Retrouver ces différentes options dans l'aide de \texttt{fitcsvm}.
+	\item Entraîner un classifieur SVM à marge souple et à noyau gaussien sur les données projetées \texttt{X\_ACP}. Attention: on utilisera le paramètre \texttt{..., 'Standardize', true, ...} pour normaliser les données.
+\end{enumerate}
+
+Une fois le classifieur entraîné, les valeurs de labels prédites à partir des données \texttt{X\_ACP} se calculent avec la commande \texttt{predict}.
+\begin{lstlisting}
+labels = predict(s,X_ACP);
+\end{lstlisting}
+
+Dans le cas de deux classes, disons par exemple 1 et 0, la commande Matlab confusionmat retourne la matrice de confusion associée aux prédictions, c'est-à-dire la matrice \eq{\begin{bmatrix} \mathrm{TP} & \mathrm{FN} \\ \mathrm{FP} & \mathrm{TN} \end{bmatrix}} avec
+\begin{itemize}[label=-]
+	\item TP: nombre de bonnes prédictions de la classe 1 ("true positive")
+	\item FP: nombre de mauvaises prédictions de la classe 1 ("false positive")
+	\item FN: nombre de mauvaises prédictions de la classe 0  ("false negative")
+	\item TN: nombre de bonnes prédictions de la classe 0 ("true negative")
+\end{itemize}
+
+Une mesure possible du taux d'erreur est donné par $\frac{FP+FN}{n}$ où $n$ est le nombre d'échantillons. 
+\begin{enumerate}
+\setcounter{enumi}{3}
+	\item Calculer le taux d'erreur de classification sur les données d'entraînement.
+	\item Réduire la dimension des données de validation avec la même matrice \texttt{U} qui a été utilisée pour les données d'apprentissage. Calculer les prédictions est le taux d'erreurs de classification.
+\end{enumerate}
+
+\subsection{Réglages des hyperparamètres}
+
+\begin{enumerate}
+	\item Répéter les codes précédents pour différentes valeurs du paramètre \texttt{'KernelScale'} dans l'intervalle [0;20]. Tracer les courbes des erreurs d'apprentissage et de validation correspondant. Quelle est une bonne valeur de ce paramètre?
+\begin{lstlisting}
+sigma_list = 0.5:0.5:20;
+% Insérer votre code ici
+for i=1:length(sigma_list)
+    % Insérer votre code ici
+end
+% Insérer votre code ici (plot)
+\end{lstlisting}
+
+	\item  Une façon courante et pratique de régler les hyperparamètres (comme \texttt{'KernelScale'}) est d'utiliser la méthode de validation croisée. Cette méthode n'utilise que les données d'apprentissage, en les sous-divisant d'une manière astucieuse en sous-ensembles d'entraînement et de validation. On peut optimiser le paramètre \texttt{'KernelScale'} de la façon suivante:
+\begin{lstlisting}
+s_opt = fitcsvm(Xt,yt,'Verbose',1,'Standardize',true,'KernelFunction','gaussian','KernelScale',1,'OptimizeHyperparameters','KernelScale');
+sigma_opt = s_opt.KernelParameters.Scale;
+\end{lstlisting}
+
+	\item Comparez les résultats (paramètre optimal, taux d'erreur) avec l'erreur de validation obtenue à l'étape précédente.
+\end{enumerate}

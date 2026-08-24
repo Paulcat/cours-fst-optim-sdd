@@ -1,0 +1,23 @@
+Morciano
+
+1. 0.5/0.5
+2. 0.5/0.5
+3. 2/2
+4. 1/1
+5. 1/1
+6. 0.5/0.5
+7. 0.5/0.5
+8. 0.5/1 % quel est le sigma ici?
+9. 1/1
+10. 1.5/2 % commentaires?
+11. 1/2 % sigma optimal? analyse?
+12. 0.5/1 % conclusion?
+13. 1/2 % comparaison précise? analyse des erreurs?
+14. 1.5/3 % résultat? + qqs problèmes
+15. 1.5/3 % pourquoi ne pas utiliser la validation croisée...
+
+sources? difficultés
+affichage inutiles
+-2
+
+Total: 12.5

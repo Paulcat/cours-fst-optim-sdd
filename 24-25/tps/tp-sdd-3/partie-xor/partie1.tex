@@ -1,0 +1,113 @@
+\section{Classification XOR}
+
+Dans cet exercice, nous allons entraîner un perceptron à modéliser la fonction "ou exclusif" (XOR). Pour cela, nous utiliserons les outils disponibles dans la toolbox "Deep Learning" de MATLAB.
+
+\subsection{Jeu de données XOR}
+La fonction XOR est une fonction de deux variables \emph{booléennes}, qui renvoie VRAI (1) si les deux variables sont distinctes eet FAUX (0) sinon.
+
+\begin{enumerate}
+	\item Compléter le tableau suivant, donnant les valeurs de sortie de la fonction XOR
+	\eq{
+	\begin{array}{c|c|c}
+		x_1 & x_2 & y = \mathrm{XOR}(x_1,x_2)\\
+		\hline
+		0 & 0 &\\
+		0 & 1 &\\
+		1 & 0 &\\
+		1 & 1 &\\
+	\end{array}
+	}
+	
+	\item Représenter les données avec une couleur pour chaque classe. Sont-elles linéairement séparables?
+	
+	\item Générer un jeu de données labellisées $(X,y) \in \RR^{4\times 2} \times \RR^4$ correspondant à toutes les entrées possibles de la fonction XOR, et aux sorties associées.
+	
+\end{enumerate}
+	
+\subsection{Modèle à deux couches}
+\begin{enumerate}
+	
+	\item On considère un perceptron à deux couches et de largeur 2 (\ie avec deux neurones sur la couche cachée). Ce réseau est représenté ci-dessous:
+	\begin{center}
+\begin{tikzpicture}
+	\node[circle,draw,thick,minimum width=0.8cm] (i1) {$x_1$};
+	\node[below=0.5cm of i1] {$\vdots$};
+	\node[circle,draw,thick,minimum width=0.8cm,below=1.8cm of i1] (i2) {$x_d$};
+	%
+	\node[circle,draw,thick,minimum width=0.8cm,below right=0.25cm and 2cm of i1,anchor=west] (h1) {$z_1$};
+	\node[circle,draw,thick,minimum width=0.8cm,below=0.7cm of h1] (h2) {$z_2$};
+	%
+	\node[circle,draw,thick,minimum width=0.8cm,below right=0.5cm and 2cm of h1,anchor=west] (o) {y};
+	
+	
+	\draw[-latex,color=blue] (i1) -- node[label={$w_{11}$}] {} (h1);
+	\draw[-latex,color=teal] (i1) -- node[label={above:$w_{21}$}] {} (h2);
+	\draw[-latex,color=blue] (i2) -- node[label={below:$w_{1d}$}] {} (h1);
+	\draw[-latex,color=teal] (i2) -- node[label={below:$w_{2d}$}] {} (h2);
+	\draw[-latex] (h1) -- node[label={above:$v_{1}$}] {} (o);
+	\draw[-latex] (h2) -- node[label={below:$v_{2}$}] {} (o);
+	
+	
+	
+	\begin{scope}[on background layer]
+	\node [rectangle, fill=yellow!20, minimum height = 4cm, fit={(i1) (i2)}] (input-layer) {};
+	
+	\node [rectangle, fill=orange!20, minimum height = 4cm, fit={(h1) (h2)}, label={below:\textcolor{orange}{$(b_1,b_2,\sigma)$}}] (hidden-layer) {};
+	
+	\node [rectangle, fill=red!20, minimum height =4cm, fit={(o)}] (output-layer) {};
+
+	\end{scope}
+\end{tikzpicture}
+\end{center}
+%où $b_1,b_2$ sont les biais et $\sigma$ la fonction d'activation associés à la première couche. %En pratique, Matlab traite les variables d'entrée comme un seul vecteur $x = \begin{bmatrix} x_1 & \ldots & x_d \end{bmatrix}^\top$.
+Dans notre cas, $d=2$; donner l'expression formelle de la sortie $y$ en fonction
+\begin{itemize}
+	\item du vecteur d'entrée $x \eqdef \begin{bmatrix} x_1 & x_2 \end{bmatrix}^\top$;
+	\item de la matrice $W \eqdef \begin{bmatrix} w_{11} & w_{12} \\ w_{21} & w_{22} \end{bmatrix}^\top$ et du vecteur $v \eqdef \begin{bmatrix} v_1 & v_2 \end{bmatrix}^\top$ des poids;
+	\item du vecteur de biais $b \eqdef \begin{bmatrix} b_1 & b_2 \end{bmatrix}^\top$;
+	\item de la fonction d'activation $\sigma$.
+\end{itemize}
+
+
+\item Utiliser la fonction Matlab \texttt{feedforwardnet} pour créer ce perceptron \texttt{nn} à une couche cachée avec deux neurones (on pensera à consulter l'aide de cette fonction).
+
+\item Les propriétés de la première (et unique) couche cachée sont enregistrées dans la variable \texttt{nn.layers\{1\}}. En particulier, la fonction d'activation pour cette couche est spécifiée par \texttt{nn.layers\{1\}.transferFcn}. Quelle est ici la fonction d'activation choisie par défaut? On peut consulter la liste de toutes les fonctions d'activation possibles avec \texttt{help nntransfer}.
+
+%\item Que contient la variable \texttt{nn.IW\{i\}} pour $i\in\{1,2\}$?
+
+\item Les algorithmes d'apprentissage partitionnent usuellement les données en plusieurs sous-ensembles (entraînement, validation et test) lors de l'entraînement. La stratégie de découpage est spécifiée dans \texttt{nn.divideFcn}, et l'ensemble des options s'obtient avec \texttt{help nndivision}. Ici, avec seulement 4 données, on n'effectue pas de partition.
+\begin{lstlisting}
+nn.divideFcn = 'dividetrain'; % pas de partition des données
+\end{lstlisting}
+
+\item Utiliser la fonction \texttt{train} pour entraîner ce réseau de neurones sur le jeu de données XOR construit précédemment. A noter que cette fonction utilise l'algorithme spécifié dans \texttt{nn.trainFcn}, avec les paramètres spécifiés dans \texttt{nn.trainParam} pour optimiser le réseau. On peut consulter tous les algorithmes disponibles avec \texttt{help nntrain}. On pourra par exemple utiliser les réglages suivants.
+\begin{lstlisting}
+nn.trainParam.epochs = 500; % nombre d'itérations
+nn.trainParam.goal = 1e-6;  % tolérance pour le critère d'arrêt
+\end{lstlisting}
+Tester l'algorithme de descente de gradient (\texttt{'traingd'}) et celui de Levenberg-Marquardt (\texttt{'trainlm'}, utilisé par défaut).
+
+%\item Les variables \texttt{nn.IW} ("InputWeights"), \texttt{nn.LW} ("LayerWeights") and \texttt{nn.b} ("biases") sont des structures respectivement définies par:
+%\begin{itemize}
+%\item \texttt{nn.IW\{i\}} contient la matrice des poids allant de l'entrée $x$ à la $i$-ème couche.
+%\item \texttt{nn.LW\{i,j\}} contient la matrice des poids allant de la couche $j$-ème à la $i$-ème couche.
+%\item \texttt{nn.b\{i\}} contient le vecteur des biais de la $i$-ème couche.
+%\end{itemize}
+%Afficher les paramètres $W$, $v$ et $b$ obtenus après l'entraînement du réseau.
+
+\item Afficher les sorties $y$ obtenues pour différents vecteurs d'entrée $x$ avec le réseau de neurones. Pour retourner une valeur binaire, on peut par exemple arrondir le résultat.
+\end{enumerate}
+
+
+%\subsection{Customisation de l'architecture}
+%
+%\begin{enumerate}
+%	
+%	
+%	\item Tester d'autres architectures, en modifiant par exemple la largeur, la profondeur, ou les fonctions d'activation du réseau, et comparer les résultats.
+%	
+%	\item Augmenter la taille du jeu d'apprentissage en répétant chaque vecteur d'entrée (et le label correspondant), et tester l'architecture de la section 1.2 dessus. Que constatez-vous?
+%	
+%	
+%	\item help nnperformance (pour la loss)
+%\end{enumerate}

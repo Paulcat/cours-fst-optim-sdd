@@ -1,0 +1,25 @@
+% Dausse
+
+1. 1/1
+2. 1/1
+5. 1/1
+6. 0.5/0.5
+7. 0.5/0.5
+8. 0/1 non, erreur...
+9. 1.5/2 le décalage est dû à un pb de taille...
+10. 0/0.5 mauvaise compréhension erreur de troncature
+11. 0.5/0.5
+12. 0.5/0.5
+13. 0/1.5 figures?
+14. 1.5/2 vous appliquez le modèle H aux données issues de la fonction conv, alors que vous venez de constater que les deux données différaient...
+15. 0.5/1
+16. 0/1
+17. 0/2
+18. - 
+19. 1.5/2 % explications de la formule?
+20. 1.5/2 mêmes soucis, de plus vous utilisez toujours ynb au lieu du signal bruité
+
+Code commenté 0.5/1
+Rendu conforme 1/1
+
+Note 13

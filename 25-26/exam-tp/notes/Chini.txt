@@ -1,0 +1,21 @@
+Note Chini
+
+1. 0.5/0.5
+2. 0.5/0.5
+3. 0.5/2 % pas besoin de centrer + on demandait les vecteurs gauches!!
+4. 1/1
+5. 1/1 
+6. 0.5/0.5
+7. 0.5/0.5
+8. 1/1
+9. 1/1
+10. 2/2
+11. 1.5/2 % pourquoi non respect du code donné?
+12. 1/1
+13. 1/2 % pas de comparaison
+14. 2/3 % pas de rescale 
+15. 0.5/3 % c'etait pas du tout le but... pas de commentaires, avec source
+
+% peu ou pas de commentaires -1.5
+% difficultés? -0.5
+Total: 13

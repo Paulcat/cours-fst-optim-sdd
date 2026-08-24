@@ -1,0 +1,21 @@
+Elothmany
+
+1. 0.5/0.5
+2. 0.5/0.5 % double pour un, pas pour l'autre?
+3. 2/2
+4. 1/1
+5. 1/1
+6. 0.5/0.5
+7. 0.5/0.5
+8. 1/1
+9. 0.5/1 % commentaires, affichage?
+10. 1.5/2 % commentaires?
+11. 2/2
+12. 1/1
+13. 1/2 % explication des figures?
+14. 1.5/3 % traitement dans le mauvais ordre + choix du sigma?
+15. 0.5/3 % ecoc sans sources
+
+% sources, difficultés? -2
+
+Total: 13

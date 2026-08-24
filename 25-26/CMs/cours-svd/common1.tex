@@ -1,0 +1,88 @@
+% VARIETIES
+\newcommand{\var}[1]{\mathcal{#1}} % subspaces
+
+
+% SETS, SPACES, VARIETIES
+\newcommand{\set}[1]{{#1}} % subspaces
+
+% TENSORS
+\newcommand{\tens}[1]{\mathcal{#1}}
+
+% ARRAYS OF ORDER>2 (representing tensors in given bases)
+\newcommand{\arr}[1]{\mathbf{#1}}
+
+% MATRICES
+\newcommand{\matr}[1]{\mathbf{#1}}
+
+% VECTORS
+\newcommand{\vect}[1]{\mathbf{#1}} % \boldsymbol{#1} is more beautiful, and works for greek letters
+\newcommand{\vx}{\vect{x}}
+\newcommand{\vd}{\vect{d}}
+\newcommand{\vb}{\vect{b}}
+
+% OPERATORS
+\makeatletter
+\newcommand{\T}{{\sf T}}      % transposition
+\renewcommand{\H}{{\sf H}}      % Hermitian transposition
+
+\newcommand{\krank}[1]{\mathop{\operator@font krank}\{#1\}}
+\newcommand{\Diag}[1]{\mathop{\operator@font Diag}\{#1\}}    % a diagonal matrix
+%\newcommand{\diag}[1]{\mathop{\operator@font diag}\{#1\}}    % a vector
+\newcommand{\Span}[1]{\mathop{\operator@font Span}\{#1\}}    % a space
+\renewcommand{\vec}{\mathop{\operator@font vec}} % vectorisation
+\newcommand{\codim}[1]{\mathop{\operator@font codim} #1}    % codimension
+\makeatother
+\newcommand{\out}{\otimes}    % outer (tensor) product
+\newcommand{\khatri}{\odot}   % Khatri-Rao product
+\newcommand{\hadam}{\boxdot}  % Hadamard product
+\newcommand{\kron}{\boxtimes}  % Kronecker product
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Hilbert}{\mathcal{H}}
+\newcommand{\Fourier}{\mathcal{F}}
+\newcommand{\eqdef}{\stackrel{\mathrm{def}}{=}}
+\newcommand{\con}{\mathop{\bullet}} % contraction
+% \def\prodmode#1{\times_{#1}} %product along the mode
+\newcommand{\prodmode}[1]{\con_{#1}} %product along the mode
+
+% COMMENTS
+\newcommand{\KU}[1]{{\color{ForestGreen}{\textbf{KU}:  #1}}}
+\newcommand{\YQ}[1]{{\color{blue}{\textbf{YQ}:  #1}}}
+\newcommand{\yq}{\color{blue}}
+\newcommand{\PC}[1]{{\color{BrickRed}{\textbf{PC}: #1}}}
+\definecolor{darkgreen}{rgb}{0,0.4,0}
+\newcommand{\ku}{\color{darkgreen}}
+\newcommand{\pc}{\color{BrickRed}}
+\newcommand{\fin}{\color{black}}
+
+% LOCAL MACROCOMMANDS
+\newcommand{\NN}{\mathbb{N}} % natural numbers
+\newcommand{\KK}{\mathbb{F}} % general field
+\newcommand{\RR}{\mathbb{R}} % real
+\newcommand{\CC}{\mathbb{C}} % complex
+\newcommand{\PP}{\mathbb{P}} % projective complex
+
+\newcommand{\form}{T} % symbol for a form
+\newcommand{\cumulant}{\mathcal{C}} % cumulant
+
+
+
+\providecommand{\sspan}[1]{\operatorname{span}(#1)} % X-rank
+\providecommand{\rank}[1]{\operatorname{rank}(#1)} % X-rank
+\providecommand{\xrank}[1]{\operatorname{rank}_{X}(#1)} % X-rank
+
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+\DeclarePairedDelimiter{\brackets}{[}{]} %used in a lot of math operators
+\DeclarePairedDelimiter{\parens}{(}{)} %used in a lot of math operators
+
+\def\hankel#1#2{\mathscr{H}_{#1}\parens{#2})} %product along the mode
+\def\sthankel#1#2{\mathscr{S}_{#1}\parens{#2}}
+
+\def\ambspace{\set{A}}
+\def\vars{\vect{u}}
+\def\varsk#1{u_{#1}}
+
+\def\rGenSdV{\rho}
+
+% Theorem definitions
+

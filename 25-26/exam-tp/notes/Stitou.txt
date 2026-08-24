@@ -1,0 +1,25 @@
+Stitou
+
+1. 0/0.5 % bcp trop compliqué!!!!!!
+2. 0.5/0.5
+3. 1.5/2 % pas de centrage
+4. 0.5/1 % compliqué!!!
+5. 0.5/1 % une fonction pour faire une multiplication matricielle... + fonction compliquée
+6. 0.5/0.5 % pour les deux
+7. 0/0.5
+8. 1/1
+9. 1/1
+10. 2/2
+11. 1/2 % commentaire? meilleur sigma incorrect
+12. 0.5/1 % conclusion décalée avec le résultat
+13. 1/2 % commentaire? figures?
+14. 2/3 % commentaires
+15. 0.5/3 % pas le but
+
+% contrôle PDF?? sources? noms de fonctions en anglais
+-1
+
+difficultés, sources? -2
+analyse +0.5
+
+Total: 10

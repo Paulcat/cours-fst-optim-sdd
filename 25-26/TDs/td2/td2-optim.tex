@@ -1,0 +1,82 @@
+\chapter{Moindres carrés linéaires}
+%\addcontentsline{toc}{chapter}{TD 1}
+
+
+\section{Formes matricielles}
+
+Mettre sous forme matricielle les expressions ou les systèmes suivants:
+%\begin{multicols}{2}
+	\begin{enumerate}
+		\item $f(x_1,x_2) = 2 x_1^2 + 4x_1x_2 + x_2^2 + x_1 + 2x_2$
+		\item $f(x_1,x_2,x_3) = x_1 + x_2^2 + x_3$
+		\item $\left\{\begin{aligned} 
+			&y_1 = 2x_1 + x_3 + 1 \\
+			&y_2 = x_1 + x_2 + 2x_3
+			\end{aligned} \right.$ 
+	\end{enumerate}
+	%
+%	\begin{enumerate}[label=\alph*.]
+%		\item
+%		\item
+%		\item\item 
+%	\end{enumerate}
+%\end{multicols}
+
+\begin{hide}
+\paragraph{\textcolor{blue}{Solution}}
+\begin{enumerate}
+	\item $f(x) = x^\top A x + b^\top x$ avec $A = \begin{bmatrix} 2 & 2 \\ 2 & 1\end{bmatrix}$, $b=\begin{bmatrix} 1 & 2 \end{bmatrix}^\top$.
+	\item $f(x) = x^\top P x + q^\top x$ avec $P = \begin{bmatrix} 0 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 0 \end{bmatrix}$, $q=\begin{bmatrix} 1 & 0 & 1 \end{bmatrix}^\top$.
+	\item $y = Mx + w$, avec $M = \begin{bmatrix} 2 & 0 & 1 \\ 1 & 1 & 2 \end{bmatrix}$, $w = \begin{bmatrix} 1 & 0 \end{bmatrix}^\top$.
+\end{enumerate}
+\end{hide}
+
+\section{Régression polynomiale}
+
+On observe des échantillons $\{y_1,\ldots,y_m\}$ d'un signal, pris aux instants $\{t_1,\ldots,t_m\} \subset \RR$. Etant donné un degré $n \in \NN$, on cherche un polynôme $p(t) = p_n t^n + p_{n-1}t^{n-1} + \ldots + p_1 t + p_0$ de degré au plus $n$ tel que $p(t_i) \simeq y_i$ au sens des moindres carrés.
+\begin{enumerate}
+	\item Ecrire le problème des moindres carrés linéaires par rapport au  vecteur des coefficients $(p_0,\ldots, p_{n}) \in \RR^{n+1}$.
+	\item On souhaite maintenant aussi pénaliser la norme euclidienne du vecteur des coefficients du polynôme. Ecrire le problème des moindres carrés régularisé correspondant.
+\end{enumerate}
+
+\section{Estimateur des moindres carrés}
+
+Soient $x_1$ et $x_2$ deux variables inconnues. On effectue trois mesures $y_1$, $y_2$ et $y_3$ reliées aux inconnues par le modèle suivant
+\eql{\label{eq:least-squares}
+	\left\{\begin{aligned}
+		&y_1 = 2x_1 + 3x_2 + b_1\\
+		&y_2 = 3x_2 + b_2\\
+		&y_3 = x_1 + b_3 
+	\end{aligned}\right.
+}
+%
+où $b = [b_1,b_2,b_3]^\top$ est un vecteur inconnu modélisant l'erreur (dûe à du bruit de mesure, à des erreurs de modèle, etc...)
+\begin{enumerate}
+	\item Mettre le modèle \eqref{eq:least-squares} sous la forme générale $y = Ax+b$, en explicitant et nommant les quantités $y$, $A$ et $x$.
+	\item Afin d'estimer $x$ à partir de $y$, on cherche à présent à minimiser la norme euclidienne du vecteur d'erreur $b$. En déduire le problème d'optimisation correspondant, en fonction de $y$, $A$ et $x$.
+	\item En détaillant les calculs, écrire le problème d'optimisation sous la forme standard
+	\eq{
+		\min \frac{1}{2}x^\top Q x + p^\top x
+	}
+	où l'on donnera l'expression de la matrice $Q$ et du vecteur $p$ en fonction de $A$ et $y$.
+	\item Calculer le gradient de la fonction objectif en fonction de $Q$ et $p$.
+	\item Donner l'expression matricielle du minimiseur (global) du problème en fonction de $Q$ et $p$, puis en fonction de $A$ et $y$.
+\end{enumerate}
+
+
+
+
+%\section{Pseudo-inverse}
+%
+%On définit
+%\eq{
+%	A = \begin{bmatrix} 1 & 2 & 1\\ 2 & 4 & 2\\-1 & 0 & 1 \end{bmatrix},
+%	\qquad
+%	y = \begin{bmatrix} 2 \\ 4 \\ 0 \end{bmatrix}
+%}
+%
+%\begin{enumerate}
+%	\item La matrice $A$ est-elle inversible?
+%	\item Vérifier que $x = \begin{bmatrix} 1 & 0 & 1 \end{bmatrix}^\top$ est solution du système $Ax = y$. Combien ce système admet-il de solutions?
+%	\item 
+%\end{enumerate}

@@ -1,0 +1,352 @@
+\documentclass[11pt]{article}
+
+\usepackage{/home/paul/Workspace/build/macros}
+
+
+\usepackage{geometry}
+\geometry{margin=0.9in}
+\geometry{letterpaper}    
+\usepackage{graphicx}
+
+\usepackage{subfig}
+
+\usepackage{pgfplots}
+
+
+\usepackage[francais]{babel}
+
+\usepackage{matlab-prettifier}
+\usepackage{listings}
+\lstset{
+	style = Matlab-editor,
+	breaklines = true,
+	basicstyle = \footnotesize\ttfamily,
+	extendedchars = true,
+	frame = single
+}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhead{}
+
+\usepackage[style=alphabetic]{biblatex}
+%\usepackage[backend=biber,style=alphabetic]{biblatex}
+\bibliography{/home/paul/Workspace/build/biblio}
+
+%\newtheorem{exercise}{Exercice}
+
+%\newenvironment{solution}[1][\it{Solution}]{\textcolor{blue}{\textbf{#1. } }}{\textcolor{blue}{$\blacksquare$}}
+
+\usepackage{lipsum}
+
+\fancyfoot{} % clear all footer fields position of footer line
+\fancyfoot[RE,LO]{\hrulefill \\ Examen.ONSDD.2526 \hfill \textbf{\thepage /\textcolor{red}{4}}}
+
+
+\begin{document}
+
+\begin{minipage}{0.5\textwidth}
+\includegraphics[height=1.6cm]{/home/paul/Workspace/build/logos/fst-couleur}
+\includegraphics[height=1.6cm]{udl}\\[1ex]
+\end{minipage}
+\hfill
+\begin{minipage}{0.4\textwidth}
+\begin{flushright}
+M2 ISC\\
+Paul Catala\\
+El-Hadi Djermoune\\
+27 janvier 2026
+\end{flushright}
+\end{minipage}
+
+\bigbreak
+
+%\noindent Traitement statistique du signal \hfill Master SNIM\\
+%Paul Catala  \hfill 2024/2025
+
+
+
+
+\begin{center}
+\textbf{\Large Examen \\ \guillemotleft Optimisation Numérique et Sciences des Données \guillemotright}
+
+Durée 2 heures \bullet{} Feuille manuscrite au format A4 autorisée \bullet{} Calculatrice non autorisée
+
+\hrulefill
+
+\end{center}
+
+\noindent \textit{Les réponses doivent être justifiées. Les exercices peuvent être résolus dans l'ordre que vous souhaitez. Le barème est indicatif.}
+
+\section{Questions de cours (4 points)}
+
+\begin{enumerate}
+	\item Donner la définition de la décomposition en valeurs singulières d'une matrice $\X \in \RR^{n \times p}$.
+	\item Expliquer brièvement pourquoi la convexité est une propriété intéressante en optimisation.
+	\item Dans le problème d'optimisation associé à la classification SVM de données labellisées $(\xx_i,y_i)_{i=1}^N$,
+	\eq{
+		\min_{\abold,b} \frac{1}{2}\norm{\abold}^2 \qscq y_i(\abold^\top \xx_i + b) \geq 1, \quad i=1,\ldots,N
+	}
+	que représentent les variables d'optimisation? la fonction objectif? les contraintes?
+	\item Soit le réseau à trois couches représenté en figure~\ref{fig:nn}, qui comporte également une fonction d'activation $\sigma$ sur chacune des couches latentes (bleues), ainsi que des vecteurs de biais $\bb^{(1)}$ et $\bb^{(2)}$ sur ces mêmes couches.
+	\begin{figure}[h!]
+	\centering
+	\begin{tikzpicture}
+		\node[circle,draw,label=left:$x_1$](x1){};
+		\node[circle,draw,label=left:$x_2$,below=1cm of x1](x2){};
+		\node[circle,draw,label=left:$x_3$,below=1cm of x2](x3){};
+		
+		\node[circle,draw,label=above:$z_1^{(1)}$,above right=0.5cm and 2cm of x2](h1){};
+		\node[circle,draw,label=below:$z_2^{(1)}$,below=1cm of h1](h2){};
+		
+		\node[circle,draw,label=above:$z_1^{(2)}$,right=2cm of h1](h12){};
+		\node[circle,draw,label=below:$z_2^{(2)}$,right=2cm of h2](h22){};
+		
+		\draw[orange] (h1) -- node[above]{$w_{11}^{(2)}$}  (h12);
+		\draw[blue] (h1) -- node[below,near start]{$w_{21}^{(2)}$}  (h22);
+		\draw[orange] (h2) -- node[above]{$w_{12}^{(2)}$}  (h12);
+		\draw[blue] (h2) -- node[below]{$w_{22}^{(2)}$} (h22);		
+		
+		
+		
+		\draw[orange] (x1) -- node[above]{$w_{11}^{(1)}$} (h1);
+		\draw[orange] (x2) -- node[above]{$w_{12}^{(1)}$} (h1);
+		\draw[orange] (x3) -- node[above]{$w_{13}^{(1)}$} (h1);
+		
+		\draw[blue] (x1) -- node[below,near start,xshift=-2mm]{$w_{21}^{(1)}$} (h2);
+		\draw[blue] (x2) -- node[below,near start]{$w_{22}^{(1)}$} (h2);
+		\draw[blue] (x3) -- node[below]{$w_{23}^{(1)}$} (h2);
+		
+
+		%\node[circle,fill,inner sep=2pt,right=2.5cm of h1] (z1) {};
+		%\node[circle,fill,inner sep=2pt,right=2.5cm of h2] (z2) {};
+		
+		\node[circle,draw,below right= 0.5cm and 2cm of h12,label=right:$y$] (o) {};
+		
+		\draw[] (h12) -- node[above]{$v_{1}$} (o);
+		\draw[] (h22) -- node[above]{$v_{2}$} (o);
+
+		
+		\begin{scope}[on background layer]
+		\node [rectangle, fill=gray!20, minimum height = 4cm, 			fit={(x1) (x3)}] (layer-1) {};
+
+		\node [rectangle, fill=teal!20, minimum height = 4cm, fit={(h1) (h2)}] (layer-2) {};
+
+		\node [rectangle, fill=teal!20, minimum height = 4cm, fit={(h12) (h22)}] (layer-3) {};
+
+		\node [rectangle, fill=gray!20, minimum height = 4cm, fit={(o)}] (layer-4) {};
+\end{scope}
+
+		
+		%\node[below right = -15pt and 5cm of h2] {$\displaystyle y = \sum_{k=1}^n v_k \, \sigma(\ww_k^\top \xx+b_k)$};
+	\end{tikzpicture}
+	\caption{Réseau de neurones}
+	\label{fig:nn}
+	\end{figure}
+%
+
+\noindent Comment s'appelle un tel réseau? Exprimer la sortie $y$ en fonction de l'entrée $\xx = (x_1,x_2,x_3)^\top$ et des paramètres du réseau $\W^{(1)} = (w_{ij}^{(1)})$, $\W^{(2)}=(w_{ij}^{(2)})$, $\vv = (v_1,v_2)^\top$, $\bb^{(1)}$, $\bb^{(2)}$ et $\sigma$.
+\end{enumerate}
+
+\section{Optimisation (5 points)}
+
+On considère la fonction convexe $f: \RR^2\to \RR$ suivante:
+\eq{
+	f(\xx) = \xx^\top \A x - \bb^\top \xx + 2,
+}
+où
+\eq{
+	\A = \begin{bmatrix} 3 & -1 \\ -1 & 3 \end{bmatrix} \qetq \bb = \begin{bmatrix} 5 \\ 1 \end{bmatrix}.
+}
+On souhaite minimiser $f$.
+
+\begin{enumerate}
+	\item Donner l'expression et calculer le vecteur gradient $\mathbf{J}(\xx)$ de $f$.
+	\item Donner l'expression et calculer la matrice Hessienne $\mathbf{H}(\xx)$ de $f$.
+	\item Quelles sont les conditions d'optimalité du problème de minimisation?
+	\item En déduire le minimiseur $(\xx_\star)$, puis la valeur du minimum.
+	\item On minimise $f$ itérativement à l'aide de la méthode de Newton, avec un pas $\alpha$ constant. Déterminer, en expliquant vos calculs, le résultat $(x_1,y_1)$ d'une itération de cet algorithme, en initialisant à $(x_0,y_0) = (0,0)$. Quel serait un bon choix pour la valeur du pas $\alpha$?  Justifier.
+\end{enumerate}
+
+
+\section{SVM à noyau (5 points)}
+
+On considère un problème de classication à deux classes avec la base d'apprentissage
+\eq{
+	\X = \begin{bmatrix} -2 \\ -1 \\ 0 \\ 1 \\ 2 \end{bmatrix},
+	\quad
+	\yy = \begin{bmatrix} 1 \\ -1 \\ -1 \\ 1 \\ 1 \end{bmatrix}
+}
+où $\X$ contient les observations et $\yy$ les classes associées. Noter que chaque observation $x_i$, $(i=1,\ldots,5)$ est un scalaire (dans $\RR$).
+\begin{enumerate}
+	\item Représenter les observations sur le segment de la figure~\ref{fig:data} en utilisant deux couleurs (ou deux formes) différentes pour bien distinguer les classes $1$ et $-1$.
+	\item Les classes sont-elles linéairement séparables?
+	\item Si oui, représenter sur la même figure un hyperplan séparateur. Sinon, tracer un hyperplan qui conduit à un minimum de mauvaises classifications en précisant ce nombre.
+	\item On se propose maintenant de transformer les données dans un espace de représentation $\RR^2$ en utilisant une fonction de redescription $\Phi(x)$ telle que:
+	\eq{
+		\begin{array}{rcl}
+		\Phi & : & \RR \to \RR^2\\
+		& & x \mapsto \begin{bmatrix} x & x^2 \end{bmatrix}
+		\end{array}
+	}
+	\begin{enumerate}
+		\item On note $\Z = \begin{bmatrix} \zz_1 & \zz_2 \end{bmatrix}$ la matrice à deux colonnes des données projetées. Calculer leurs coordonnées ($\zz_1$ et $\zz_2$) en utilisant les données d'apprentissage.
+		\item Représenter les données projetées sur la figure~\ref{fig:kernelized} en utilisant les mêmes couleurs (ou formes) que la question 1.
+		\item Les classes sont-elles linéairement séparables? Dans l'affirmative, tracer sur la même figure le séparateur à marge maximale et calculer la marge.
+		\item Quels sont les vecteurs de support?
+		\item Que se passe-t-il si l'on retire l'observation $x_4$ (considérée comme valeur aberrante) des données d'apprentissage? Expliquer en quelques lignes ce que devient l'hyperplan séparateur dans l'espace de redescription et la marge associée.
+	\end{enumerate}
+\end{enumerate}
+
+
+
+
+\section{Problème: Décomposition en valeurs singulières et ACP (6 points)}
+\textit{Il est possible d'admettre le résultat d'une question et de l'utiliser pour résoudre les questions suivantes.}
+
+
+Soit un ensemble de données $\{\xx_1,\ldots, \xx_N\} \in \RR^d$ ($N > d$), et la matrice de données centrées correspondante
+\eq{
+	\underline{\X} = \begin{bmatrix} \xx_1 - \underline{\xx} & \ldots & \xx_N - \underline{\xx} \end{bmatrix} \in \RR^{d \times N} \quad \text{où} \quad \underline{\xx} \eqdef \frac{1}{N} \sum_{i=1}^N \xx_i \; . 
+}
+L'analyse en composantes principales (ACP) est une technique de réduction de dimension, qui consiste à projeter chaque donnée $\xx_i$ sur des axes $\abold_1, \ldots, \abold_p \in \RR^d$ ($p < d$). Les $p$ nouvelles coordonnées définissent alors des données projetées $\widetilde{\xx}_i \in \RR^p$, données par
+\eq{
+	\widetilde{\xx}_i = \A^\top \xx_i, \quad \text{où} \quad \A \eqdef \begin{bmatrix} \abold_1 & \ldots & \abold_p \end{bmatrix}.
+}
+Le principe de l'ACP est de choisir les axes $\abold_k$ de manière à maximiser la variance empirique des données projetées, souvent appelée \textit{variance expliquée}, définie comme
+\eq{
+	\widetilde{\Vv} \eqdef \frac{1}{N-1} \sum_{i=1}^{N}\norm{\widetilde{\xx}_i - \widetilde{\underline{\xx}}}^2, \quad\text{où}\quad \underline{\widetilde{\xx}} \eqdef \frac{1}{N} \sum_{i=1}^N\widetilde{\xx}_i \;.
+}
+Dans la suite, on note
+\eq{
+	\C \eqdef \frac{1}{N-1}\sum_{i=1}^N (\xx_i - \overline{\xx})(\xx_i - \overline{\xx})^\top\; . %\quad \underline{\xx} \eqdef \frac{1}{N}\sum_{i=1}^N \xx_i
+}
+Cette matrice s'appelle \textit{matrice de covariance} des données (non projetées).
+
+%on définit respectivement le barycentre et la matrice de covariance empirique comme
+%\eq{
+%	\overline{\xx} \eqdef \frac{1}{N}\sum_{i=1}^N \xx_i, \qetq \C \eqdef \frac{1}{N-1}\sum_{i=1}^N (\xx_i - \overline{\xx})(\xx_i - \overline{\xx})^\top. %\quad \underline{\xx} \eqdef \frac{1}{N}\sum_{i=1}^N \xx_i
+%}
+%La variance empirique \textit{totale} des données est donnée par
+%\eq{
+%	\Vv \eqdef \Tr(\C) = \frac{1}{N-1} \sum_{i=1}^{N}\norm{\xx_i - \overline{\xx}}^2.
+%}
+ 
+
+%pour lesquelles on définit comme précédemment un barycentre ${\overline{\xx}'}$, une covariance empirique ${\C}'$ et une variance empirique 
+%\eq{
+%	\Vv' = \Tr(\A^\top \C \A) = \frac{1}{N-1}\sum_{i=1}^N\norm{\xx'_i - \overline{\xx}'}^2
+%}
+%appelée \emph{variance expliquée}.
+%Le principe de l'ACP est de choisir les axes $\abold_k$ de manière à maximiser cette variance expliquée, $p$ étant donné. On supposera toujours que $\norm{\abold_k} = 1$.
+
+%\paragraph{Partie 1: Variance expliquée.} Nous allons commencer par montrer que la variance expliquée s'exprime comme
+%\eql{\label{eq:var-explain}
+%	\widetilde{\Vv} = \sum_{k=1}^p \abold_k^\top \C \abold_k.
+%}
+\begin{enumerate}
+	\item Justifier que 
+	\eq{\label{eq:var-explain}
+		\widetilde{\Vv} = \sum_{k=1}^p \abold_k^\top \C \abold_k \; .
+	}
+%	\eq{
+%		\abold_k^\top \C \abold_k = \frac{1}{N-1}\sum_{i=1}^N (\abold_k^\top (\xx_i - \underline{\xx}))^2.
+%	}
+%	
+%	\item Montrer que \eq{\norm{\widetilde{\xx}_i - \underline{\widetilde{\xx}}}^2 = \sum_{k=1}^p (\abold_k^\top(\xx_i - \underline{\xx}))^2.}
+%	
+%	\item En déduire le résultat \eqref{eq:var-explain}.
+\end{enumerate}
+
+\noindent On souhaite déterminer les axes $\abold_1, \ldots, \abold_p$ qui maximisent $\widetilde{\Vv}$ (pour $p$ donné). \textit{On supposera sans perte de généralités que $\norm{\abold_k} = 1$ pour tout $k$}. Soit la décomposition en valeurs singulières de $\underline{\X}$
+	\eq{
+		\underline{\X} = \U\SSig\V = \sum_{i=1}^d \sigma_i \uu_i \vv_i^\top .
+	}
+%la décomposition en valeurs singulières de $\X$. %, avec $\sigma_i$ les valeurs singulières, $\uu_i$ et $\vv_i$ les vecteurs singuliers associés gauches et droits.
+
+\begin{enumerate}
+\setcounter{enumi}{1}
+
+	\item Exprimer $\C$ en fonction de $\underline{\X}$.
+	
+	\noindent \textbf{Indication:} on rappelle que pour tout $\B = \begin{bmatrix} \bb_1 & \bb_2 & \ldots \end{bmatrix}$, $\B\B^\top = \sum \bb_i \bb_i^\top$.
+\item En déduire que \eq{\C = \frac{1}{N-1}\sum_{i=1}^{d} \sigma_i^2 \uu_i \uu_i^\top.}
+\item Déduire de ce qui précède et de la question 1. que pour tout choix d'axes $\abold_k$,
+\eq{
+	\widetilde{\Vv} \leq \frac{p}{N-1}\sum_{i=1}^{d} \sigma_i^2.
+}
+
+%\noindent \textbf{Indication:} on rappelle que les vecteurs $\abold_k$ et $\uu_k$ sont tous de norme $1$. 
+\item Quand y-a-t-il égalité ci-dessus? Conclure.
+\end{enumerate}
+
+
+
+\begin{figure}[h!]
+\centering
+
+%
+\subfloat[Données initiales \label{fig:data}]{
+\begin{tikzpicture}
+
+%\draw[step=0.5,gray] (-3,-3) grid (3,3);
+
+
+\node[label=below:{-2}] at (-2,0) {};
+\node[label=below:{-1}] at (-1,0) {};
+\node[label=below:{0}] at (0,0) {};
+\node[label=below:{1}] at (1,0) {};
+\node[label=below:{2}] at (2,0) {};
+
+\draw[thick] (-2,-0.1) -- (-2,0.1);
+\draw[thick] (-1,-0.1) -- (-1,0.1);
+\draw[thick] (0,-0.1) -- (0,0.1);
+\draw[thick] (1,-0.1) -- (1,0.1);
+\draw[thick] (2,-0.1) -- (2,0.1);
+\draw[-latex,thick] (-2.5,0) -- (2.8,0);
+
+\node at (3,0) {$x$};
+\end{tikzpicture}
+}
+%
+\hspace{1cm}
+\subfloat[Données transformées \label{fig:kernelized}]{
+\begin{tikzpicture}
+
+\draw[step=0.5,gray] (-2,0) grid (2,4);
+
+
+\node[label=below:{-2}] at (-2,0) {};
+\node[label=below:{-1}] at (-1,0) {};
+\node[label=below:{0}] at (0,0) {};
+\node[label=below:{1}] at (1,0) {};
+\node[label=below:{2}] at (2,0) {};
+
+\draw[-latex,thick] (-2.5,0) -- (2.5,0);
+\draw[-latex,thick] (0,-0.1) -- (0,4.5);
+
+\draw[thick] (-2,0) -- (-2,4);
+\draw[thick] (-1,0) -- (-1,4);
+\draw[thick] (1,0) -- (1,4);
+\draw[thick] (2,0) -- (2,4);
+\draw[thick] (-2,4) -- (2,4);
+\draw[thick] (-2,3) -- (2,3);
+\draw[thick] (-2,2) -- (2,2);
+\draw[thick] (-2,1) -- (2,1);
+
+\node at (-0.2,1) {1};
+\node at (-0.2,2) {2};
+\node at (-0.2,3) {3};
+\node at (-0.2,4) {4};
+
+\node at (2.8,0) {$z_1$};
+\node at (0,4.8) {$z_2$};
+
+\end{tikzpicture}
+}
+\caption{SVM à noyau}
+\end{figure}
+
+
+
+\end{document}

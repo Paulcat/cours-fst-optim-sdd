@@ -1,0 +1,23 @@
+Haselvander
+
+1. 0.5/0.5
+2. 0.5/0.5
+3. 2/2
+4. 1/1
+5. 1/1
+6. 0.5/0.5
+7. 0.5/0.5
+8. 1/1
+9. 1/1
+10. 2/2
+11. 1/2 % commentaires pas clair, sigma optimal??
+12. 0.5/1 % commentaires, comparaison?
+13. 1/2 % sources? (kfoldLoss, etc...)? commentaires des figures?
+14. 2.5/3 % explications
+15. 0/3
+
+% sources?
+% affichage inutile
+-1
+
+Total: 14

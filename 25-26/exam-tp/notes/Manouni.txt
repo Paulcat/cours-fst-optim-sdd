@@ -1,0 +1,21 @@
+Manouni
+
+1. 0.5/0.5
+2. 0.5/0.5
+3. 2/2
+4. 1/1
+5. 1/1
+6. 0.5/0.5
+7. 0.5/0.5
+8. 0.5/1 % rbf != gaussien
+9. 1/1
+10. 1.5/2 % conclusion?
+11. 1/2 % sigma optimal? commentaires?
+12. 0.5/1 % commentaires????
+13. 1.5/2 % idem, phrase de commentaires, réponses...
+14. 1.5/3 % soudainement nom de fonction en anglais, manque d'explications, pb normalisation, résultats?
+15. 0.5/3 % pas l'idée, pas de commentaires
+
+% difficultés n'ont pas de sens (nombre de composantes principales...) -0.5
+
+Total: 13.5

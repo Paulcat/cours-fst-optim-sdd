@@ -1,0 +1,25 @@
+% Gouaima
+
+1. 1/1
+2. 1/1
+5. 1/1
+6. 0.5/0.5
+7. 0.5/0.5
+8. 1/1
+9. 2/2
+10. 0/0.5 mauvaise compréhension
+11. 0.5/0.5
+12. 0.5/0.5
+13. 0.5/1.5 pour tester la reconstruction en fonction de sigma, il faut re-générer des données pour chaque sigma, sinon model mismatch
+14. 2/2
+15. 1/1
+16. 1/1
+17. 1.5/2
+18. - 
+19. 1.5/2 explication de la formule?
+20. 2/2
+
+Code commenté 0.5/1
+Rendu conforme 1/1 figures n'importe où?
+
+Note finale 19

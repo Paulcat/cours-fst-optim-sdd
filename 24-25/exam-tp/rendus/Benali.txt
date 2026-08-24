@@ -1,0 +1,25 @@
+% Benali
+
+1. 1/1
+2. 1/1
+5. 1/1
+6. 0.5/0.5
+7. 0.5/0.5
+8. 0/1 expression en fonction de Nx et Ny
+9. 0.5/2 mauvaise utilisation de toeplitz; utilisation 1:31 à proscrire
+10. 0/0.5 appliquer l'erreur de bruit non réalisé, compare juste les deux résultats (matricille et avec conv)
+11. 0.5/0.5
+12. 0.5/0.5
+13. 0/1.5 non fait
+14. 2/2 pour l'utilisation de \ non justifiée, pas de commentaire figure
+15. 0/1 pb de dimension: l'erreur de reconstruction devrait être un réel (pas un vecteur)
+16. 1/1
+17. 0/2
+18. - 
+19. 1.5/2 explication pour la solution régularisée?
+20. 2/2
+
+Code commenté 0.5/1 un peu de descriptif général aurait été apprécié
+Rendu conforme 1/1
+
+Total 13.5

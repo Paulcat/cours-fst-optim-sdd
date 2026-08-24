@@ -1,0 +1,92 @@
+\documentclass{article}
+
+\usepackage{/home/paul/Workspace/build/macros}
+
+\title{Devoir maison}
+\author{Paul Catala}
+
+\usepackage[T1]{fontenc}
+
+\usepackage{matlab-prettifier}
+\usepackage{listings}
+\lstset{
+	style = Matlab-editor,
+	breaklines = true,
+	basicstyle = \footnotesize\ttfamily,
+	extendedchars = true,
+	frame = single
+}
+
+\usepackage{geometry}
+\geometry{letterpaper}    
+\usepackage{graphicx}
+
+\usepackage[french]{babel}
+\usepackage{enumitem}
+
+%\newtheorem{exercise}{Exercise}
+
+%\title{Devoir en optimisation numérique -- ISC 962}
+
+\newenvironment{solution}[1][\it{Solution}]{\textcolor{blue}{\textbf{#1. } }}{\textcolor{blue}{$\blacksquare$}}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhead{}
+
+\begin{document}
+
+\begin{minipage}{0.5\textwidth}
+\includegraphics[height=1.6cm]{/home/paul/Workspace/build/logos/fst-couleur}
+\includegraphics[height=1.6cm]{/home/paul/Workspace/build/logos/udl}\\[1ex]
+\end{minipage}
+\hfill
+\begin{minipage}{0.4\textwidth}
+\begin{flushright}
+M2 ISC\\
+2025-2026
+\end{flushright}
+\end{minipage}
+
+\bigbreak
+
+%\noindent Traitement statistique du signal \hfill Master SNIM\\
+%Paul Catala  \hfill 2024/2025
+
+
+
+
+\begin{center}
+\textbf{\Large Devoir à rendre \\ \: \\ \guillemotleft Pratique de l'optimisation numérique et sciences des données \guillemotright}
+
+\hrulefill
+
+\end{center}
+
+
+\medbreak
+
+\paragraph{Livrables}: Il est demandé de livrer sur Arche au plus tard le \textbf{vendredi 06 février 2026 à 14h} un compte-rendu au format pdf du TP ci-dessous.
+
+\paragraph{Consignes}: Les réponses aux éventuelles questions et les analyses de vos résultats sont à donner directement dans le code sous la forme de commentaires. Vous indiquerez le numéro de la question le cas échéant. Le compte-rendu final devra être généré par la commande \texttt{publish} de MATLAB:
+\begin{lstlisting}
+publish("nom_du_script.m", format="pdf")
+\end{lstlisting}
+
+\noindent Si vous créez des fonctions matlab en plus du script principal, les fichiers .m correspondants devront être déposés en plus du compte-rendu. 
+
+\noindent Le code devra être commenté, et divisé en sections correspondant aux sous-parties. 
+
+\noindent Indiquez les difficultés que vous avez rencontrées, et vos tentatives pour les surmonter; signalez vos sources d'information et les outils utilisés. Si vous échangez au sein de la promotion pour avancer dans la résolution d'un problème, il conviendra de citer la ou les personnes qui vous auront permis de progresser.
+
+\newpage
+
+\pagenumbering{arabic}
+
+L'objectif de ce devoir est de mettre en oeuvre un algorithme de classification SVM sur le jeu de données USPS, qui contient des images de chiffres écrits à la main (de 0 à 9).
+\input{partie-data/partie1}
+\input{partie-svm/partie2}
+\input{partie-bonus/partie3}
+
+
+\end{document}

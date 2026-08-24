@@ -1,0 +1,25 @@
+% Hamza
+
+1. 1/1
+2. 1/1
+5. 1/1
+6. 0.5/0.5
+7. 0.5/0.5
+8. 1/1
+9. 2/2
+10. 0/0.5 pas tronquée
+11. 0.5/0.5
+12. 0.5/0.5
+13. 0.5/1.5 model mismatch
+14. 2/2
+15. 0.5/1 l'erreur se calcule plutôt à partir des itérées ici
+16. 0.5/1 affichage cond?
+17. 0/2 non traité
+18. - 
+19. 1.5/2
+20. 1/2
+
+Code commenté 0.5/1
+Rendu conforme 0/1
+
+Note finale 14.5

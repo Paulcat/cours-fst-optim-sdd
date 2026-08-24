@@ -1,0 +1,117 @@
+% Solution TP noté
+
+% helpers
+L = 100; % dure d ' observation du signal d ' entree ( secondes )
+fe = 1; % frequence d ' echantillonage ( Hz )
+Te = 1/ fe ; % periode d ' echantillonage ( secondes )
+Nx = L / Te ; % nombre d ' echantillons du signal x
+nx = 0: Nx -1; % indice temporel ( entier )
+tx = nx * Te ; % base de temps ( secondes )
+
+%% 1a. Simulation du signal d'entrée
+% -----------------------------------
+
+x1 = 2 * tx(tx <= L/2) / L;
+x2 = 2 * (-tx(tx > L/2) + L) / L;
+x  = [x1,x2]';
+
+stem(tx,x,'.','linewidth',2,'markersize',25);
+set(gca,'fontsize',20);
+axis tight
+
+
+%% 1b. Simulation du filtre
+% -------------------------
+
+m = 15; % Gaussian mean
+s = 0.8; % Gaussian std
+
+Nh = 30;
+th = (0:Nh-1) * Te;
+
+h = 1/s/sqrt(2*pi) * exp( -(th-m).^2 /2/s^2 )';
+
+clf, stem(th,h,'.','linewidth',2,'markersize',25);
+set(gca,'fontsize',20);
+axis tight
+
+%% 1c. Simulation du problème direct: première approche
+% -----------------------------------------------------
+
+ynb = conv(h,x);
+
+clf, plot(ynb,'linewidth',2,'markersize',25);
+set(gca,'fontsize',20);
+axis tight
+
+y = round(ynb*2^10)/2^10;
+clf, stairs(y,'linewidth',2);
+axis tight
+
+% le bruit de quenatification s'obtient par soustraction
+b = ynb - y;
+plot(b,'linewidth',2);
+axis tight
+
+%% 1d. Simulation du problème direct par approche matricielle
+% -----------------------------------------------------------
+
+Ny = Nx + Nh - 1;
+
+hr = zeros(Nx,1); hr(1) = h(1);
+hc = zeros(Ny,1); hc(1:Nh) = h;
+
+H = toeplitz(hc,hr);
+
+ynb = H*x;
+
+% bruit de quantification
+y = round(ynb*2^10)/2^10;
+b = ynb - y;
+clf, plot(b,'linewidth',2);
+axis tight
+
+%% 2a. Deconvolution naive et constat de l'instabilite
+% ----------------------------------------------------
+
+xrec = deconv(y,h);
+
+clf, plot(xrec);
+hold on, plot(x);
+
+%% 2b. Deconvolution par moindres carres
+% --------------------------------------
+
+xrec = pinv(H)*y;
+
+clf, plot(xrec);
+hold on, plot(x);
+
+err = norm(x-xrec,'fro')/norm(x,'fro');
+
+S = svd(H);
+cond = max(S)/min(S);
+
+%% 2c. Deconvolution par regularisation lineaire quadratique
+% ----------------------------------------------------------
+
+dcol1 = zeros(1,Nx);
+dcol1(1:2) = dcol1(1:2) + [1 -1];
+dlig1 = zeros(1,Nx);
+dlig1(1,1) = dcol1(1,1);
+D1 = toeplitz(dcol1,dlig1);
+
+
+lambda = 10^(-2);
+xrec = inv(H'*H + lambda*D1'*D1)*H'*y;
+
+clf, plot(xrec);
+hold on, plot(x);
+
+i = 0;
+err = zeros(100,1);
+for lambda = 10.^(linspace(-7,2,100))
+    i = i+1;
+    xrec = inv(H'*H + lambda*D1'*D1)*H'*y;
+    err(i) = norm(xrec-x,'fro')/norm(x'fro')
+end

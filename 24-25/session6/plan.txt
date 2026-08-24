@@ -1,0 +1,13 @@
+* terminologie (couches, poids, profondeur, largeur, etc...)
+
+* 1er exemple: un réseau linéaire --> les fonctions apprises sont forcément linéaires
+
+* fonction d'activation
+
+* propriétés d'approximation (universelle dès que 1 couche latente)
+
+* mettre des formules de réseau de neurones et trouver la formulation fonction correspondante, et inversement
+
+* différentiation automatique
+
+

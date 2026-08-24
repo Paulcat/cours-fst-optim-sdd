@@ -1,0 +1,134 @@
+\chapter{Décomposition en valeurs singulières}
+%\addcontentsline{toc}{chapter}{TD 1}
+
+
+
+\section{Calcul de la SVD}
+\begin{enumerate}
+	\item Les décompositions suivantes sont-elles des décompositions en valeurs singulières? Justifier vos réponses.
+	
+	\begin{tabular}{ll}
+	\\
+		(a) $\displaystyle \begin{bmatrix} 0 & 0 \\ 1 & 1\end{bmatrix}  \begin{bmatrix} 2 & 0 \\ 0 & 1 \end{bmatrix} \begin{bmatrix} 0 & 1 \\ 1 & 0\end{bmatrix}$
+		&
+		(b) $\displaystyle \begin{bmatrix} 1 & 0 \\ 0 & 1\end{bmatrix}  \begin{bmatrix} -2 & 0 \\ 0 & 1 \end{bmatrix} \begin{bmatrix} 0 & 1 \\ 1 & 0\end{bmatrix}$\\ \\
+		(c) $\displaystyle \begin{bmatrix} 0 & 1 \\ -1 & 0\end{bmatrix}  \begin{bmatrix} 4 & 0 & 0 \\ 0 & 2 & 0 \end{bmatrix} \begin{bmatrix} 1 & 0 & 0 \\ 0 & -1 & 0 \\ 0 & 0 & 1 \end{bmatrix}$
+		&
+		(d) $\displaystyle \begin{bmatrix} 1 & 1 \\ -1 & 1\end{bmatrix}  \begin{bmatrix} 4 & 0 & 0 \\ 0 & 2 & 0 \end{bmatrix} \begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1 \end{bmatrix}$
+	\end{tabular}
+\end{enumerate}
+Dans la suite on considère la matrice
+\eq{
+	\mathbf{X} = \begin{bmatrix} 3 & 1\\ 1 & 3\\ 1 & -1 \end{bmatrix}
+}
+
+\begin{enumerate}
+	\setcounter{enumi}{1}
+	\item Quel est le rang de $\mathbf{X}$? Justifier.
+	\item Calculer la matrice $\mathbf{C} = \mathbf{X}\mathbf{X}^\top$.
+	\item Parmi les vecteurs suivants, lesquels sont des vecteurs propres de $\mathbf{C}$? Indiquer le cas échéant la valeur propre associée (on rappelle que $\mathbf{x}$ est un vecteur propre de $\mathbf{C}$ associé à la valeur propre $\lambda$ si $\mathbf{x}\neq 0$ et $\mathbf{C}\mathbf{x} = \lambda \mathbf{x}$). Justifier vos réponses.
+	
+	\begin{tabular}{lllll}
+		(a) $\begin{bmatrix} 1 \\ 1 \\ 0 \end{bmatrix}$ & (b) $\begin{bmatrix} 0 \\ 2 \\ 0 \end{bmatrix}$ & (c) $\begin{bmatrix} 1 \\ 0 \\ 1 \end{bmatrix}$ & (d) $\begin{bmatrix} 1 \\ -1 \\ 1 \end{bmatrix}$ & (e) $\begin{bmatrix} -1 \\ 1 \\ 2 \end{bmatrix}$
+	\end{tabular}
+	
+	\item En déduire les valeurs singulières de la matrice $\mathbf{X}$. Les vecteurs propres trouvés à la question précédente correspondent-ils à des vecteurs singuliers droits ou gauches de $\mathbf{X}$?
+	\item En déduire finalement la décomposition en valeurs singulière $\mathbf{U}\mathbf{\Sigma}\mathbf{V}^\top$ de $\mathbf{X}$ en utilisant les propriétés suivantes:
+	\begin{itemize}
+		\item[-] les vecteurs singuliers gauches doivent être normalisés, \ie $\norm{\mathbf{u}_k}_2 = 1$;
+		\item[-] les vecteurs singuliers droits s'obtiennent à partir des valeurs singulières non nulles et des vecteurs singuliers gauches correspondants comme $\mathbf{v}_k = \frac{1}{\sigma_k}\mathbf{X}^\top \mathbf{u}_k$.
+	\end{itemize}
+\end{enumerate}
+
+
+
+\section{Approximation de rang faible}
+\begin{enumerate}
+	
+	
+	
+	\item On considère dans cette question la matrice $\mathbf{A}$ définie par
+	\eq{
+		\mathbf{A} = \begin{bmatrix} 1 & -1 & 1 \\ -1 & 1 & -1 \\ 1 & -1 & -2 \end{bmatrix}.
+	}
+	\begin{enumerate}
+		\item Calculer la matrice $\mathbf{B} = \mathbf{A}^\top \mathbf{A}$.
+		\item Quel est le rang de $\mathbf{B}$? En déduire une valeur propre et un vecteur propre de $\mathbf{B}$ (on rappelle qu'un couple valeur/vecteur propre est un couple $(\lambda,\mathbf{v})$ tel que $\mathbf{v}\neq 0$ et $\mathbf{B}\mathbf{v} = \lambda \mathbf{v}$).
+		\item Quel est le rang de $\mathbf{B}-6\mathbf{I}_3$? Trouver deux vecteurs $\mathbf{v}_1,\mathbf{v}_2 \in \RR^3$ non colinéaires (et non nuls) tels que $\mathbf{B}\mathbf{v}_1=6\mathbf{v}_1$ et $\mathbf{B}\mathbf{v}_2=6\mathbf{v}_2$.
+		\item Trouver les valeurs singulières de $\mathbf{A}$, ainsi que les vecteurs singuliers droits associés.
+	\end{enumerate}
+	
+	\item Soit $\mathbf{X} \in \RR^{m\times n}$, pour $m,n \in \NN$ donnés. On note
+	\eq{
+		\mathbf{X} = \mathbf{U}\diag(\sigma_1,\ldots,\sigma_r,0,\ldots,0)\mathbf{V}^\top
+	}
+	la décomposition en valeurs singulières de $\mathbf{X}$, avec $\sigma_1 \geq \ldots \geq \sigma_r > 0$. Montrer que \eq{\norm{X}_F = \sqrt{\sum_{j=1}^r \sigma_j^2}} où $\norm{\mathbf{X}}_F = \sqrt{\Tr(\mathbf{X}^\top \mathbf{X})}$ est la norme de Frobenius.
+	
+	%\noindent \textbf{Indication}: On rappelle que $\Tr(AB) = \Tr(BA)$ pour toutes matrices $A$, $B$ (de tailles compatibles).
+	
+	\item En déduire la valeur de
+	\eq{
+		\norm{X-X_s}_F^2
+	}
+	lorsque $X_s = U_s \diag(\sigma_1,\ldots,\sigma_s) V_s^\top$, où $U_s$ et $V_s$ sont les troncatures de $U$ et $V$ à $s$ colonnes.
+\end{enumerate}
+
+\paragraph{\textcolor{blue}{Solution}}
+\begin{enumerate}
+	\item On a
+	\eq{
+		\mathbf{B} = \begin{bmatrix} 3 & -3 & 0 \\ -3 & 3 & 0 \\ 0 & 0 & 6 \end{bmatrix}
+	} 
+	\item 
+	\begin{enumerate}
+	\item $\mathbf{B}$ est de rang $2$: si l'on regarde par exemple ses colonnes, la dernière colonne est très clairement orthogonales à toutes les autres, et les deux premières sont colinéaires. L'ensemble des colonnes engendrent donc un espace de dimension $2$. $\mathbf{B}$ étant de taille $3$, elle n'est donc pas de rang plein, et donc n'est pas inversible. Autrement dit, il existe un vecteur \emph{non nul} $v$ tel que $Bv = 0$. Par conséquent, $0$ est une valeur propre de $B$. Un vecteur propre associée est par exemple $\mathbf{v} = \begin{bmatrix} 1 & 1 & 0\end{bmatrix}^\top$, puisque
+	\eq{
+		\mathbf{B}\mathbf{v} = \begin{bmatrix} 0 \\ 0 \\ 0 \end{bmatrix}
+	} 
+	\item On a
+	\eq{
+		\mathbf{B} - 6\mathbf{I}_3 = \begin{bmatrix} -3 & -3 & 0 \\ -3 & -3 & 0 \\ 0 & 0 & 0\end{bmatrix}
+	}
+	qui est de rang $1$. Un premier vecteur dans le noyau de cette matrice est
+	\eq{
+		\mathbf{v}_1 = \begin{bmatrix} 1 \\ -1 \\ 0\end{bmatrix}
+	}
+	et un deuxième, non colinéaire, est
+	\eq{
+		\mathbf{v}_2 = \begin{bmatrix} 0 \\ 0 \\ 1\end{bmatrix}.
+	}
+	Il s'agit donc de deux vecteurs propres associés à la valeur propre $6$.
+	\item On sait que les valeurs singulières sont les racines (positives) des valeurs propres de $A^\top A$: ici, on a donc, dans l'ordre décroissant
+	\eq{
+		\sigma_1 = \sigma_2 = \sqrt{6}, \quad \sigma_3 = 0
+	}
+	associée respectivement aux vecteurs singuliers droits $\mathbf{v}_1$, $\mathbf{v}_2$ définis précédemment, et $\mathbf{v}_3 = \begin{bmatrix} 1 & 1 & 0 \end{bmatrix}^\top$.
+	
+	\end{enumerate}
+	
+	\item Notons $\mathbf{\Sigma}$ la matrice diagonale des valeurs singulières. On a, par orthonormalité de $\mathbf{U}$ et $\mathbf{V}$,
+	\eq{\begin{aligned}
+		\Tr(\mathbf{X}^\top \mathbf{X}) 
+			&= \Tr(\mathbf{V} \mathbf{\Sigma}^\top \mathbf{\Sigma}\mathbf{V}^\top) \\
+			&= \Tr(\mathbf{\Sigma}^\top\mathbf{\Sigma})\\
+			&= \sum_{j=1}^r \sigma_j^2
+	\end{aligned}
+	}
+	puisque les valeurs singulières au-delà de $r$ sont nulles.
+	
+	\item On a
+	\eq{\begin{aligned}
+		\mathbf{X}-\mathbf{X_s} = \mathbf{U}\mathbf{\Sigma}\mathbf{V}^\top - \mathbf{U}_s \mathbf{\Sigma}_s \mathbf{V}_s^\top 
+			&=\begin{bmatrix} \mathbf{U}_s & \star\end{bmatrix} \begin{bmatrix} \mathbf{\Sigma_s} & 0 \\ 0 & \mathbf{\Sigma}_{r-s} \end{bmatrix}  \begin{bmatrix} \mathbf{V}_s & \star\end{bmatrix}^\top - \mathbf{U}_s \mathbf{\Sigma}_s \mathbf{V}_s^\top \\
+			&= \begin{bmatrix} \mathbf{U}_s & \star\end{bmatrix} \begin{bmatrix} \mathbf{\Sigma_s} & 0 \\ 0 & \mathbf{\Sigma}_{r-s} \end{bmatrix}  \begin{bmatrix} \mathbf{V}_s & \star\end{bmatrix}^\top - \begin{bmatrix} \mathbf{U}_s & \star\end{bmatrix} \begin{bmatrix} \mathbf{\Sigma_s} & 0 \\ 0 & 0 \end{bmatrix}  \begin{bmatrix} \mathbf{V}_s & \star\end{bmatrix}^\top\\
+			&= \mathbf{U} \begin{bmatrix} 0 & 0 \\ 0 & \mathbf{\Sigma}_{r-s} \end{bmatrix} \mathbf{V}^\top
+	\end{aligned}	
+	}
+	où $\mathbf{\Sigma}_{r-s} = \diag(\sigma_{s+1}, \ldots, \sigma_r, 0, \ldots)$. On en déduit, par un raisonnement similaire à la question précédente:
+	\eq{
+		\norm{X-X_s}_F = \sqrt{\sum_{j=s+1}^r \sigma_j^2}.
+	}
+\end{enumerate}
+
+
+

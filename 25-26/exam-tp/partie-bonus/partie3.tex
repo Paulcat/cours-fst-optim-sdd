@@ -1,0 +1,25 @@
+\section{Classification multi-classes}
+
+Il y a deux stratégies principales pour entraîner un classifieur multi-classe (avec M classes) à partir des outils de classification bi-classes que nous avons vues:
+
+\paragraph{One-vs-one:} on entraine des classifieurs SVM bi-classes pour chacune des  paires de classes. Par exemple : ’1’ vs. ’2’, ’1’ vs. ’3’, ..., ’1’ vs. ’0’, ’2’ vs.’3’, ..., ’2’ vs. ’0’, ... etc. Pour trouver une prediction, on évalue ensuite tous les classifieurs sur un nouvel echantillon, et on choisit la classe qui ressort le plus souvent. Par exemple :
+\begin{itemize}[label=-]
+	\item '1' vs. '2' : '1'
+	\item '1' vs. ’3’ : '1'
+	\item '2' vs. '3' : '3'
+\end{itemize}
+$\Rightarrow$ la classe '1' est choisie.
+
+\paragraph{One-vs-all:} On entraine M classifieurs pour la classification binaire :
+\begin{itemize}[label=-]
+	\item '1' vs. '2','3',...'0'
+	\item '2' vs. '1','3',...'0'
+	\item $\vdots$
+	\item '0' vs. '1','2',...'9'
+\end{itemize}
+et pour un nouvel échantillon, on choisit la classe ayant obtenu le meilleur score (voir section 2.1).
+
+\begin{enumerate}
+	\setcounter{enumi}{14}
+	\item Implémenter une des deux stratégies pour le jeu de données USPS. Calculer la matrice de confusion (commande \texttt{confusionmat}) et le taux d'erreur. 
+\end{enumerate}

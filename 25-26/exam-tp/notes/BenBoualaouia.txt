@@ -1,0 +1,21 @@
+Barème TP M2
+
+1. 0.5/0.5
+2. 0.5/0.5
+3. 1.5/2 % pas besoin de centrer...
+4. 1/1
+5. 0.5/1 % classe -1,  1 au lieu de 7, 9
+6. 0.5/0.5
+7. 0/0.5 ?
+8. 1/1
+9. 1/1
+10. 1.5/2 % commentaires biais variance?
+11. 2/2
+12. 1/1
+13. 1/2 % d'ou sort la valeur 2.1360? explication des figures?
+14. 2/3 % problème affichage publish + explications
+15. 3/3
+
+% difficultés? -1
+
+Total: 16

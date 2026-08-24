@@ -1,0 +1,25 @@
+Erebih
+
+1. 1/1
+2. 1/1
+5. 1/1 ne pas utiliser l'option 'same'
+6. 0.5/0.5
+7. 0.5/0.5
+8. 0/1 erreur de dimension, la dimension devrait être Nx+Nh-1
+9. 1.5/2 mauvaise taille
+10. 0/0.5 mauvaise compréhension de troncature
+11. 0.5/0.5
+12. 0.5/0.5
+13. 0.5/1.5 si le h change, changer les données aussi, sinon forcément il y a une erreur de modèle...
+14. 0.5/2 mauvaise formule (signe), mauvaise implémentation
+15. 1/1
+16. 0.5/1 pas tracé
+17. 0.5/2 pas de test numérique, explications à côté de la plaque
+18. -
+19. 1.5/2 explication de la formule?
+20. 1.5/2 pb dûs à la taille certainement
+
+Code commenté 1/1
+Rendu conforme 1/1
+
+Note finale 14,5

@@ -1,0 +1,29 @@
+\section{Customisation de l'architecture}
+
+Cet exercice vise à vous faire observer l'impact de l'architecture sur les résultats de classification. 
+
+\subsection{Classification binaire}
+
+\begin{enumerate}
+	\item Utiliser la fonction matlab fournie \texttt{data2class} pour générer un jeu de données bi-classes, avec 200 échantillons par classe. Afficher le jeu de données sur le domaine $[-1,1]\times [-1,1]$ (avec une couleur par classe).
+	
+	\item Entraîner un réseau de neurones \texttt{nn\_trained} à une couche cachée avec 3 neurones sur ces données.
+	
+	\item Faire un nouveau tirage des données, et les afficher en même temps que la fonction  \texttt{nn\_trained} apprise. Pour évaluer \texttt{nn\_trained} sur l'ensemble du domaine, on pourra s'aider du code suivant.
+\begin{lstlisting}
+t = linspace(-1,1,100);
+[B,A] = meshgrid(t);
+D = [A(:) B(:)]';
+nn_output = round(nn_trained(D));
+nn_output = reshape(F,[201,201]);
+\end{lstlisting}
+
+	\item Tester plusieurs architectures (nombre de couches, largeur, fonctions d'activation)
+\end{enumerate}
+
+
+\subsection{Classification multi-classes}
+
+\begin{enumerate}
+	\item Tester de même plusieurs architectures sur les données générées avec \texttt{data3class} et afficher les résultats comme précédemment. A ce stade vous pouvez aussi essayer de changer la fonction objectif utilisée par le réseau, et spécifiée par \texttt{nn.performFcn}. Par défaut, Matlab choisit l'erreur quadratique moyenne (\texttt{'mse'}). La liste des choix possibles est donnée par \texttt{help nnperformance}.
+\end{enumerate}

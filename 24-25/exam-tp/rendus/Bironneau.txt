@@ -1,0 +1,25 @@
+% Bironneau
+
+1. 1/1
+2. 1/1 double normalisation contre-productive
+5. 1/1
+6. 0.5/0.5
+7. 0.5/0.5
+8. 0/1 vient d'une erreur plus haut: la convolution de deux vecteurs ne renvoie pas un vecteur de même taille
+9. 1.5/2 bonne utilisation de toeplitz, mauvaise taille de matrice; la figure obtenue aurait dû vous faire réaliser
+10. 0/0.5 l'erreur de troncature n'est pas ce que vous croyez
+11. 0.5/0.5
+12. 0.5/0.5
+13. 1/1.5 pb dans le code (les résultats ne sont pas corrects)
+14. 0.5/2 pas d'explications et erreur dans la formule
+15. 0.5/1 10^22 aurait dû vous faire réagir...
+16. 1/1 le conditionnement apparaît 1 page plus loin... relisez-vous
+17. 0.5/2 ok, mais cette observation aurait dû être faite numériquement
+18. - 
+19. 1/2 il fallait faire H'*H. Explications?
+20. 1.5/2 Explications?
+
+Code commenté 0.5/1
+Rendu conforme 1/1
+
+Note finale: 12,5

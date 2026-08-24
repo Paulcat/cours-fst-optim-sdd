@@ -1,0 +1,36 @@
+\documentclass[11pt,twoside,a4paper]{book}
+
+\usepackage{/home/paul/Workspace/build/macros}
+
+\usepackage[hmargin=2.5cm,vmargin=2.5cm]{geometry}
+\usepackage{matlab-prettifier}
+\usepackage{listings}
+\lstset{
+	style = Matlab-editor,
+	breaklines = true,
+	basicstyle = \footnotesize\ttfamily,
+	extendedchars = true,
+	frame = single
+}
+
+\usepackage[french]{babel}
+
+% afficher les sous-sous-sections
+\setcounter{secnumdepth}{3}
+
+\setlength{\parindent}{0cm} \sloppy
+
+\begin{document}
+
+\pagenumbering{roman}
+\include{pagedegarde}
+
+\cleardoublepage
+\tableofcontents
+
+\pagenumbering{arabic}
+\include{partie-svd/partie1}
+\include{partie-tensop/partie2}
+\include{partie-parafac/partie3}
+
+\end{document}

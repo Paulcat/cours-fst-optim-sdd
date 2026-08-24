@@ -1,0 +1,25 @@
+% Elamine
+
+1. 1/1
+2. 1/1
+5. 1/1
+6. 0.5/0.5
+7. 0.5/0.5
+8. 0/1 erreur de taille: convolution = taille différente
+9. 1.5/2 pb taille
+10. 0/0.5 non fait
+11. 0.5/0.5
+12. 0.5/0.5
+13. 0/1.5
+14. 0.5/2 model mismatch, aucun commentaire
+15. 0/1 non fait
+16. 0.5/1 pas affiché
+17. 0/2
+18. - 
+19. 1.5/2
+20. 1/2 répondez aux questions!!!
+
+Code commenté 0/1
+Rendu conforme 0/1
+
+Note 10

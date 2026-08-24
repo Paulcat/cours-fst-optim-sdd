@@ -1,0 +1,25 @@
+% Rafiq
+
+1. 1/1
+2. 1/1
+5. 1/1
+6. 0.5/0.5
+7. 0.5/0.5
+8. 1/1
+9. 2/2
+10. 0/0.5
+11. 0.5/0.5
+12. 0.5/0.5
+13. 0.5/1.5 model mismatch, aucun commentaires
+14. 2/2
+15. 1/1
+16. 1/1
+17. 0.5/2 aucun commentaires
+18. - 
+19. 1.5/2
+20. 2/2
+
+Code commenté 0/1
+Rendu conforme 0/1
+
+Note finale 16.5

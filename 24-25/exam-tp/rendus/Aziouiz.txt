@@ -1,0 +1,27 @@
+% Aziouiz
+
+1. 1/1
+2. 1/1 ne pas normaliser deux fois, la constante devant h est déjà une normalisation.
+5. 1/1
+6. 0.5/0.5
+7. 0.5/0.5
+8. 0/1 à déterminer en fonction de Nx et Nh
+9. 1/2 mauvaise utilisation de toeplitz
+10. 0/0.5 ajout de l'erreur non réalisé
+11. 0.5/0.5
+12. 0/0.5
+13. 0.5/1.5 question répondue à la fin, sans commentaires, model mismatch...
+14. 1.5/2 nouvelle construction de H, avec une taille erronée... 1 pour la bonne utilisation de \ pour les moindres carrés?
+15. 0.5/1 pour le tracé? pas de commentaires, pas de calcul de l'énergie...
+16. 0/1
+17. 0/2
+18. - 
+19. 0/2
+20. 0/2
+
++1 pour la tentative de la dernière partie...
+
+Code/figures commentées 0.5/1 
+Rendu conforme 0/1
+
+Note finale: 9.5

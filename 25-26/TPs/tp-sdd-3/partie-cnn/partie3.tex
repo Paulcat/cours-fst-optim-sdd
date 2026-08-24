@@ -1,0 +1,80 @@
+\section{Réseaux convolutionnels}
+
+Dans cet exercice, nous allons construire et entraîner un réseau de neurones convolutionnel simple, sur des images extraites du jeu de donnée CIFAR-10. Ces données sont fournies dans les fichiers du tp. Elles consistent en des images de taille $32\times 32$.
+
+Charger les images du jeu d'entraînement à l'aide des commandes suivantes
+\begin{lstlisting}
+categories = {'cat', 'dog'}
+img_train = imageDataStore(fullfile('cifar10train',categories),LabelSource='foldernames');
+\end{lstlisting}
+
+La variable \texttt{img} est une structure contenant les chemins vers les images (\texttt{img.Files}), et plusieurs informations utiles comme les labels (\texttt{img.Labels}). Vous pouvez changer les classes utilisées si vous le souhaitez, ou en rajouter.
+
+\begin{enumerate}
+	\item On peut charger une image dans une matrice à l'aide de la commande \texttt{imread}.
+\begin{lstlisting}
+I = imread(img.Files{i});
+\end{lstlisting}
+	Afficher quelques images du jeu de données à l'aide de \texttt{imagesc}.
+	
+	\item On peut charger toutes les images et leurs labels à l'aide de 
+\begin{lstlisting}
+data_train = readall(img_train);
+labels_train = img_train.Labels;
+\end{lstlisting}
+	La variable \texttt{data\_train} se présente sous la forme d'une cellule Matlab. Stockez-la dans un unique de tenseur \texttt{Xtrain} de dimension $32 \times 32 \times 3 \times \text{(nombre d'images)}$.
+\end{enumerate}
+
+Les couches latentes d'un réseau de neurones convolutionnels alternent généralement entre 
+\begin{itemize}
+	\item des couches de convolution, que l'on initialisera avec la commande \texttt{convolution2dlayer(...,'Padding','same')}. Il faudra spécifier la taille des filtres (en pixels), ainsi que leur nombre;
+	\item des couches de normalisation \texttt{batchNormalizationLayer}, optionnelle pour stabiliser l'apprentissage;
+	\item des couches de regroupement, ou "pooling", où la dimension des données est réduite en remplacant les pixels d'une région par un pixel avec la valeur maximum sur la région (\texttt{maxPooling2dLayer(...)}), ou bien la valeur moyenne (\texttt{averagePooling2dLayer(...)}). L'argument nécessaire dans les deux cas est la taille des régions;
+	\item des couches d'activation (comme \texttt{relulayer} ou \texttt{softmaxlayer});
+	\item des couches complètement connectées (\texttt{fullyConnectedLayer(...)}), où la taille des données en sortie doit être spécifiée.
+\end{itemize}
+
+Dans le cas d'images, la première couche contenant les données se déclare avec \texttt{imageInputLayer(size)}, où \texttt{size} représente la taille des images.
+
+Les deux dernières couches sont usuellement une couche complètement connectée, avec comme taille de sortie le nombre de classes, suivie d'une activation softmax.
+
+Pour des tâches de classification, la couche de sortie se déclare par \texttt{classificationLayer}.
+
+La syntaxe Matlab pour déclarer une architecture est la suivante:
+\begin{lstlisting}
+layer = [
+	couche1
+	couche2
+	...
+	coucheN];
+\end{lstlisting}
+
+\begin{enumerate}
+	\setcounter{enumi}{1}
+	\item Construire une première architecture simple, constituée: d'une couche d'entrée, une couche de convolution (taille 5, quantité 32), une couche de regroupement par maximum (taille 5), une couche Relu, une couche complètement connectée (le nombre de classes en taille de sortie), une couche softmax.
+	
+	\item Entraîner ce réseau à l'aide de la commande \texttt{trainnet}. On spécifiera les options suivantes pour l'optimisation.
+	
+\begin{lstlisting}
+options = trainingOptions('sgdm', ... % descente de gradient stochastique
+    InitialLearnRate= 0.001, ... % pas de descente
+    LearnRateDropFactor= 0.1, ...
+    LearnRateDropPeriod= 8, ...
+    L2Regularization= 0.004, ...
+    MaxEpochs= 10, ...
+    MiniBatchSize= 100, ...
+    Verbose= true);
+\end{lstlisting} 
+
+	\item Charger les images test dans un tenseur \texttt{X\_test} comme en 2. La commande \texttt{predict(cnet,Xtest)} retourne, pour chaque échantillon test, un vecteur de probabilité d'appartenance aux différentes classes.
+	
+	Déterminer le résultat de la classification sur les échantillons tests, en supposant que l'on choisit la classe ayant la probabilité maximale.
+	
+	
+	\item Afficher quelques images du jeu de test, en indiquant en titre la classication obtenue.
+	
+	\item Afficher la matrice de confusion (\texttt{confusionchart}).
+
+	\item Tester d'autres architectures de réseau, par exemple en rajoutant des couches que vous choisirez et initialiserez.
+\end{enumerate}
+
