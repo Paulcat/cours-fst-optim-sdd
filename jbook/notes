@@ -1,0 +1,4 @@
+procédure pour un jupyter book avec uv:
+
+- créer le répertoire du book
+- uv init
