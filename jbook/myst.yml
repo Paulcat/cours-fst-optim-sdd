@@ -2,7 +2,7 @@
 version: 1
 project:
   id: 3a48888d-c232-419c-9ba7-eea072e16d3a
-  title: Optimisation et Science des Données
+  title: Optimisation et Sciences des Données
   # description:
   # keywords: []
   # authors: []
@@ -13,3 +13,6 @@ site:
   # options:
   #   favicon: favicon.ico
   #   logo: site_logo.png
+actions:
+ - title: Optimisation et Sciences des Données
+   url: https://github.com/Paulcat/cours-fst-optim-sdd/jbook/README.md
