@@ -7,7 +7,7 @@ Optimisation problems can be studied in much more general spaces (infinite-dimen
 :::
 
 
-# Applications linéaires
+# Linear mappings
 
 The key idea behind differential calculus is to approximate a function locally by a linear mapping (the tangent). Let us begin by defining what a linear mapping is. Let $E$ and $F$ be two $\mathbb{R}$-vector spaces.
 
@@ -182,7 +182,7 @@ We will also encounter in this course *matrix norms* on $\mathbb{R}^{n\times m}$
 \begin{equation*}
     |\!|X|\!|_{2,2} = \sup_{v \neq 0} \frac{|\!|Xv|\!|_2}{|\!|v|\!|_2}
 \end{equation*}
-In particular, the latter satsify the important property that for all vector $v \in \mathbb{R^m}$, $|\!|Xv|\!|_2 \leq |\!|X|\!|_{2,2} |\!|v|\!|_2$.
+In particular, this last norm satisfy is such that for all vector $v \in \mathbb{R^m}$, $|\!|Xv|\!|_2 \leq |\!|X|\!|_{2,2} |\!|v|\!|_2$.
 :::
 
 ##

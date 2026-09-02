@@ -1,74 +1,74 @@
-# Différentielles
+# Differentials
 
 
 # Différentielles premières
 
-L'idée fondamental du calcul différentiel est d'approcher une fonction $f$, localement au voisinage d'un point, par une application linéaire (la *tangente*).
-
-Vous connaissez déjà la notion de *dérivée* d'une fonction $f:\mathbb{R} \to \mathbb{R}$ (en un point où celle-ci est dérivable). L'objectif de cette page est d'introduire ou rappeler les concepts qui permettent de la généraliser au cas de fonctions de variables vectorielles, et à valeurs vectorielles.
+The fundamental idea behind differential calculus is to approximate a function $f$, locally in the neighbourhood of a point, by a linear mapping (the *tangent*).
+You are already familiar with the concept of the *derivative* of a function $f:\mathbb{R} \to \mathbb{R}$ (at a point where it is differentiable). The aim of this page is to introduce or revise the concepts that allow us to generalise this to the case of functions of several variables, and vector-valued.
 
 ## Définition
 
-Soient $E$ et $F$ deux espaces vectoriels, munis de leurs normes respectives $|\!| \cdot |\!|_E$ et $|\!| \cdot |\!|_F$. On donne ci-dessous la définition formelle de la différentiabilité locale.
+Let $E$ and $F$ be two vector spaces, equipped with their respective norms $|!| \cdot |!|E$ and $|!| \cdot |!|F$. The formal definition of local differentiability is given below.
 :::{prf:definition}
-:label: def:diff
-Soit $U$ un ouvert de $E$. Une application $f:U \to F$ est dite différentiable en un point $a \in U$ s'il existe une application *linéaire* $D_af \in \mathcal{L}(E,F)$ telle que
+:label: def:diff 
+Let $U$ be an open set in $E$. A mapping $f:U \to F$ is said to be differentiable at a point $a \in U$ if there exists a linear mapping $D_af \in \mathcal{L}(E,F)$ such that
 \begin{equation*}
     f(a+h) = f(a) + D_af(h) + o(|\!| h|\!|).
 \end{equation*}
 :::
 
 :::{margin}
-La notation $o(|\!|h|\!|)$ (lire "petit o de norme de $h$") signifie que le reste
+The notation $o(|\!|h|\!|)$ (read "little o of norm of $h$") means that the remainder
 \begin{equation*}
     R(h) = f(a+h) - f(a) - D_af(h)
 \end{equation*}
-est infiniment petit par rapport à $h$, c'est-à-dire
+is infinitesimally small compared to $h$, *i.e.*
 \begin{equation*}
     \lim_{h \to 0} \frac{|\!|R(h)|\!|}{|\!|h|\!|} = 0
 \end{equation*}
 :::
 
-L'intérêt de considérer un ouvert $U$ est que cela permet de définir une boule ouverte autour de $a$ tel que, pour $h$ suffisamment petit, $a+h \in U$. Lorsqu'elle existe, l'application $D_af$ est unique: on écrira $D_af(h) = f'(a) \cdot h$, pour mettre en évidence la linéarité.
+The advantage of considering an open set $U$ is that it allows us to define an open ball around $a$ such that, for $h$ sufficiently small, $a+h \in U$. When it exists, the map $D_af$ is unique: we write $D_af(h) = f'(a) \cdot h$, to highlight its linearity.
 
-:::{margin}
-Un *ouvert* $U$ de $E$ est un ensemble tel que, pour tout élément $x$ de cet ensemble, on peut toujours trouver une boule ouverte $B$ centrée en $x$ telle que $B$ soit entièrement contenue dans $U$.
+:::{margin} 
+An *open* set $U$ in $E$ is a set such that, for any element $x$ in this set, one can always find an open ball $B$ centred at $x$ such that $B$ is entirely contained within $U$. 
 :::
 
-Dans la suite, on se concentre à nouveau sur les cas où $E = \mathbb{R}^n$ et $F = \mathbb{R}^m$, munis de leurs bases canoniques respectives.
+In what follows, we shall again focus on the cases where $E = \mathbb{R}^n$ and $F = \mathbb{R}^m$, equippe with their respective canonical bases.
 
-## Fonctions de $\mathbb{R}$ dans $\mathbb{R}$
 
-Pour une fonction $f$ numérique de variable numérique, la notion de [différentiabilité](#def:diff) ci-dessus équivaut à celle de dérivabilité: en effet, l'existence de la limite
+## Functions from $\mathbb{R}$ to $\mathbb{R}$
+
+For a numerical function $f$ of a numerical variable, the notion of [differentiability](#def:diff) given above is equivalent to that of derivability: indeed, the existence of the limit
 \begin{equation*}
     \lim_{h \to 0} \frac{f(a+h) - f(a)}{h} = f'(a) \in \mathbb{R}
 \end{equation*}
-montre bien que $f(a+h) = f(a) + f'(a)h + o(h)$. Dans ce cas, $f'(a)$ est un *réel*: c'est le coefficient directeur de la droite tangente à $f$ en $a$: localement, i.e. en zoomant suffisamment sur le point $a$, la fonction $f$ se comporte comme la droite affine $h \mapsto f(a) + f'(a)h$.
+clearly shows that $f(a+h) = f(a) + f'(a)h + o(h)$. In this case, $f'(a)$ is a *real number*: it is the slope of the tangent line to $f$ at $a$: locally, i.e. by zooming in sufficiently on the point $a$, the function $f$ behaves like the affine line $h \mapsto f(a) + f'(a)h$.
 
-## Fonctions de $\mathbb{R}^n$ dans $\mathbb{R}$
+## Functions from $\mathbb{R}^n$ to $\mathbb{R}$
 
-On considère maintenant une fonction $f$ numérique de variable vectorielle.
+We now consider a numerical function $f$ of a vector variable.
 
-### Dérivées partielles
-La différentiabilité de $f$ entraîne l'existence des dérivées le long de chaque vecteur de la base canonique $e_i$.
+### Partial derivatives
+Differentiability of $f$ implies the existence of derivatives along each vector in the canonical basis $e_i$.
 :::{margin}
-Pour $x = (x_1,\ldots,x_n)^\top$ dans la base canonique, on notera indifféremment $f(x)$ ou $f(x_1,\ldots,x_n)$. 
+For $x = (x_1,\ldots,x_n)^\top$ in the canonical basis, we shall write $f(x)$ or $f(x_1,\ldots,x_n)$ interchangeably. 
 :::
 
-:::{prf:lemma}Dérivée partielle
+:::{prf:lemma}Partial derivative
 :label: lem:partial
-Soit $f:\mathbb{R}^n\to\mathbb{R}$ [différentiable](#def:diff) en $a$. Alors, pour tout $i=1,\ldots,n$, on a 
+Let $f:\mathbb{R}^n\to\mathbb{R}$ [differentiable](#def:diff) at $a$. Then, for all $i=1,\ldots,n$, one has 
 \begin{equation*}
     \lim_{t\to 0} \frac{f(a_1,\ldots,a_i+t,\ldots,a_n)-f(a)}{t} = f'(a) \cdot e_i .
 \end{equation*}
-On notera cette limite $\partial_i f(a)$, appelée *dérivée partielle* de $f$ en $a$.
+We shall denote this limit $\partial_i f(a)$, known as the *partial derivative* of $f$ at $a$.
 :::
 
-Dans la pratique, calculer la $i$-ème dérivée partielle de $f(x_1,\ldots,x_n)$ est simple: on fixe toutes les variables $x_j$ pour $j\neq i$, et on calcule la dérivée par rapport à la variable $x_i$.
+In practice, computing the $i$-th partial derivative of $f(x_1,\ldots,x_n)$ is easy: we set all the variables $x_j$ for $j\neq i$, and compute the derivative with respect to the remaining variable $x_i$.
 
 :::{prf:example}
 :label: ex:partial
-On considère la fonction $f(x_1,x_2) = 2x_1^2 + x_1x_2 - 3x_2^2 - x_1 + 1$. Ses dérivées partielles sont
+Let $f(x_1,x_2) = 2x_1^2 + x_1x_2 - 3x_2^2 - x_1 + 1$. The partial derivatives of $f$ are
 \begin{equation*}
 \left\{
 \begin{aligned}
@@ -81,50 +81,50 @@ On considère la fonction $f(x_1,x_2) = 2x_1^2 + x_1x_2 - 3x_2^2 - x_1 + 1$. Ses
 \end{equation*}
 :::
 
-:::{warning}Attention
-La différentiabilité d'une fonction entraîne l'existence des dérivées partielles, mais l'inverse n'est pas vrai: une fonction peut avoir des dérivées partielles en $a$ sans même être continue en $a$.
+:::{warning}Warning
+The differentiability of a function implies the existence of partial derivatives, but the converse is not true: a function may have partial derivatives at $a$ without even being continuous at $a$.
 :::
 
 
 ### Gradient
 
-Le gradient de $f$ est le vecteur de ses dérivées partielles.
+The gradietn of $f$ is the vector of its partial derivatives.
 
 :::{prf:definition}Gradient
 :label: def:gradient
-Soit $f:\mathbb{R}^n \to \mathbb{R}$ une fonction différentiable. Le *gradient* de $f$ en un point $a$, usuellement noté $\nabla f(a)$ ou $f'(a)$, est le vecteur défini par
+Let $f:\mathbb{R}^n \to \mathbb{R}$ be a differentiable function. The *gradient* of $f$ at a point $a$, usually denoted by $\nabla f(a)$ or $f'(a)$, is the vector defined by
 \begin{equation*}
     \nabla f(a) = \begin{bmatrix} \partial_1f(a) \\ \partial_2 f(a) \\ \vdots \\ \partial_n f(a) \end{bmatrix} \in \mathbb{R}^n.
 \end{equation*}
 :::
 
-Sur $\mathbb{R}^n$, on peut définir le produit scalaire usuel
+On $\mathbb{R}^n$, one may define the usual scalar product
 \begin{equation*}
     x \cdot y = \sum_{i=1}^n x_i y_i \quad \forall x,y \in \mathbb{R}^n
 \end{equation*}
-Lorsque $f$ est [différentiable](#def:diff) de différentielle $D_af$, le gradient de $f$ est l'unique vecteur tel que, pour tout $h \in \mathbb{R}^n$
+When $f$ is [differentiable](#def:diff) with differential $D_af$, the gradient of $f$ is the unique vector such that, for all $h \in \mathbb{R}^n$
 \begin{equation*}
     D_af(h) = \nabla f(a) \cdot h
 \end{equation*}
 
 :::{prf:example}
-Le gradient de la fonction $f$ de l'[exemple précédent](#ex:partial) est donné par
+The gradient of the function $f$ of the [previous example](#ex:partial) is given by
 \begin{equation*}
     \nabla f(x_1,x_2) = \begin{bmatrix} 4x_1 + x_2 -1 \\ x_1 - 6x_2 \end{bmatrix}.
 \end{equation*}
 :::
 
 
-## Fonctions de $\mathbb{R}^n$ dans $\mathbb{R}^m$
+## Functions from $\mathbb{R}^n$ to $\mathbb{R}^m$
 
-Lorsque $f$ est une application à valeurs vectorielles de variable vectorielle, on notera
+When $f$ is a vector-valued function with vector variable, we shall write
 \begin{equation*}
     f(x) = \begin{bmatrix} f_1(x) \\ \vdots \\ f_m(x) \end{bmatrix} \in \mathbb{R}^m
 \end{equation*}
-où pour tout $j=1,\ldots,m$, $f_j$ est une application de $\mathbb{R}^n$ dans $\mathbb{R}$.
+where for all $j=1,\ldots,m$, $f_j$ is a function from $\mathbb{R}^n$ to $\mathbb{R}$.
 
-:::{prf:definition}Matrice jacobienne
-Soit $f:\mathbb{R}^n \to \mathbb{R}^m$ une application différentiable. La matrice jacobienne de $f$ en un point $a \in \mathbb{R}^n$, usuellement notée $J_f(a)$ ou $f'(a)$, est la matrice
+:::{prf:definition}Jacobian matrix
+Let $f:\mathbb{R}^n \to \mathbb{R}^m$ be a differentiable function. The Jacobian matrix of $f$ at a point $a \in \mathbb{R}^n$, commonly denoted by $J_f(a)$ or $f'(a)$, is the matrix
 \begin{equation*}
     J_f(a) = 
     \begin{bmatrix} 
@@ -136,33 +136,33 @@ Soit $f:\mathbb{R}^n \to \mathbb{R}^m$ une application différentiable. La matri
 \end{equation*}
 :::
 
-De manière analogue au gradient, la matrice jacobienne de $f$ est l'unique matrice telle que, pour tout $h \in \mathbb{R}^n$,
+Similarly to the gradient, the Jacobian matrix of $f$ is the only matrix such that, for all $h \in \mathbb{R}^n$,
 :::{margin}
-On surcharge la notation $f'(a) \cdot h$, qui prend un sens différent selon que
-- $f'(a)$ est un réel et $h$ un réel
-- $f'(a)$ est un vecteur et $h$ un vecteur
-- $f'(a)$ est une matrice et $h$ un vecteur.
+We overload the notation $f'(a)$, which takes on a different meaning depending on whether
+- $f'(a)$ is a real number and $h$ a real number
+- $f'(a)$ is a vector and $h$ a vector
+- $f'(a)$ is a matrix and $h$ a vector.
 
-Le point commun dans les trois cas est la linéarité de $D_af:h\mapsto f'(a) \cdot h$.
+The common feature in all three cases is the linearity of $D_af:h\mapsto f'(a) \cdot h$.
 :::
 \begin{equation*}
     D_af(h) = J_f(a) \cdot h,
 \end{equation*}
-où cette fois l'opération $\cdot$ est à comprendre comme un produit matriciel.
+where, in this instance, the operation $\cdot$ is to be understood as a matrix product.
 
 :::{important}
-On retiendra que le principe fondamental du calcul différentiel consiste à voir que
+It is worth noting that the fundamental principle of differential calculus is to recognise that
 \begin{equation*}
-    \left( \begin{array}{c} \text{accroissement} \\ \text{de la fonction} \end{array} \right)
+    \left( \begin{array}{c} \text{change} \\ \text{in the function} \end{array} \right)
     =
-    \left( \begin{array}{c} \text{terme linéaire en} \\ \text{l'accroissement de la variable} \end{array} \right)
+    \left( \begin{array}{c} \text{linear term in} \\ \text{the change in the variable} \end{array} \right)
     +
-    \left( \begin{array}{c} \text{petit terme} \\ \text{correctif} \end{array} \right)
+    \left( \begin{array}{c} \text{a small corrective} \\ \text{term} \end{array} \right)
 \end{equation*}
 \begin{equation*}
     \qquad f(x)-f(x_0) \quad = \qquad \qquad f'(x_0) \cdot (x-x_0) \qquad \qquad \; + \;\, \quad o(|\!|x-x_0|\!|) \qquad \quad  
 \end{equation*}
-Géométriquement, cela exprime qu'une courbe est, au voisinage d'un point, confondue avec une droite (la tangente), une surface avec un espace tangent, etc...:
+Geometrically, this means that a curve, in the neighbourhood of a point, coincides with a line (the tangent), a surface with a tangent space, etc...:
 \begin{equation*}
     f(x) \simeq f(x_0) + f'(x_0)\cdot (x-x_0)
 \end{equation*}
@@ -170,52 +170,52 @@ Géométriquement, cela exprime qu'une courbe est, au voisinage d'un point, conf
 
 ## Chain rule
 
-Une propriété importante des différentielles est la **formule de différentiation des fonctions composées**.
+An important property of the differentials is the **differentiation rule for composite functions**.
 
 :::{prf:proposition}
-Si $f : E \to F$ et $g : F \to G$ sont des application différentiables en $a$ (sur des espaces vectoriels $E, F$ et $G$), alors l'application $g \circ f$ est différentiable en $a$ et on a
+If $f : E \to F$ and $g : F \to G$ are functions that are differentiables at $a$ (on vector spaces $E, F$ and $G$), then the application $g \circ f$ is differentiable at $a$ and one has
 \begin{equation*}
     (g \circ f)'(a) = g'(f(a)) \cdot f'(a)
 \end{equation*}
 :::
 
-Cette formule est cruciale pour comprendre les algorithmes de propagation de gradient dans les réseaux de neurones.
+This formula is crucial to understand gradient propagations algorithms in neural networks.
 
 
-# Différentielle seconde
+# Second-order differential
 
-L'étude locale d'une fonction peut s'affiner au-delà de l'approximation tangentielle (linéaire), en explicitant les termes d'ordre supérieur dans les termes correctifs "petit o". Géométriquement, les termes d'ordre 2 contrôlent la position de la variété (courbe, surface, etc...) par rapport à sa tangente (convexité, concavité, points d'inflexion, etc...).
+The local analysis of a function can be refined beyond the tangential (linear) approximation by explicitly including higher-order terms in the "little o" correction terms. Geometrically, second-order terms determine the position of the manifold (curve, surface, etc.) relative to its tangent (convexity, concavity, inflection points, etc.).
 
-## Fonctions de $\mathbb{R}^n$ dans $\mathbb{R}$
+## Functions from $\mathbb{R}^n$ to $\mathbb{R}$
 
 ### Définition
-Si $f:\mathbb{R}^n \to \mathbb{R}$ est [différentiable](#def:diff) sur un voisinage $U$ de $a$, sa différentielle $L$ définit une application $f'$ de $U$ dans $\mathbb{R}^n$:
+If $f:\mathbb{R}^n \to \mathbb{R}$ est [differentiable](#def:diff) on a neighbourhood $U$ of $a$, its differential $L$ defines an application $f'$ of $U$ in $\mathbb{R}^n$:
 
 \begin{equation*}
     x = (x_1,\ldots,x_n) \mapsto f'(x) = \begin{bmatrix} \partial_1 f(x) \\ \vdots \\ \partial_n f(x) \end{bmatrix}.
 \end{equation*}
 
-:::{prf:definition}Différentielle seconde
-Si l'application $f'$ est différentiable en $a$, on dit que $f$ est *deux fois différentiable en $a$* et on note $D^2_af$ la *différentielle seconde*. Les composantes $\partial_i f(x)$ admettent alors des [dérivées partielles](#lem:partial) en $a$, notées
+:::{prf:definition}Second-order differential
+If the application $f'$ is differentiable at $a$, we say that $f$ is *twice différentiable at $a$* and we denote by $D^2_af$ its *second-order differential*. The components $\partial_i f(x)$ then admit [partial derivatives](#lem:partial) at $a$, denoted by
 \begin{equation*}
     \partial_{ij}^2 f(a) = \partial_i (\partial_j f) (a), \quad 1 \leq i,j \leq n.
 \end{equation*}
 :::
 
-### Matrice hessienne
-De même que la *différentielle* définit une application *linéaire* 
+### Hessian matrix
+Just as the *différential* defines a *linear* mapping 
 \begin{equation*}
     h \mapsto f'(a) \cdot h = \sum_{i=1}^n \partial_i f(a) h_i,
 \end{equation*}
-représentée par le [gradient](#def:gradient) de $f$, la différentielle seconde définit une application *bilinéaire* (c'est-à-dire linéaire en chacune de ses variables)
+represented by the [gradient](#def:gradient) of $f$, the second differential deines a *bilinear* application (that is to say linear in each of its variables)
 \begin{equation*}
     (h,k) \mapsto f''(a) \cdot (h,k) = \sum_{i,j=1}^n \partial_{ij}^2 f(a) h_i k_j
 \end{equation*}
-représentée par la matrice *hessienne* de $f$.
+represented by the *Hessian* matrix of $f$.
 
-:::{prf:definition}Matrice hessienne
+:::{prf:definition}Hessian matrix
 :label: def:hessienne
-La *matrice hessienne* de $f$ en $a \in \mathbb{R}^n$, usuellement notée $\nabla^2 f(a)$, ou $H_f(a)$ ou $f''(a)$, est la matrice $n\times n$ définie par
+The *Hessian matrix* of $f$ at $a \in \mathbb{R}^n$, commonly denoted by $\nabla^2 f(a)$, or $H_f(a)$ or $f''(a)$, is the matrix $n\times n$ defined by
 \begin{equation*}
 \nabla^2 f(a) = 
 \begin{bmatrix} 
@@ -226,39 +226,39 @@ La *matrice hessienne* de $f$ en $a \in \mathbb{R}^n$, usuellement notée $\nabl
 \end{equation*}
 :::
 
-Lorsqu'elle est définie, la matrice hessienne est *symétrique*: en effet, le théorème de Schwarz assure que pour une fonction $f$ deux fois différentiable en $a \in \mathbb{R}^n$, on a
+When it is defined, the Hessian matrix is *symmetric*: indeed, Schwarz theorem ensures that for a function $f$ twice differentiable at $a \in \mathbb{R}^n$, one has
 \begin{equation*}
     \partial_{ij}^2 f(a) = \partial_{ji}^2 f(a).
 \end{equation*}
 
 :::{prf:example}
-La matrice hessienne dans l'[exemple précédent](#ex:partial) est, pour tout $(x_1,x_2) \in \mathbb{R}^2$,
+The Hessian matrix in the [previous exemple](#ex:partial) is, for all $(x_1,x_2) \in \mathbb{R}^2$,
 \begin{equation*}
     \nabla^2 f(x_1,x_2) = \begin{bmatrix} 4 & 1 \\ 1 & -6 \end{bmatrix}
 \end{equation*}
 :::
 
-## Fonctions de $\mathbb{R}^n$ dans $\mathbb{R}^m$
+## Functions de $\mathbb{R}^n$ dans $\mathbb{R}^m$
 
 
 
 
 # Formule de Taylor
 
-Les différentielles d'ordre supérieur se définissent de manière analogue, pour donner successivement les terms
+Higher order differentials are defined similarly, giving the successive terms
 \begin{equation*}
     D_af(h),\, D^2_af(h,h),\, D^3_af(h,h,h),\, \ldots
 \end{equation*}
 :::{margin}
-La différentielle d'ordre $k$ d'une application de $\mathbb{R}^n$ dans $\mathbb{R}$ est donc représentée par un tenseur d'ordre $k$, de taille $n\times n \times \ldots \times n$.
+The $k$-th-order differential of a function from $\mathbb{R}^n$ to $\mathbb{R}$ is thus represented by a tensor of order $k$, of size $n\times n \times \ldots \times n$.
 :::
-Ces termes permettent de d'obtenir les approximations successivement linéaires, quadratiques, cubiques, etc... de la fonction $f$. On retiendra notamment le théorème suivant.
+These terms enable us to obtain successively linear, quadratic, cubic approximations of the function $f$, and so on. Of particular note is the following theorem.
 
-:::{prf:theorem}Formule de Taylor-Young 
+:::{prf:theorem}Taylor-Young formula 
 :label: thm:taylor-young
-Si $f$ est $k$ fois différentiable en $a\in U$, on a
+If $f$ is $k$ times differentiable at $a\in U$, we have
 \begin{equation*}
     f(a+h) = f(a) + D_af(h) + \frac{1}{2} D_a^2f(h,h) + \ldots + \frac{1}{k!}D^k_af(h,\ldots,h) + o(|\!|h|\!|^k)
 \end{equation*}
-lorsque $h$ tend vers $0$ dans $\mathbb{R}^n$.
+when $h$ goes to $0$ in $\mathbb{R}^n$.
 :::
