@@ -1,11 +1,11 @@
-# Convexité
+# Convexity
 
-Dans les problèmes de minimisation de fonctions, la *convexité* est une propriété clé, car elle donne une caractérisation simple (du premier ordre) des minimiseurs globaux.
+In minimisation problems, convexity is a key property, as it provides a simple (first-order) characterisation of global minima.
 
-# Définitions et exemples
+# Definitions and examples
 
-:::{prf:definition}Ensemble convexe
-Un ensemble $C$ est *convexe* si toute ligne joignant deux points de $C$ est entièrement contenues dans $C$, c'est-à-dire, pour tout $(x,y) \in C$ et pour tout $0 \leq \theta \leq 1$
+:::{prf:definition}Convex set
+A set $C$ is *convex* if any line joining two points of $C$ is entirely contained in $C$, *i.e.* for all $(x,y) \in C$ and for all $0 \leq \theta \leq 1$
 ```{math}
     \theta x + (1-\theta)y \in C.
 ```
@@ -13,27 +13,27 @@ Un ensemble $C$ est *convexe* si toute ligne joignant deux points de $C$ est ent
 
 :::{figure} images/cvxsets.png
 :label: fig:cvx-sets
-Exemple d'ensembles convexes et non-convexes. *Gauche*: l'hexagone (avec son contour) est convexe. *Centre*: l'anneau n'est pas convexe, puisque le segment entre les deux points dessinés n'est pas incluse dans l'ensemble. *Droite*: le carré ne contient pas tous les points du bords, et n'est pas convexe.
+Example of convex and non-convex sets. *Left*: the hexagon (with its contour) is convex. *Middle*: the ring is not convex, since the segment between the two drawn points is not contained in the set. *Right*: the square does not contain all the points on the edge, and hence is not convex.
 :::
 
-:::{prf:definition}Fonction convexe
-Une fonction $f:E \to \mathbb{R}$ est dite *convexe* si pour tout $x,y \in E$, pour tout $\lambda \in [0,1]$,
+:::{prf:definition}Convex function
+A function $f:E \to \mathbb{R}$ is said to be *convex* if for all $x,y \in E$, for all $\lambda \in [0,1]$,
 ```{math}
 :label: eq:convexity
     f(\lambda x +  (1-\lambda)y) \leq \lambda f(x) + (1-\lambda) f(y).
 ```
-Lorsque l'inégalité est stricte, $f$ est dite *strictement convexe*. $f$ est dite *(strictement) concave* lorsque $-f$ est (strictement) convexe.
+When the inequality is strict, $f$ is said to be *strictly convex*. $f$ is said to be *(strictly) concave* when $-f$ is (strictly) convexe.
 :::
 
-Géométriquement, l'équation [](#eq:convexity) exprime que l'*épigraphe* de $f$, c'est-à-dire l'ensemble des points situés au-dessus du graphe de $f$, est convexe. Autrement dit, le segment joignant les points de coordonnées $(x,f(x))$ et $(y,f(y))$ est toujours au-dessus du graphe de $f$.
+Geometrically, the equation [](#eq:convexity) means that the *epigraph* of $f$, that is to say the sey of points that are above the graph of $f$, is convex. In other words, the segment joining the points of coordinates $(x,f(x))$ and $(y,f(y))$ is always avove the graph of $f$.
 
-# Caractérisations
+# Caracterisations
 
-La convexité d'une fonction est liée à différentes propriétés des différentielles de cette fonction.
+The convexity of a function is linked to various properties of the differentials of that function.
 
-### Condition d'ordre 1
+### First order condition
 :::{prf:theorem}
-Soit $f$ une fonction différentiable sur $\mathbb{R}^n$. Alors $f$ est convexe si et seulement si, pour tout $x,y \in \mathbb{R}^n$,
+Let $f$ be a differentiable function on $\mathbb{R}^n$. Then $f$ is convex if and only iff, for all $x,y \in \mathbb{R}^n$,
 ```{math}
 :label: eq:first-order
     f(y) \geq f(x) + \nabla f(x)^\top(y-x).
@@ -41,14 +41,14 @@ Soit $f$ une fonction différentiable sur $\mathbb{R}^n$. Alors $f$ est convexe 
 :::
 
 :::{margin}
-On pourrait plus généralement considérer une fonction $f$ différentiable sur un domaine convexe quelconque.
+We could more generaly consider a function $f$ differentiable on an arbitrary convex domain.
 :::
 
-L'inégalité [](#eq:first-order) exprime qu'en n'importe quel point $x$, l'approximation de Taylor d'ordre $1$ de $f$ en $x$ (c'est-à-dire la tangente en $x$) *minore* $f$ globalement.
+The inequality [](#eq:first-order) means that at any point $x$, the first order Taylor approximation of $f at $x$ (*i.e.* the tangent at $x$) is a *lower bound* of $f$ globally.
 
-### Condition d'ordre 2
+### Second order condition
 :::{prf:theorem}
-Soit $f$ une fonction deux fois différentiable sur $\mathbb{R}^n$. Alors $f$ est convexe si et seulement si, pour tout $x \in \mathbb{R}^n$,
+Let $f$ be a function twice differentiable on $\mathbb{R}^n$. Then $f$ is convex if and only if, for all $x \in \mathbb{R}^n$,
 ```{math}
 :label: eq:second-order
     \nabla^2 f(x) \succeq 0.
@@ -56,10 +56,10 @@ Soit $f$ une fonction deux fois différentiable sur $\mathbb{R}^n$. Alors $f$ es
 :::
 
 :::{margin}
-Pour une matrice $M \in \mathbb{R}^{n\times n}$ *symétrique*, la notation $M \succeq 0$ signifie que, pour tout $x\in \mathbb{R}^n$,
+For a *symmetric* matrix $M \in \mathbb{R}^{n\times n}$, the notation $M \succeq 0$ means that, for all $x\in \mathbb{R}^n$,
 \begin{equation*}
     x^\top M x \geq 0.
 \end{equation*}
-On dit que $M$ est *semi-définie positive*. Si l'inégalité est stricte, $M$ est dite *définie positive*, noté $M \succ 0$.
-$M$ est semi-définie positive si et seulement si toutes ses valeurs propres sont positives.
+We say that $M$ is *positive semi-definite*. When the inequality is strict, $M$ is said to be *positive definite*, denoted by $M \succ 0$.
+$M$ is positive semi-definite if and only if all its eigenvalues are nonnegative.
 :::

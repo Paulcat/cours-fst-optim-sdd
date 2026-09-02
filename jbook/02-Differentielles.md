@@ -1,12 +1,12 @@
 # Differentials
 
 
-# Différentielles premières
+# First-order differentials
 
 The fundamental idea behind differential calculus is to approximate a function $f$, locally in the neighbourhood of a point, by a linear mapping (the *tangent*).
 You are already familiar with the concept of the *derivative* of a function $f:\mathbb{R} \to \mathbb{R}$ (at a point where it is differentiable). The aim of this page is to introduce or revise the concepts that allow us to generalise this to the case of functions of several variables, and vector-valued.
 
-## Définition
+## Definition
 
 Let $E$ and $F$ be two vector spaces, equipped with their respective norms $|!| \cdot |!|E$ and $|!| \cdot |!|F$. The formal definition of local differentiability is given below.
 :::{prf:definition}
@@ -31,10 +31,10 @@ is infinitesimally small compared to $h$, *i.e.*
 The advantage of considering an open set $U$ is that it allows us to define an open ball around $a$ such that, for $h$ sufficiently small, $a+h \in U$. When it exists, the map $D_af$ is unique: we write $D_af(h) = f'(a) \cdot h$, to highlight its linearity.
 
 :::{margin} 
-An *open* set $U$ in $E$ is a set such that, for any element $x$ in this set, one can always find an open ball $B$ centred at $x$ such that $B$ is entirely contained within $U$. 
+An *open* set $U$ in $E$ is a set such that, for any element $x$ in this set, one can always find an open ball $B$ centered at $x$ such that $B$ is entirely contained within $U$. 
 :::
 
-In what follows, we shall again focus on the cases where $E = \mathbb{R}^n$ and $F = \mathbb{R}^m$, equippe with their respective canonical bases.
+In what follows, we shall again focus on the cases where $E = \mathbb{R}^n$ and $F = \mathbb{R}^m$, equipped with their respective canonical bases.
 
 
 ## Functions from $\mathbb{R}$ to $\mathbb{R}$
@@ -188,7 +188,7 @@ The local analysis of a function can be refined beyond the tangential (linear) a
 
 ## Functions from $\mathbb{R}^n$ to $\mathbb{R}$
 
-### Définition
+### Definition
 If $f:\mathbb{R}^n \to \mathbb{R}$ est [differentiable](#def:diff) on a neighbourhood $U$ of $a$, its differential $L$ defines an application $f'$ of $U$ in $\mathbb{R}^n$:
 
 \begin{equation*}
@@ -243,7 +243,7 @@ The Hessian matrix in the [previous exemple](#ex:partial) is, for all $(x_1,x_2)
 
 
 
-# Formule de Taylor
+# Taylor formula
 
 Higher order differentials are defined similarly, giving the successive terms
 \begin{equation*}
