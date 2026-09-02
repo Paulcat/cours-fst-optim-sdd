@@ -1,38 +1,36 @@
-# Notions d'algèbre linéaire
+# Basics of linear algebra
 
-L'objectif du cours est de vous introduire à des problèmes d'optimisation définis sur $\mathbb{R}^n$ (l'ensemble des vecteurs réels de dimension $n$). Cet espace est l'exemple le plus standard d'un *$\mathbb{R}$-espace vectoriel* de dimension finie. Ce chapitre est dédié à quelques concepts importants associés aux espaces vectoriels.
+The aim of the course is to introduce you to optimisation problems defined on $\mathbb{R}^n$ (the set of real vectors of dimension $n$). This space is the most standard example of a finite-dimensional $\mathbb{R}$-vector space. This chapter is devoted to a number of important concepts associated with vector spaces.
 
 :::{note}
-On peut étudier des problèmes d'optimisation sur des espaces bien plus généraux (espaces de dimension infinie, espaces métriques, etc...).  Avantage: norme, produit scalaire, etc...
+Optimisation problems can be studied in much more general spaces (infinite-dimensional spaces, metric spaces, etc.). Advantages: norm, scalar product, etc.
 :::
 
 
 # Applications linéaires
 
-L'idée clé du calcul différentiel est d'approximer une fonction localement par une application linéaire (la *tangente*). Commençons par définir ce qu'est une application linéaire.
-Soient $E$ et $F$ deux $\mathbb{R}$-espaces vectoriels.
+The key idea behind differential calculus is to approximate a function locally by a linear mapping (the tangent). Let us begin by defining what a linear mapping is. Let $E$ and $F$ be two $\mathbb{R}$-vector spaces.
 
-## Définition
+## Definition
 
 :::{prf:definition}
 :label:def-lineaire
-Une application $f:E \to F$ est appelée *application linéaire* si pour tout $(x,y) \in E$, pour tout $\lambda,\mu \in \mathbb{R}$, on a
-\begin{equation*}
+A mapping $f: E \to F$ is called a *linear mapping* if, for all $(x, y) \in E$ and all $\lambda, \mu \in \mathbb{R}$, we have
+\begin{equation*} 
     f(\lambda x + \mu y) = \lambda f(x) + \mu f(y)
 \end{equation*}
-
-Lorsque $f$ est à valeurs scalaires (i.e. $F = \mathbb{R}$), on parle de *forme linéaire*.
+When $f$ takes scalar values (i.e. $F = \mathbb{R}$), it is referred to as a *linear form*.
 :::
 
-On note en général $\mathcal{L}(E,F)$ l'ensemble des applications linéaires de $E$ dans $F$.
+In general, we denote by $\mathcal{L}(E,F)$ the set of all linear mappings from $E$ to $F$.
 
-## Matrice d'une application
+## Matrix of a mapping
 
-Dans la suite, on suppose que $E$ et $F$ sont tous deux de dimension finie, de base $\mathcal{E} = (e_1, \ldots, e_n)$ et $\mathcal{V} = (v_1,\ldots,v_m)$ respectivement. Dans ce cas, pour connaître une application $f$, il faut et il suffit de connaître les images $f(e_i)$ pour tout $e_i \in \mathcal{E}$.
+In what follows, we assume that $E$ and $F$ are both finite-dimensional, with bases $\mathcal{E} = (e_1, \ldots, e_n)$ and $\mathcal{V} = (v_1, \ldots, v_m)$ respectively. In this case, to determine a mapping $f$, it is both necessary and sufficient to know the images $f(e_i)$ for all $e_i \in \mathcal{E}$.
 
 :::{prf:definition}
 :label: def-matrice
-La matrice des coordonnées dans la base $\mathcal{V}$ des vecteurs $f(e_i)$, pour $e_i \in \mathcal{E}$, est appelée *matrice de l'application $f$ dans les base $\mathcal{E}$ et $\mathcal{F}$*, notée $M_{\mathcal{E},\mathcal{V}}(f)$. Autrement dit,
+The matrix of coordinates of the vectors $f(e_i)$ in the basis $\mathcal{V}$, for $e_i \in \mathcal{E}$, is called *matrix of the mapping $f$ in the bases $\mathcal{E}$ and $\mathcal{F}$*, denoted by $M_{\mathcal{E},\mathcal{V}}(f)$. In other words,
 \begin{equation*}
     \begin{aligned}
         & \begin{matrix} & f(e_1) & & f(e_i) & & f(e_n) \end{matrix}\\
@@ -46,146 +44,145 @@ La matrice des coordonnées dans la base $\mathcal{V}$ des vecteurs $f(e_i)$, po
     \end{aligned}.
 \end{equation*}
 
-C'est une matrice de $\mathbb{R}^{m \times n}$.
+It is a matrix in $\mathbb{R}^{m \times n}$.
 :::
 
-
-Dans les cas qui nous intéressent, l'espace $E$ sera $\mathbb{R}^n$ muni de sa base canonique, c'est-à-dire les vecteur $e_i$ tels que
+In the cases that concern us, the space $E$ will be $\mathbb{R}^n$ equipped with its canonical basis, that is, the vectors $e_i$ such that
 \begin{equation*}
     e_{ik} = \left\{ \begin{aligned} &1 \quad \text{si}\quad  k=i \\ &0 \quad \text{sinon} \end{aligned} \right..
 \end{equation*}
-De même $F$ sera $\mathbb{R}^m$ muni de sa base canonique. On notera alors plus simplement $M(f)$, ou $M_f$, ou $M$ la matrice d'une application linéaire de $E$ dans $F$. 
+
+Similarly, $F$ will be $\mathbb{R}^m$ equipped with its canonical basis. We shall then denote by $M(f)$, or $M_f$, or $M$, the matrix of a linear mapping from $E$ to $F$.
 
 :::{important}
-Si $M$ est la matrice de l'application $f$, alors pour tout $x \in E$, $f(x) = Mx$.
+If $M$ is the matrix of the mapping $f$, then for all $x \in E$, $f(x) = Mx$.
 :::
 
 
-## Noyau et Image
+## Kernel and Range
 
-Soit $f \in \mathcal{L}(E,F)$.
+Let $f \in \mathcal{L}(E,F)$.
 
 :::{prf:definition}
 :label: def-noyau-image
-- On appelle *noyau* de $f$ l'ensemble
+- The *kernel* of $f$ is the set
 ```{math}
     \left\{ x \in E \; | \; f(x) = 0 \right\}
 ```
-- On appelle *image* de $f$ l'ensemble
+- The *range* of $f$ is the set
 ```{math}
     \left\{y \in F \; | \; \exists\, x \in E, \quad y = f(x) \right\}
 ```
 :::
 
-Le noyau et l'image de $f$ sont des sous-espaces vectoriels de $E$ et $F$, respectivement. On définit de la même manière le noyau et l'image d'une matrice.
+The kernel and the range of $f$ are vector subspaces of $E$ and $F$, respectively. The kernel and the range of a matrix are defined in the same way.
 
-# Valeurs et vecteur propres
+# Eigenvalues and eigenvectors
 
-Un concept fondamental en algèbre linéaire est celui de *spectre* d'une matrice.
+A fundamental notion in linear algebra is that of the *spectrum* of a matrix.
 
 ## Définition
-:::{prf:definition}Valeurs propres, vecteurs propres
+:::{prf:definition}Eigenvalues, eigenvectors
 :label: def-spectre
 
-Soit $M \in \mathbb{R}^{n \times n}$. $\lambda \in \mathbb{R}$ est appelée *valeur propre* de $M$ si et seulement s'il existe un vecteur *non nul* $x$ de $\mathbb{R}^n$ tel que
+Let $M \in \mathbb{R}^{n \times n}$. $\lambda \in \mathbb{R}$ is called *eigenvalue* de $M$ if and only if there exists a *non-zero* vector $x \in \mathbb{R}^n$ sucg that
 ```{math}
     Mx = \lambda x.
 ```
-Autrement dit, s'il existe un vecteur non nul dans le [noyau](#def-noyau-image) de $M - \lambda I$.
-Dans ce cas, on dit que $x$ est un *vecteur propre* de $M$ associé à la valeur propre $\lambda$. L'ensemble des valeurs propres de $M$ s'appelle le *spectre* de $M$.
+In other words, if there exists a non-zero vector in the [kernel](#def-noyau-image) of $M - \lambda I$.
+In this case, $x$ is called an *eigenvector* of $M$ associated with the eignevalue $\lmbda$. The set of all eigenvalues of $M$ is called the *spectrum* of $M$.
 :::
 
-Lorsque l'on peut trouver une base $(x_1,\ldots,x_n)$ de $\mathbb{R}^n$, telle que les vecteurs $x_i$ soient tous vecteurs propres de $M$ (associés aux valeurs propres $\lambda_1,\ldots,\lambda_n$), on dit que la matrice $M$ est *diagonalisable*. Dans ce cas, on a
+ 
+When there exists a basis $(x_1,\ldots,x_n)$ of $\mathbb{R}^n$, such that the vectors $x_i$ are all eigenvectors of $M$ (associated with the eigenvalues $\lambda_1,\ldots,\lambda_n$), the matrix $M$ is said to be *diagonalisable*. In this case, one has
 \begin{equation*}
     M = P \begin{pmatrix} \lambda_1 & & \\ & \ddots & \\ & & \lambda_n \end{pmatrix} P^{-1}
 \end{equation*}
-où $P = \begin{pmatrix} x_1 & \ldots & x_n \end{pmatrix} \in \mathbb{R}^n$. Autrement dit, exprimée dans la base $P$, la matrice $M$ est diagonale, avec les valeurs propres $\lambda_i$ pour entrées.
+where P = \begin{pmatrix} x_1 & \ldots & x_n \end{pmatrix} \in \mathbb{R}^n$. In other words, onec expressed in the basis $P$, the matrix $M$ is diagonal, with eigenvalues $\lambda_i$ as diagonal values.
 
-## Théorème spectral
+## Spectral theorem
 
-Pour les matrices *symétriques*, nous avons le résultat important suivant:
-:::{prf:theorem}Théorème spectral
-Soit $M \in \mathbb{R}^{n \times n}$ une matrice *symétrique*. Alors $M$ est diagonalisable dans une base *orthonormale* avec valeurs propores réelles, c'est-à-dire qu'il existe $P \in \mathbb{R}^{n\times n}$ *orthogonale* et une matrice $D$ *diagonale* dont tous les coefficients sont réels, telles que
+For *symmetric* matrices, the following important result holds:
+:::{prf:theorem}Spectral theorem
+Let $M \in \mathbb{R}^{n \times n}$ be a *symmetric* matrix. Then $M$ is diagonalisable in an *orthogonal* basis with *real* eigenvalues, *i.e.* there exists an *orthogonal* matrix $P \in \mathbb{R}^{n\times n}$ and a *diagonal* matrix $D$ whose coefficients are all real, such that
 ```{math}
     M = P D P^\top.
 ```
 :::
 
 :::{margin}
-Une matrice $P \in \mathbb{R}^n$ est dite orthogonale si et seulement si
+A matrix $P \in \mathbb{R}^n$ is said to be orthogonal if and only if
 \begin{equation*}
     PP^\top = P^\top P = I_n.
 \end{equation*}
 :::
 
-# Normes
+# Norms
 
-Les normes sont un outil important en calcul différentiel, car elles permettent de définir des notions de voisinage d'un point, et donc d'étudier le comportement *local* des fonctions. On se contente dans ce cours de la définition et d'exemple
+Normes are important tools in differential calculus, as they allow to define the concept of neighborhood of a point, and thus to study the local behavior of functions. In this course, we shall confine ourselves to the definition and examples.
 
-## Définition
+## Definition
 :::{prf:definition}
 :label: def-norme
-Une *norme* sur $E$ est une application $x \mapsto |\!| x |\!|$ de $E$ dans $[0,+\infty)$ telle que, pour tout $x,y \in E$, pour tout $\lambda \in \mathbb{R}$,
+A *norm* on $E$ is a mapping $x \mapsto |\!| x |\!|$ from $E$ to $[0,+\infty)$ such that, for all $x,y \in E$, for all $\lambda \in \mathbb{R}$,
 - $|\!| x |\!| = 0 \implies x = 0$
-- $|\!| \lambda x |\!| = |\lambda| |\!| x|\!|$ (homogénéité)
-- $|\!| x + y |\!| \leq |\!|x|\!| + |\!|y|\!|$ (inégalité triangulaire)
+- $|\!| \lambda x |\!| = |\lambda| |\!| x|\!|$ (homogeneity)
+- $|\!| x + y |\!| \leq |\!|x|\!| + |\!|y|\!|$ (triangular inequality)
 :::
 
 :::{margin}
-De l'inégalité triangulaire on peut également déduire l'autre inégalité suivante, souvent moins connue:
+From the triangular inequality, one can also obtain the following inequality:
 \begin{equation*}
     ||\!|x|\!| - |\!|y|\!| | \leq |\!|x-y|\!|
 \end{equation*}
 :::
 
-Les normes permettent de définir la notion de *boules*, cruciale pour étudier les propriétés de régularités des fonctions sur $E$ (continuité, dérivabilité, etc...). La *boule ouverte* $B(a,r)$ de centre $a \in E$ et de rayon $r$ est l'ensemble des points $x \in E$ tels que $|\!|x-a|\!| < r$. De même, la boule fermée $\overline{B(a,r)}$ de centre $a\in E$ et de rayon $r$ est l'ensemble des points $x \in E$ tels que $|\!|x-a|\!| \leq r$.
+Norms aloow us to define the concept of *balls*, which is crucial for studying the reularity properties of functions on $E$ (continuity, differentiability, etc...). The *open ball* $B(a,r)$ centered at $a \in E$ and with radius $r$ is the set of points $x \in E$ such that $|\!|x-a|\!| < r$. Similarly, the *closed ball* $\overline{B(a,r)}$ with center $a\in E$ and with radius $r$ is the set of points $x \in E$ such that $|\!|x-a|\!| \leq r$.
 
-Les propriétés de continuité et de dérivabilité étant des propriétés *locales* des fonctions, il convient généralement de les étudier au *voisinage* d'un point donné, typiquement sur une boule ouverte centrée sur le point.
+Continuity and differentiability properties being *local* properties of functions, they should be studied on *neighorhoods* of a given point, typically on open balls centered at this point.
 
 ## Exemples
 
-Les normes les plus usuelles sont des normes sur $\mathbb{R}^n$ (vecteurs de dimension $n$).
+The most commonly used norms are norms on $\mathbb{R}^n$ ($n$-dimensional vectors).
 :::{prf:example}
-- **La norme $1$ (ou de Manhattan)**: pour tout $x \in \mathbb{R}^n$, 
+- **$\ell^1$-norm (or Manhattan norm)**: for all $x \in \mathbb{R}^n$, 
 \begin{equation*}
     |\!| x |\!|_1 = \sum_{i=1}^n |x_i|
 \end{equation*}
-- **La norme $2$ (ou euclidienne)**: pour tout $x \in \mathbb{R}^n$, 
+- **$\ell^2$-norm (ou Euclidean norm)**: for all $x \in \mathbb{R}^n$, 
 \begin{equation*}
     |\!| x |\!|_2= \sqrt{\sum_{i=1}^n x_i^2}
 \end{equation*}
-- **La norme infini (ou sup)**: pour tout $x \in \mathbb{R}^n$,
+- **Infinity norm (or supremum norm)**: for all $x \in \mathbb{R}^n$,
 \begin{equation*}
     |\!|x|\!|_\infty = \sup_{i} |x_i|
 \end{equation*}
 :::
 
-Il peut être utile d'avoir une image graphique des boules unités $B_i(0,1) = \{x : |\!|x|\!|_i < 1\} $ associées à chacune de ces normes ($i=1,2,\infty$).
+The following figure gives an illustration of the unit balls $B_i(0,1) = \{x : |\!|x|\!|_i < 1\} $ associated with each of these norms ($i=1,2,\infty$).
 
 :::{figure} images/normes.png
 :label: fig-normes
 :align: center
 
-De gauche à droite: les 3 boules unités $B_1(0,1)$, $B_2(0,1)$ et $B_\infty(0,1)$
+From left to right: the 3 unit balls $B_1(0,1)$, $B_2(0,1)$ et $B_\infty(0,1)$
 :::
 
-On rencontrera également dans ce cours des normes matricielles, sur $\mathbb{R}^{n\times m}$.
+We will also encounter in this course *matrix norms* on $\mathbb{R}^{n\times m}$.
 :::{prf:example}
-- **La norme de Frobenius**: pour tout $X \in \mathbb{R}^{n\times m}$,
+- **Frobenius norm**: for all $X \in \mathbb{R}^{n\times m}$,
 \begin{equation*}
     |\!|X|\!|_F = \sqrt{\mathrm{Tr}(X^\top X)} = \sqrt{\sum_{i,j}X_{ij}^2}
 \end{equation*}
-- **La norme infini**: pour tout $X \in \mathbb{R}^{n \times m}$,
+- **Infinity norm**: for all $X \in \mathbb{R}^{n \times m}$,
 \begin{equation*}
     |\!|X|\!|_\infty = \sup_{ij} |{X_{ij}}|
 \end{equation*}    
-- **La norme d'opérateur**: pour tout $X \in \mathbb{R}^{n\times m}$,
+- **Operator norm**: for all $X \in \mathbb{R}^{n\times m}$,
 \begin{equation*}
     |\!|X|\!|_{2,2} = \sup_{v \neq 0} \frac{|\!|Xv|\!|_2}{|\!|v|\!|_2}
 \end{equation*}
-En particulier, cette dernière norme vérifie la propriété importante que pour tout vecteur $v \in \mathbb{R^m}$, $|\!|Xv|\!|_2 \leq |\!|X|\!|_{2,2} |\!|v|\!|_2$.
+In particular, the latter satsify the important property that for all vector $v \in \mathbb{R^m}$, $|\!|Xv|\!|_2 \leq |\!|X|\!|_{2,2} |\!|v|\!|_2$.
 :::
 
-
-ceci est un [embedding](#def-norme)
 ##
