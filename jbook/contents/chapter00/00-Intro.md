@@ -1,4 +1,8 @@
-# Optimisation toolbox
+---
+title: Differential calculus
+---
+
+# Introduction
 
 This chapter introduces important technical tools in optimisation. The aim is to provide you with a guide to the useful concepts that make up this branch of applied mathematics.
 

@@ -15,7 +15,9 @@ toc:
     children: 
       - file: contents/chapter00/01-Algebre-lineaire.md
       - file: contents/chapter00/02-Differentielles.md
-      - file: contents/chapter00/03-Convexite.md
+  - file: contents/chapter01/00-Intro.md
+    children:
+      - file: contents/chapter01/03-Convexite.md
 
 
 site:
