@@ -9,6 +9,15 @@ project:
   github: https://github.com/Paulcat/cours-fst-optim-sdd-private
   # To autogenerate a Table of Contents, run "jupyter book init --write-toc"
 
+toc:
+  - file: README.md
+  - file: contents/chapter00/00-Intro.md
+    children: 
+      - file: contents/chapter00/01-Algebre-lineaire.md
+      - file: contents/chapter00/02-Differentielles.md
+      - file: contents/chapter00/03-Convexite.md
+
+
 site:
   template: book-theme
   # options:
