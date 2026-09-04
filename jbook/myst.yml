@@ -13,11 +13,14 @@ project:
     - file: README.md
     - file: contents/chapter00/00-Intro.md
       children: 
-        - file: contents/chapter00/01-Algebre-lineaire.md
-        - file: contents/chapter00/02-Differentielles.md
+        - file: contents/chapter00/01-Linear-maps.md
+        - file: contents/chapter00/02-Norms.md
+        - file: contents/chapter00/03-First-order-differentials.md
+        - file: contents/chapter00/04-Second-order-differentials.md
+        - file: contents/chapter00/05-Convexity.md
     - file: contents/chapter01/00-Intro.md
       children:
-        - file: contents/chapter01/03-Convexite.md
+        - file: contents/chapter01/01-Nelder-Mead.md
 
   math:
     # variables
