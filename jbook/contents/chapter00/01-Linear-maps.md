@@ -6,11 +6,11 @@ The aim of the course is to introduce you to optimisation problems defined on $\
 Optimisation problems can be studied in much more general spaces (infinite-dimensional spaces, metric spaces, etc.). Advantages: norm, scalar product, etc.
 :::
 
-The key idea behind differential calculus is to approximate a function locally by a linear mapping (the tangent). Let us begin by defining what a linear mapping is. Let $E$ and $F$ be two $\mathbb{R}$-vector spaces.
+The key idea behind differential calculus is to approximate a function locally by a linear mapping (the tangent). In the following, we denote by $E$ and $F$ be two $\mathbb{R}$-vector spaces.
 
 ## Basic definitions
 
-:::{prf:definition}Linear maps
+:::{prf:definition}Linear map
 :label:def-lineaire
 A mapping $f: E \to F$ is called a *linear mapping* if, for all $(x, y) \in E$ and all $\lambda, \mu \in \mathbb{R}$, we have
 \begin{equation*} 
@@ -19,8 +19,9 @@ A mapping $f: E \to F$ is called a *linear mapping* if, for all $(x, y) \in E$ a
 When $f$ takes scalar values (i.e. $F = \mathbb{R}$), it is referred to as a *linear form*.
 :::
 
+:::{note}Notation
 In general, we denote by $\mathcal{L}(E,F)$ the set of all linear mappings from $E$ to $F$.
-
+:::
 
 In what follows, we assume that $E$ and $F$ are both finite-dimensional, with bases $\mathcal{E} = (e_1, \ldots, e_n)$ and $\mathcal{V} = (v_1, \ldots, v_m)$ respectively. In this case, to determine a mapping $f$, it is both necessary and sufficient to know the images $f(e_i)$ for all $e_i \in \mathcal{E}$.
 
@@ -77,7 +78,7 @@ The kernel and the range of $f$ are vector subspaces of $E$ and $F$, respectivel
 
 A fundamental notion in linear algebra is that of the *spectrum* of a matrix.
 
-:::{prf:definition}Eigenvalues, eigenvectors
+:::{prf:definition}Spectrum
 :label: def-spectre
 
 Let $M \in \mathbb{R}^{n \times n}$. $\lambda \in \mathbb{R}$ is called *eigenvalue* de $M$ if and only if there exists a *non-zero* vector $x \in \mathbb{R}^n$ sucg that
@@ -85,7 +86,7 @@ Let $M \in \mathbb{R}^{n \times n}$. $\lambda \in \mathbb{R}$ is called *eigenva
     Mx = \lambda x.
 ```
 In other words, if there exists a non-zero vector in the [kernel](#def-noyau-image) of $M - \lambda I$.
-In this case, $x$ is called an *eigenvector* of $M$ associated with the eignevalue $\lmbda$. The set of all eigenvalues of $M$ is called the *spectrum* of $M$.
+In this case, $x$ is called an *eigenvector* of $M$ associated with the eignevalue $\lambda$. The set of all eigenvalues of $M$ is called the *spectrum* of $M$.
 :::
 
  
@@ -93,7 +94,7 @@ When there exists a basis $(x_1,\ldots,x_n)$ of $\mathbb{R}^n$, such that the ve
 \begin{equation*}
     M = P \begin{pmatrix} \lambda_1 & & \\ & \ddots & \\ & & \lambda_n \end{pmatrix} P^{-1}
 \end{equation*}
-where P = \begin{pmatrix} x_1 & \ldots & x_n \end{pmatrix} \in \mathbb{R}^n$. In other words, onec expressed in the basis $P$, the matrix $M$ is diagonal, with eigenvalues $\lambda_i$ as diagonal values.
+where $P = \begin{pmatrix} x_1 & \ldots & x_n \end{pmatrix} \in \mathbb{R}^n$. In other words, onec expressed in the basis $P$, the matrix $M$ is diagonal, with eigenvalues $\lambda_i$ as diagonal values.
 
 
 For *symmetric* matrices, the following important result holds:

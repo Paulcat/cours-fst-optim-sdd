@@ -11,7 +11,7 @@ A set $C$ is *convex* if any line joining two points of $C$ is entirely containe
 ```
 :::
 
-:::{figure} images/cvxsets.png
+:::{figure} figures/cvxsets.png
 :label: fig:cvx-sets
 Example of convex and non-convex sets. *Left*: the hexagon (with its contour) is convex. *Middle*: the ring is not convex, since the segment between the two drawn points is not contained in the set. *Right*: the square does not contain all the points on the edge, and hence is not convex.
 :::

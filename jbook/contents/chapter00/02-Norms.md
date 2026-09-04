@@ -42,7 +42,7 @@ The most commonly used norms are norms on $\mathbb{R}^n$ ($n$-dimensional vector
 
 The following figure gives an illustration of the unit balls $B_i(0,1) = \{x : |\!|x|\!|_i < 1\} $ associated with each of these norms ($i=1,2,\infty$).
 
-:::{figure} images/normes.png
+:::{figure} figures/normes.png
 :label: fig-normes
 :align: center
 
