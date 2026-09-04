@@ -19,6 +19,15 @@ project:
       children:
         - file: contents/chapter01/03-Convexite.md
 
+  math:
+    # variables
+    '\x': '\mathbf{x}'
+    '\y': 'mathbf{y}'
+    # spaces
+    '\RR': '\mathbb{R}'
+    # operators
+    '\min': '\operatorname{minimize}'
+
   numbering:
     title: true
 
