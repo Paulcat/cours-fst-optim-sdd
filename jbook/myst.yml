@@ -8,6 +8,7 @@ project:
   # authors: []
   github: https://github.com/Paulcat/cours-fst-optim-sdd-private
   # To autogenerate a Table of Contents, run "jupyter book init --write-toc"
+
 site:
   template: book-theme
   # options:

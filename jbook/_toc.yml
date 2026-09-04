@@ -5,6 +5,8 @@ format: jb-book
 root: README
 
 chapters:
-  - file: 01-Algebre-lineaire
-  - file: 02-Differentielles
-  - file: 03-Convexite
+  - file: contents/chapter00/00-Intro.md
+    children:
+      - file: contents/chapter00/01-Algebre-lineaire.md
+      - file: contents/chapter00/02-Differentielles.md
+      - file: contents/chapter00/03-Convexite.md

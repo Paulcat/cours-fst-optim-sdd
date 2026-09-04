@@ -1,6 +1,6 @@
 # Welcome
 
-This website supplements the course materials for the "Optimisation and Data Sciences" module on the [Master Ingénierie des Systèmes Complexes](fst.univ-lorraine.fr/formations/master-ingenierie-des-systemes-complexes) at the university of Lorraine. The various mathematical concepts covered in the lectures are explored in greater depth here.
+This website supplements the course materials for the "Optimisation and Data Sciences" module on the [Master Ingénierie des Systèmes Complexes](fst.univ-lorraine.fr/formations/master-ingenierie-des-systemes-complexes) at the university of Lorraine.
 
 > An overview of the key mathematical concepts behind optimisation and data sciences
 
