@@ -7,8 +7,8 @@ kernelspec:
 
 
 Nelder-Mead algorithm is an instance of gradient-free approaches, which only evaluations of the objective $f(\x)$ to run.
-- This is a practical heuristic when the objective is not differentiable &#x2611;
-- There is no guarantee to converge towards a local minimiser &#x2612;
+- This is a practical heuristic when the objective is not differentiable \u2705;
+- There is no guarantee to converge towards a local minimiser \u274c;
 
 ## Principle
 
@@ -25,7 +25,7 @@ For an objective $f:\RR^n\to\RR$
 
 ## Examples
 
-Implementation following \cite{nocedal2006}
+The code below implements the Nelder-Mead algorithm following @nocedal2006 [Chapter 9.5].
 
 :::{code-cell} python
 :tags:[hide-input]
@@ -151,6 +151,93 @@ plt.close()
 HTML(ani.to_jshtml())
 :::
 
+We can use a different initialization.
+
+:::{code-cell} python
+:tags:[hide-input]
+
+# Contour data
+npts = 101
+x, y = np.mgrid[-6:6:npts*1j, -6:6:npts*1j]
+x = x.reshape(-1)
+y = y.reshape(-1)
+z = himmel(np.column_stack((x,y)))
+x = x.reshape(npts,npts)
+y = y.reshape(npts,npts)
+z = z.reshape(npts,npts)
+
+# Animation setup
+fig, ax = plt.subplots(figsize=(6,6))
+levels = np.logspace(0.35, 3.2, 20)
+
+ax.contour(x,y,z, levels=levels)
+ax.set_title("Nelder-Mead iterations")
+ax.set_xlabel('$x_1$')
+ax.set_ylabel('$x_2$')
+
+# Initial simplex
+vertices = np.array([[1, -2], [3, 5], [2, 1]])
+
+simplex_lines, = ax.plot([], [], 'ro-', lw=2)
+history = []
+
+def run_iterations(frame):
+    global vertices
+    history.append(vertices.copy())
+    vertices = nm_update(himmel, vertices)
+    simplex = np.vstack([vertices, vertices[0]])
+    simplex_lines.set_data(simplex[:,0], simplex[:,1])
+    return simplex_lines,
+
+ani = anim.FuncAnimation(fig, run_iterations, 20, blit=False)
+plt.close()
+HTML(ani.to_jshtml())
+:::
+
+The algorithm now converges to a different local minima. An unlucky initialization may even result in the algorithm getting trapped in a valley, and not converging anymore.
+
+:::{code-cell} python
+:tags:[hide-input]
+
+# Contour data
+npts = 101
+x, y = np.mgrid[-6:6:npts*1j, -6:6:npts*1j]
+x = x.reshape(-1)
+y = y.reshape(-1)
+z = himmel(np.column_stack((x,y)))
+x = x.reshape(npts,npts)
+y = y.reshape(npts,npts)
+z = z.reshape(npts,npts)
+
+# Animation setup
+fig, ax = plt.subplots(figsize=(6,6))
+levels = np.logspace(0.35, 3.2, 20)
+
+ax.contour(x,y,z, levels=levels)
+ax.set_title("Nelder-Mead iterations")
+ax.set_xlabel('$x_1$')
+ax.set_ylabel('$x_2$')
+
+# Initial simplex
+vertices = np.array([[-3, -4], [2, 2], [3, 1]])
+
+simplex_lines, = ax.plot([], [], 'ro-', lw=2)
+history = []
+
+def run_iterations(frame):
+    global vertices
+    history.append(vertices.copy())
+    vertices = nm_update(himmel, vertices)
+    simplex = np.vstack([vertices, vertices[0]])
+    simplex_lines.set_data(simplex[:,0], simplex[:,1])
+    return simplex_lines,
+
+ani = anim.FuncAnimation(fig, run_iterations, 20, blit=False)
+plt.close()
+HTML(ani.to_jshtml())
+:::
+
+Gradient-free are thus cheap to implement, but offer poor guarantees. In the reminder of the chapter, we will focus on *descent methods*, that leverage first-order (gradient) and second-order (Hessian) properties of the objective to construct iterates that iteratively progress towards a local minimum.
 
 ## References
 
