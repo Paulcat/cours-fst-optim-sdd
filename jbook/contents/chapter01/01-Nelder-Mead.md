@@ -73,7 +73,7 @@ def nm_update(obj, vertices, r=1, alpha=2, beta=0.5, gamma=0.5):
     # 2. Expansion
     elif fr < f[0]:
         # reflected point is better than current best: expand in that direction
-        xe = xb + alpha * (vertices[-1,:] - xb)
+        xe = xb - alpha * (vertices[-1,:] - xb)
         fe = obj(xe)
 
         if fe < fr:
@@ -114,7 +114,7 @@ def nm_update(obj, vertices, r=1, alpha=2, beta=0.5, gamma=0.5):
     return new_vertices
 
 # Contour data
-npts = 101
+npts = 201
 x, y = np.mgrid[-6:6:npts*1j, -6:6:npts*1j]
 x = x.reshape(-1)
 y = y.reshape(-1)
@@ -127,8 +127,8 @@ z = z.reshape(npts,npts)
 fig, ax = plt.subplots(figsize=(6,6))
 levels = np.logspace(0.35, 3.2, 20)
 
-ax.contour(x,y,z, levels=levels)
-ax.set_title("Nelder-Mead iterations")
+ax.contour(x,y,z, levels=levels, cmap='viridis')
+ax.set_title("Nelder-Mead iterations on Himmelblau's function")
 ax.set_xlabel('$x_1$')
 ax.set_ylabel('$x_2$')
 
@@ -151,13 +151,13 @@ plt.close()
 HTML(ani.to_jshtml())
 :::
 
-We can use a different initialization.
+We can choose a different initialization.
 
 :::{code-cell} python
 :tags:[hide-input]
 
 # Contour data
-npts = 101
+npts = 201
 x, y = np.mgrid[-6:6:npts*1j, -6:6:npts*1j]
 x = x.reshape(-1)
 y = y.reshape(-1)
@@ -170,13 +170,13 @@ z = z.reshape(npts,npts)
 fig, ax = plt.subplots(figsize=(6,6))
 levels = np.logspace(0.35, 3.2, 20)
 
-ax.contour(x,y,z, levels=levels)
-ax.set_title("Nelder-Mead iterations")
+ax.contour(x,y,z, levels=levels, cmap='viridis')
+ax.set_title("Nelder-Mead iterations on Himmelblau's function")
 ax.set_xlabel('$x_1$')
 ax.set_ylabel('$x_2$')
 
 # Initial simplex
-vertices = np.array([[1, -2], [3, 5], [2, 1]])
+vertices = np.array([[-3, -4], [-2, -2], [-3, -1]])
 
 simplex_lines, = ax.plot([], [], 'ro-', lw=2)
 history = []
@@ -200,7 +200,7 @@ The algorithm now converges to a different local minima. An unlucky initializati
 :tags:[hide-input]
 
 # Contour data
-npts = 101
+npts = 201
 x, y = np.mgrid[-6:6:npts*1j, -6:6:npts*1j]
 x = x.reshape(-1)
 y = y.reshape(-1)
@@ -213,7 +213,7 @@ z = z.reshape(npts,npts)
 fig, ax = plt.subplots(figsize=(6,6))
 levels = np.logspace(0.35, 3.2, 20)
 
-ax.contour(x,y,z, levels=levels)
+ax.contour(x,y,z, levels=levels, cmap='viridis')
 ax.set_title("Nelder-Mead iterations")
 ax.set_xlabel('$x_1$')
 ax.set_ylabel('$x_2$')
@@ -239,7 +239,6 @@ HTML(ani.to_jshtml())
 
 Gradient-free are thus cheap to implement, but offer poor guarantees. In the reminder of the chapter, we will focus on *descent methods*, that leverage first-order (gradient) and second-order (Hessian) properties of the objective to construct iterates that iteratively progress towards a local minimum.
 
-## References
 
 :::{bibliography}
 :::
