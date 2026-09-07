@@ -219,7 +219,7 @@ ax.set_xlabel('$x_1$')
 ax.set_ylabel('$x_2$')
 
 # Initial simplex
-vertices = np.array([[-3, -4], [2, 2], [3, 1]])
+vertices = np.array([[-5, -5], [1, 1], [4, 5.5]])
 
 simplex_lines, = ax.plot([], [], 'ro-', lw=2)
 history = []
