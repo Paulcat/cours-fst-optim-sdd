@@ -33,7 +33,7 @@ project:
     '\RR': '\mathbb{R}'
     # operators
     '\min': '\operatorname{minimize}'
-    '\st': '\operatorname{subject to}'
+    '\st': '\operatorname{subject\ to}'
 
   numbering:
     title: true
