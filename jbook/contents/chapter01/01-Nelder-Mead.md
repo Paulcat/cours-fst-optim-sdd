@@ -39,7 +39,12 @@ import matplotlib.animation as anim
 from IPython.display import HTML
 
 def himmel(x):
-    return (x[:,0]**2 + x[:,1] - 11)**2 + (x[:,0] + x[:,1]**2 - 7)**2
+    if len(x.shape)==1:
+        x1, x2, = x
+    else:
+        x1 = x[:,0]
+        x2 = x[:,1]
+    return (x1**2 + x2 - 11)**2 + (x1 + x2**2 - 7)**2
 
 def nm_update(obj, vertices, r=1, alpha=2, beta=0.5, gamma=0.5):
     """Nelder-Mead update
@@ -144,4 +149,10 @@ def run_iterations(frame):
 ani = anim.FuncAnimation(fig, run_iterations, 20, blit=False)
 plt.close()
 HTML(ani.to_jshtml())
+:::
+
+
+## References
+
+:::{bibliography}
 :::
