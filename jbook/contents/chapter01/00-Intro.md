@@ -6,13 +6,14 @@ title: Iterative methods for unconstrained optimisation
 
 In this chapter, we consider *unconstrained optimisation* problems of the form
 \begin{equation*}
-    \min_{\x \in \RR^n} f(\x)
+    \min f(\x) \st \x \in \RR^n
 \end{equation*}
+where $f: \RR^n \to \RR$.
 
 In most cases, such problems do not admit *analytical solutions* (unlike the least-squares problem). To solve it we will resort to **iterative algorithms**:
-- *choose* on (or several) initial point(s) $\x_0 \in \RR^n$
-- at each step $k>0$, construct a new point $\x_k$ following *update rules depending on the objective $f$ and the previous iterate $\x_{k-1}$
-- reiterate until some *stopping criterion* is satisfied
+1. *choose* on (or several) initial point(s) $\x_0 \in \RR^n$
+2. at each step $k>0$, construct a new point $\x_k$ following *update rules* depending on the objective $f$ and the previous iterate $\x_{k-1}$
+3. reiterate until some *stopping criterion* is satisfied
 
 :::{important}Key notions
 - Gradient-free methods

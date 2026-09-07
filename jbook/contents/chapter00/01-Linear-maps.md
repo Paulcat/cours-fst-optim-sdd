@@ -86,7 +86,7 @@ Let $M \in \mathbb{R}^{n \times n}$. $\lambda \in \mathbb{R}$ is called *eigenva
     Mx = \lambda x.
 ```
 In other words, if there exists a non-zero vector in the [kernel](#def-noyau-image) of $M - \lambda I$.
-In this case, $x$ is called an *eigenvector* of $M$ associated with the eignevalue $\lambda$. The set of all eigenvalues of $M$ is called the *spectrum* of $M$.
+In this case, $x$ is called an *eigenvector* of $M$ associated with the eigenvalue $\lambda$. The set of all eigenvalues of $M$ is called the *spectrum* of $M$.
 :::
 
  

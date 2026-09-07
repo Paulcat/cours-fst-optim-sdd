@@ -9,6 +9,9 @@ project:
   github: https://github.com/Paulcat/cours-fst-optim-sdd-private
   # To autogenerate a Table of Contents, run "jupyter book init --write-toc"
 
+  bibliography:
+    - biblio.bib
+
   toc:
     - file: README.md
     - file: contents/chapter00/00-Intro.md
@@ -30,6 +33,7 @@ project:
     '\RR': '\mathbb{R}'
     # operators
     '\min': '\operatorname{minimize}'
+    '\st': '\operatorname{subject to}'
 
   numbering:
     title: true
