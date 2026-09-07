@@ -41,10 +41,17 @@ jobs:
           version: "latest"
       - name: Install Jupyter Book and dependencies (via uv)
         working-directory: ./jbook
-        run: uv sync
+        run: |
+          uv venv .venv
+          source .venv/bin/activate
+          uv pip install -r requirements.txt || true
+          uv pip install jupyter-book || true
+          # uv sync
       - name: Build HTML Assets
         working-directory: ./jbook
-        run: uv run jupyter-book build --html
+        run: |
+          source .venv/bin/activate
+          uv run jupyter-book build --html --execute
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

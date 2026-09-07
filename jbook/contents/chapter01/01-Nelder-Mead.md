@@ -111,7 +111,12 @@ def nm_update(obj, vertices, r=1, alpha=2, beta=0.5, gamma=0.5):
 # Contour data
 npts = 101
 x, y = np.mgrid(-6:6:npts*1j, -6:6:npts*1j)
-z = himmel(np.column_stack((x.reshape(-1),y.reshape(-1))))
+x = x.reshape(-1)
+y = y.reshape(-1)
+z = himmel(np.column_stack((x,y)))
+x = x.reshape(npts,npts)
+y = y.reshape(npts,npts)
+z = z.reshape(npts,npts)
 
 # Animation setup
 fig, ax = plt.subplots(figsize=(6,6))

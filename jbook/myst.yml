@@ -28,7 +28,7 @@ project:
   math:
     # variables
     '\x': '\mathbf{x}'
-    '\y': 'mathbf{y}'
+    '\y': '\mathbf{y}'
     # spaces
     '\RR': '\mathbb{R}'
     # operators
