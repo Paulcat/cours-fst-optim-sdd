@@ -39,7 +39,7 @@ import matplotlib.animation as anim
 from IPython.display import HTML
 
 def himmel(x):
-    return (x[:,1]**2 + x[:,2] - 11)**2 + (x[:,1] + x[:,2]**2 - 7)**2
+    return (x[:,0]**2 + x[:,1] - 11)**2 + (x[:,0] + x[:,1]**2 - 7)**2
 
 def nm_update(obj, vertices, r=1, alpha=2, beta=0.5, gamma=0.5):
     """Nelder-Mead update
@@ -66,7 +66,7 @@ def nm_update(obj, vertices, r=1, alpha=2, beta=0.5, gamma=0.5):
         new_vertices = np.vstack((vertices[:-1,:], xr))
 
     # 2. Expansion
-    elif fr < f[0]
+    elif fr < f[0]:
         # reflected point is better than current best: expand in that direction
         xe = xb + alpha * (vertices[-1,:] - xb)
         fe = obj(xe)
@@ -80,7 +80,7 @@ def nm_update(obj, vertices, r=1, alpha=2, beta=0.5, gamma=0.5):
     else:
         # reflected point is worst in the new simplex: contract
         contracted = 0
-        if f[-2] <= fr and fr < f[-1]
+        if f[-2] <= fr and fr < f[-1]:
             # "outside" contraction
             xout = xb - beta * (vertices[-1,:] - xb)
             fout = obj(xout)
@@ -99,11 +99,11 @@ def nm_update(obj, vertices, r=1, alpha=2, beta=0.5, gamma=0.5):
                 contracted = 1
 
     # 4. Shrinking
-        if !contracted:
+        if not contracted:
             # shrink simplex toward x0
             new_vertices = np.zeros_like(vertices)
             new_vertices[0,:] = vertices[0,:]
-            for k in range(1,n)
+            for k in range(1,n):
                 new_vertices[k,:] = gamma * (vertices[0,:] + vertices[k,:])
            
     return new_vertices
@@ -123,7 +123,7 @@ ax.set_xlabel('$x_1$')
 ax.set_ylabel('$x_2$')
 
 # Initial simplex
-vertices = np.array([[4,6], [1 1], [5 2]])
+vertices = np.array([[4, 6], [1, 1], [5, 2]])
 
 simplex_lines, = ax.plot([], [], 'ro-', lw=2)
 history = []
@@ -132,7 +132,7 @@ def run_iterations(frame):
     global vertices
     history.append(vertices.copy())
     vertices = nm_update(himmel, vertices)
-    simplex = np.vstack([vertices, vertice[0]])
+    simplex = np.vstack([vertices, vertices[0]])
     simplex_lines.set_data(simplex[:,0], simplex[:,1])
     return simplex_lines,
 
