@@ -110,7 +110,7 @@ def nm_update(obj, vertices, r=1, alpha=2, beta=0.5, gamma=0.5):
 
 # Contour data
 npts = 101
-x, y = np.mgrid(-6:6:npts*1j, -6:6:npts*1j)
+x, y = np.mgrid[-6:6:npts*1j, -6:6:npts*1j]
 x = x.reshape(-1)
 y = y.reshape(-1)
 z = himmel(np.column_stack((x,y)))
