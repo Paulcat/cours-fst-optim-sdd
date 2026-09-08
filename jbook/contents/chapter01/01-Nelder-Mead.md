@@ -86,7 +86,7 @@ def nm_update(obj, vertices, r=1, alpha=2, beta=0.5, gamma=0.5):
         # reflected point is worst in the new simplex: contract
         contracted = 0
         if f[-2] <= fr and fr < f[-1]:
-            # "outside" contraction
+            # "outer" contraction
             xout = xb - beta * (vertices[-1,:] - xb)
             fout = obj(xout)
 
@@ -95,7 +95,7 @@ def nm_update(obj, vertices, r=1, alpha=2, beta=0.5, gamma=0.5):
                 contracted = 1
 
         else:
-            # "inside" contraction
+            # "inner" contraction
             xin = xb + beta * (vertices[-1,:] - xb)
             fin = obj(xin)
 
@@ -194,14 +194,25 @@ plt.close()
 HTML(ani.to_jshtml())
 :::
 
-The algorithm now converges to a different local minima. An unlucky initialization may even result in the algorithm getting trapped in a valley, and not converging anymore.
+The algorithm now converges to a different local minima. An unlucky initialization may even result in the algorithm getting trapped and not converging anymore.
+
+
 
 :::{code-cell} python
 :tags:[hide-input]
 
+def mckinnon(x,phi=60,theta=6,tau=2):
+    if len(x.shape)==1:
+        x1, x2, = x
+    else:
+        x1 = x[:,0]
+        x2 = x[:,1]
+    return theta*phi*np.abs(x1)**tau * (x1<=0) + theta*x1**tau * (x1 > 0) + x2*(1+x2)
+
+
 # Contour data
 npts = 201
-x, y = np.mgrid[-6:6:npts*1j, -6:6:npts*1j]
+x, y = np.mgrid[-0.2:1.2:npts*1j, -1.5:1:npts*1j]
 x = x.reshape(-1)
 y = y.reshape(-1)
 z = himmel(np.column_stack((x,y)))
@@ -211,15 +222,18 @@ z = z.reshape(npts,npts)
 
 # Animation setup
 fig, ax = plt.subplots(figsize=(6,6))
-levels = np.logspace(0.35, 3.2, 20)
+levels = np.linspace(0, 10, 20)
 
 ax.contour(x,y,z, levels=levels, cmap='viridis')
-ax.set_title("Nelder-Mead iterations")
+ax.scatter([0], [-0.5], marker="*", s=100, color="k")
+ax.set_title("Nelder-Mead iterations on McKinnon's example")
 ax.set_xlabel('$x_1$')
 ax.set_ylabel('$x_2$')
 
-# Initial simplex
-vertices = np.array([[-5, -5], [1, 1], [4, 5.5]])
+# Unlucky initialisation
+A = (1 + np.sqrt(33))/8
+B = (1 + np.sqrt(33))/8
+vertices = np.array([[0, 0], [1, 1], [A, B]])
 
 simplex_lines, = ax.plot([], [], 'ro-', lw=2)
 history = []
@@ -237,7 +251,9 @@ plt.close()
 HTML(ani.to_jshtml())
 :::
 
-Gradient-free are thus cheap to implement, but offer poor guarantees. In the reminder of the chapter, we will focus on *descent methods*, that leverage first-order (gradient) and second-order (Hessian) properties of the objective to construct iterates that iteratively progress towards a local minimum.
+In this example, the function is striclty convex and attains its minimum at $x_\star = (0,-0.5)$, but the Nelder-Mead simplex get trapped at the point $(0,0)$. The example is due to @mckinnon1998.
+
+Gradient-free methods are thus cheap to implement, but may offer poor guarantees. In the reminder of the chapter, we will focus on *descent methods*, that leverage first-order (gradient) and second-order (Hessian) properties of the objective to construct iterates that iteratively progress towards a local minimum.
 
 
 :::{bibliography}
