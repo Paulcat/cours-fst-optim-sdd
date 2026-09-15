@@ -5,7 +5,7 @@ You are already familiar with the concept of the *derivative* of a function $f:\
 
 ## Definition
 
-Let $E$ and $F$ be two vector spaces, equipped with their respective norms $|!| \cdot |!|E$ and $|!| \cdot |!|F$. The formal definition of local differentiability is given below.
+Let $E$ and $F$ be two vector spaces, equipped with their respective norms $|\!| \cdot |\!|_E$ and $|\!| \cdot |\!|_F$. The formal definition of local differentiability is given below.
 :::{prf:definition}
 :label: def:diff 
 Let $U$ be an open set in $E$. A mapping $f:U \to F$ is said to be differentiable at a point $a \in U$ if there exists a linear mapping $D_af \in \mathcal{L}(E,F)$ such that

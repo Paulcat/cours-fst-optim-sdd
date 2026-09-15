@@ -24,15 +24,23 @@ project:
     - file: contents/chapter01/00-Intro.md
       children:
         - file: contents/chapter01/01-Nelder-Mead.md
+        - file: contents/chapter01/02-Descent-methods.md
+        - file: contents/chapter01/03-Gradient-descent.md
+        - file: contents/chapter01/04-Newton-method.md
+        - file: contents/chapter01/05-Quasi-Newton.md
 
   math:
     # variables
     '\x': '\mathbf{x}'
     '\y': '\mathbf{y}'
+    '\d': '\mathbf{d}'
+    #
+    '\B': '\mathbf{B}'
     # spaces
     '\RR': '\mathbb{R}'
     # operators
     '\min': '\operatorname{minimize}'
+    '\argmin': '\operatorname{argmin}'
     '\st': '\operatorname{subject\ to}'
 
   numbering:

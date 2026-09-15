@@ -215,7 +215,7 @@ npts = 201
 x, y = np.mgrid[-0.2:1.2:npts*1j, -1.5:1:npts*1j]
 x = x.reshape(-1)
 y = y.reshape(-1)
-z = himmel(np.column_stack((x,y)))
+z = mckinnon(np.column_stack((x,y)))
 x = x.reshape(npts,npts)
 y = y.reshape(npts,npts)
 z = z.reshape(npts,npts)
@@ -241,7 +241,7 @@ history = []
 def run_iterations(frame):
     global vertices
     history.append(vertices.copy())
-    vertices = nm_update(himmel, vertices)
+    vertices = nm_update(mckinnon, vertices)
     simplex = np.vstack([vertices, vertices[0]])
     simplex_lines.set_data(simplex[:,0], simplex[:,1])
     return simplex_lines,

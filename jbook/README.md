@@ -44,6 +44,7 @@ Some useful references:
 - [Numerical Tours](www.numerical-tours.com): many practical examples in machine learning, signal processing and optimisation (in Matlab, Python, Julia)
 
 To go further:
-- [Convex Optimisation](http://web.stanford.edu/~boyd/cvxbook/), S. Boyd et L. Vandenberghe
+- [Convex Optimization](http://web.stanford.edu/~boyd/cvxbook/), S. Boyd et L. Vandenberghe
+- [Numerical Optimization](link.springer.com/book/10.1007/978-0-387-40065-5), J. Nocedal and S.J. Wright
 - [Algorithms for Optimization](http://algorithmsbook.com/optimization), M. Kochenderfer et T. Wheeler
 - [Petit Guide du Calcul Différentiel à l'Usage de la Licence et de l'Agrégation](http://math.univ-cotedazur.fr/~frou/PGCD.html), F. Rouvière
