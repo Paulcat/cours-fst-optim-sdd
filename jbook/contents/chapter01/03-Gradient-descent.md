@@ -72,7 +72,7 @@ def q(x,gamma=10):
 
 # gradient
 def gradq(x,gamma=10):
-    return np.hstack((x[0,:], gamma*x[1,:]))
+    return np.vstack((x[0,:], gamma*x[1,:]))
 
 gamma = 10
 x0 = np.array([[gamma],[1.]])
