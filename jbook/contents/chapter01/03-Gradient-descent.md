@@ -106,7 +106,7 @@ trajectories = [
 ax.legend([fr"$\alpha={a}" for a in alphas])
 
 def run_iterations(frame):
-    for i,a in enumerate(alphas)
+    for i,a in enumerate(alphas):
         states[i] = GradientUpdate2DFixed(states[i], gradq, alpha=a)
         history[i].append(states[i].copy())
         history_stack = np.hstack(history[i]) # shape (2, niter)
