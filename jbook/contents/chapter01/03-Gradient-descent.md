@@ -60,7 +60,8 @@ from IPython.display import HTML
 
 def GradientUpdate2DFixed(x, gradf, alpha=0.1):
     """ GradientMethod2DFixed
-    One gradient descent update with fixed stepsize (alpha) for a bivariate objective
+    One gradient descent update with fixed stepsize
+    for a bivariate objective
     """
 
     return x - alpha * gradf(x)
@@ -98,23 +99,34 @@ ax.set_xlabel("$x_1$")
 ax.set_ylabel("$x_2$")
 
 colors = plt.cm.autumn(np.linspace(0,1,len(alphas)))
-states = [x0.copy() for _ in alphas]
-history = []
+
+# initialise trajectory linestyles
 trajectories = [
-    ax.plot(states[i][0], states[i][1], '.-', color=colors[i], lw=2, ms=10)[0] # TODO: understand...
+    ax.plot([], [], '.-', color=colors[i], lw=2, ms=10, 
+            label=fr"$\alpha={a}$")[0]
     for i,a in enumerate(alphas)
 ]
 ax.legend([fr"$\alpha={a}$" for a in alphas])
 
+def init_animation():
+    global states, history
+    states = [x0.copy() for _ in alphas]
+    history = [[x0.copy()] for _ in alphas]
+    for i in range(len(alphas)):
+        history[i].append(states[i].copy())
+        trajectories[i].set_data(states[i][0], states[i][1])
+    return trajectories
+
 def run_iterations(frame):
     for i,a in enumerate(alphas):
+        states[i] = GradientUpdate2DFixed(states[i], gradq, alpha=a)
         history[i].append(states[i].copy())
         history_stack = np.hstack(history[i]) # shape (2, niter)
-        states[i] = GradientUpdate2DFixed(states[i], gradq, alpha=a)
         trajectories[i].set_data(history_stack)
     return trajectories
 
-ani = anim.FuncAnimation(fig, run_iterations, 20, blit=False)
+ani = anim.FuncAnimation(fig, run_iterations, frames=20, 
+                            init_func=init_animation, blit=False)
 plt.close()
 HTML(ani.to_jshtml())
 :::
@@ -140,7 +152,8 @@ This strategy has the best performance in terms of *number of iterations*. Howev
 
 def GradientUpdate2DOptimal(x, gradf, gamma):
     """
-    One gradient update with optimal stepsize for bivariate quadratic objective
+    One gradient update with optimal stepsize
+    for bivariate quadratic objective
     """
 
     alpha = (x[0]**2 + gamma**2 * x[1]**2) / (x[0]**2 + gamma**3 * x[1]**2)
