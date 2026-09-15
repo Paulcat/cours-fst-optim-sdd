@@ -56,6 +56,7 @@ then the algorithm converges towards a stationary point of $f$ if $\ 0 < \alpha 
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.animation as anim
+from IPython.display import HTML
 
 def GradientUpdate2DFixed(x, gradf, alpha=0.1):
     """ GradientMethod2DFixed
