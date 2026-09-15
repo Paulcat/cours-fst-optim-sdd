@@ -99,18 +99,18 @@ ax.set_ylabel("$x_2$")
 
 colors = plt.cm.autumn(np.linspace(0,1,len(alphas)))
 states = [x0.copy() for _ in alphas]
-history = [[x0.copy()] for _ in alphas]
+history = []
 trajectories = [
     ax.plot(states[i][0], states[i][1], '.-', color=colors[i], lw=2, ms=10)[0] # TODO: understand...
     for i,a in enumerate(alphas)
 ]
-ax.legend([fr"$\alpha={a}" for a in alphas])
+ax.legend([fr"$\alpha={a}$" for a in alphas])
 
 def run_iterations(frame):
     for i,a in enumerate(alphas):
-        states[i] = GradientUpdate2DFixed(states[i], gradq, alpha=a)
         history[i].append(states[i].copy())
         history_stack = np.hstack(history[i]) # shape (2, niter)
+        states[i] = GradientUpdate2DFixed(states[i], gradq, alpha=a)
         trajectories[i].set_data(history_stack)
     return trajectories
 
